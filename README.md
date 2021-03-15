@@ -6,7 +6,7 @@
 大家可以把本仓库的代码导入到您本地的IDE中，这样比较容易阅读  
 
 **`IDEA`导入教程**  
-`打开idea` -> `File` -> `New` -> `Project from Version Control` -> 
+`打开idea` -> `File` -> `New` -> `Project from Version Control` ->
 `git@github.com:guyuedumingx/ProgrammingExperiment.git` 就可以很方便的导入
 将本仓库导入到一个新项目中  
 
@@ -17,6 +17,9 @@
 请通过某种方式联系我`yohoyes`,可以微信联系我
 也可以提一个`issue`，同时请提供您的`github`账号
 我会把您加入到开发者菜单中  
+
+每次实验，都请各位开发者在对应的文件夹内新建一个以自己名字命名的文件夹
+将该实验代码写在个人的文件夹中  
 
 **`COMMIT`注释标准**  
 
