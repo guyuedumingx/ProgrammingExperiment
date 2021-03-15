@@ -1,23 +1,24 @@
 # 程序设计实验  
-[Icon](https://github.com/scotch-io/All-Github-Emoji-Icons)  
+[![icon](https://img.shields.io/badge/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-DataStruct-informational)](https://github.com/scotch-io/All-Github-Emoji-Icons)
+[![图标制作](https://img.shields.io/badge/%E5%9B%BE%E6%A0%87%E5%88%B6%E4%BD%9C-shields-orange)](https://shields.io/h)
 
 ### 开始使用  
 大家可以把本仓库的代码导入到您本地的IDE中，这样比较容易阅读  
 
-**Idea导入教程**  
+**`IDEA`导入教程**  
 `打开idea` -> `File` -> `New` -> `Project from Version Control` -> 
 `git@github.com:guyuedumingx/ProgrammingExperiment.git` 就可以很方便的导入
 将本仓库导入到一个新项目中  
 
-**Eclipse导入教程**  
+**`Eclipse`导入教程**  
 百度一下，你就知道  
 
 ### 参与  
-请通过某种方式联系我(yohoyes),可以微信联系我
-也可以提一个issue，同时请提供您的github账号
+请通过某种方式联系我`yohoyes`,可以微信联系我
+也可以提一个`issue`，同时请提供您的`github`账号
 我会把您加入到开发者菜单中  
 
-**commit注释标准**  
+**`COMMIT`注释标准**  
 
 添加文件  
 ```
@@ -33,6 +34,8 @@
 ``` 
 :boom: 删除的文件名
 ```
+
+> 前后的分号都要  
 
 
 ### 声明  
