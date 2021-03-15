@@ -1,8 +1,8 @@
 package experiment2.yhicxu.carpark;
 
-import two.bean.Car;
-import two.utils.LinkQueue;
-import two.utils.SeqStack;
+import experiment2.yhicxu.bean.Car;
+import experiment2.yhicxu.utils.LinkQueue;
+import experiment2.yhicxu.utils.SeqStack;
 
 import java.text.DecimalFormat;
 import java.util.Date;
