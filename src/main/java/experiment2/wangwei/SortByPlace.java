@@ -26,7 +26,7 @@ public class SortByPlace {
             br.close();
             // sort the list by bubble sorting
             boolean flag = true;
-            while (link.next.getData().equals(link.next.next.getData()) > 0 && flag) {
+            while (!isSortDone(link)){
 
                 Node<President> m = link;
                 flag = false;
@@ -65,6 +65,21 @@ public class SortByPlace {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+    }
+
+    private static boolean isSortDone(Node<President> link) {
+        Node<President> cur = link.next;
+        while (cur.next != null) {
+            if(cur.getData().equals(cur.next.getData()) > 0 ) {
+                return false;
+            }else if(cur.getData().equals(cur.next.getData()) == 0 ){
+                if(cur.getData().compareTo(cur.next.getData()) > 0) {
+                    return false;
+                }
+            }
+            cur = cur.next;
+        }
+        return true;
     }
 }
 
