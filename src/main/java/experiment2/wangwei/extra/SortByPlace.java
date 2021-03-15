@@ -1,4 +1,4 @@
-package experiment2.wangwei;
+package experiment2.wangwei.extra;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
