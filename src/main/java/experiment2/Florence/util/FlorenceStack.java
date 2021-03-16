@@ -6,9 +6,9 @@ import java.util.Iterator;
  * @author Florence
  */
 public class FlorenceStack<T> implements Iterable<T> {
-    T top = null;
-    int size = 0;
-    Node<T> head = new Node<>();
+    private T top = null;
+    private int size = 0;
+    private Node<T> head = new Node<>();
 
     /**
      * 采用头插法插入元素

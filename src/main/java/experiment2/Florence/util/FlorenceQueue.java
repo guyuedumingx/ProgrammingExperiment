@@ -9,7 +9,7 @@ public class FlorenceQueue<E> implements Iterable<E>{
     private E peek=null;
     private Node<E> head=new Node<>();
     private Node<E> tail=head;
-    int size=0;
+    private int size=0;
 
     /**
      * 链尾入队
