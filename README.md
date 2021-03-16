@@ -1,6 +1,7 @@
 # 程序设计实验  
 [![icon](https://img.shields.io/badge/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-DataStruct-informational)](https://github.com/guyuedumingx/DataStruct)
-[![图标制作](https://img.shields.io/badge/%E5%9B%BE%E6%A0%87%E5%88%B6%E4%BD%9C-shields-orange)](https://shields.io/h)
+[![图标制作](https://img.shields.io/badge/%E5%9B%BE%E6%A0%87%E5%88%B6%E4%BD%9C-shields-orange)](https://shields.io/h)  
+**[本项目链接](https://github.com/guyuedumingx/ProgrammingExperiment)**
 
 ### 开始使用  
 大家可以把本仓库的代码导入到您本地的IDE中，这样比较容易阅读  

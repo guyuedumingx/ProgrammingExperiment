@@ -18,7 +18,7 @@ public class SeqStack<T> implements Iterable<T> {
     }
 
     public boolean isFull() {
-        return index == capacity - 1;
+        return index == capacity;
     }
 
     public T push(T t) {
@@ -70,7 +70,7 @@ public class SeqStack<T> implements Iterable<T> {
 
     public static void main(String[] args) {
         SeqStack<Integer> stack = new SeqStack<>(10);
-        for(Integer t:stack){
+        for (Integer t : stack) {
 
         }
     }

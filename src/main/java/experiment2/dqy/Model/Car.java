@@ -39,4 +39,21 @@ public class Car {
     public void setLeavingTime(Date leavingTime) {
         this.leavingTime = leavingTime;
     }
+
+    public Car() {};
+
+    public Car(String no, String name, Date enterTime) {
+        this.no = no;
+        this.name = name;
+        this.enterTime = enterTime;
+        this.leavingTime = null;
+    }
+
+    public boolean equals(Car car) {
+        if (this.no == car.no) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
