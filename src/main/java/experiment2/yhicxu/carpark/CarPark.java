@@ -42,7 +42,34 @@ public class CarPark {
      * 返回值：离开汽车
      */
     public Car leave(String carNo) {
-        return null;
+        Car now = null;
+        for (Car car : stack) {
+            if (car.getNum().equals(carNo)) {
+                now = car;
+                break;
+            }
+        }
+        if (now == null) {
+            return null;
+        } else {
+            SeqStack<Car> stack2 = new SeqStack<>(capacity);
+            while (!stack.isEmpty()) {
+                Car t = stack.pop();
+                if (t == now) {
+                    while (!stack2.isEmpty()) {
+                        stack.push(stack2.pop());
+                    }
+                    if (!queue.isEmpty()) {
+                        stack.push(queue.pool());
+                    }
+                    break;
+                } else {
+                    stack2.push(t);
+                }
+            }
+            now.setLeave(new Date().getTime());
+            return now;
+        }
     }
 
 
@@ -53,27 +80,49 @@ public class CarPark {
      * 返回值：停车费用
      */
     public double charging(Car car) {
-        long offset = car.getLeave() - car.getReach();
-        return offset / 60000 * price;
+        return getTime(car) * price;
     }
 
     // 显示所有入库车辆信息
     public void showPark() {
-
+        if (stack.isEmpty()) {
+            System.out.println("The parking lot is empty");
+        }
+        System.out.println("Park:");
+        int index = 1;
+        for (Car car : stack) {
+            System.out.println(index + " : " + car.getNum());
+            index++;
+        }
     }
 
     // 显示所有在便道上等待信息
     public void showWaiting() {
-
+        if (queue.isEmpty()) {
+            return;
+        }
+        System.out.println("Waiting:");
+        int index = 1;
+        for (Car car : queue) {
+            System.out.println(index + " : " + car.getNum());
+            index++;
+        }
     }
 
+    // 计算停车时间
+    private int getTime(Car car) {
+        long offset = car.getLeave() - car.getReach();
+        return (int) Math.ceil((offset + 0.0) / 60000);
+    }
+
+    // 显示菜单
     private void showMenu() {
-        System.out.println("\n    §※§※§※§※§※§ 欢迎使用停车场系统.§※§※§※§※§※§\t\n");
-        System.out.println("\t※◎※◎※◎※◎  1. 车辆到达登记.※◎※◎※◎※◎\t");
-        System.out.println("\t※◎※◎※◎※◎  2. 车辆离开登记.※◎※◎※◎※◎\t");
-        System.out.println("\t※◎※◎※◎※◎  3. 显示车辆信息.※◎※◎※◎※◎\t");
-        System.out.println("\t※◎※◎※◎※◎  4. 退出系统.※◎※◎※◎※◎\t");
-        System.out.println("\n\t请选择：\t");
+        System.out.println("\n欢迎使用停车场系统.\t\n");
+        System.out.println("1. 车辆到达登记.\t");
+        System.out.println("2. 车辆离开登记.\t");
+        System.out.println("3. 显示车辆信息.\t");
+        System.out.println("4. 退出系统.\t");
+        System.out.println("\n请选择：\t");
     }
 
     // 运行
@@ -100,7 +149,11 @@ public class CarPark {
                     System.out.println("请输入车牌号：");
                     carNo = scanner.next();
                     Car car = carPark.leave(carNo);
-                    long time = (car.getLeave() - car.getReach()) / 60000;
+                    if (car == null) {
+                        System.out.println("停车场中没有车牌号为" + carNo + "的车");
+                        break;
+                    }
+                    long time = getTime(car);
                     DecimalFormat df = new DecimalFormat("#.00");
                     String fee = df.format(carPark.charging(car));
                     System.out.println("车辆" + carNo + "停车时长" + time + "分钟，共收费" + fee + "元。");
