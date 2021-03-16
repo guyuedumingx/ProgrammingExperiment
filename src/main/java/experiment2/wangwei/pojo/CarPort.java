@@ -55,7 +55,17 @@ public class CarPort {
 
     @Override
     public boolean equals(Object obj) {
-        int no = (Integer)obj;
+        int no = (Integer) obj;
         return this.no == no;
     }
+
+    @Override
+    public String toString() {
+        return "Parking {\n"
+                + car.toString() +
+                "\n serialNumber=" + serialNumber +
+                "\n parkTime=" + parkTime +
+                "\n}";
+    }
 }
+
