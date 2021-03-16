@@ -17,8 +17,8 @@ public class FlorenceStack<T> implements Iterable<T> {
      */
     public void push(T data) {
         Node<T> temp = new Node<>(data);
-        temp.next = head.next;
-        head.next = temp;
+        temp.setNext(head.getNext());
+        head.setNext(temp);
         size++;
         top = data;
     }
@@ -33,11 +33,11 @@ public class FlorenceStack<T> implements Iterable<T> {
             System.out.println("栈为空");
             return null;
         }
-        T data = head.next.data;
-        head.next = head.next.next;
+        T data = head.getNext().getData();
+        head.setNext(head.getNext().getNext());
         size--;
         if (size != 0) {
-            top = head.next.data;
+            top = head.getNext().getData();
         } else {
             top = null;
         }
@@ -73,7 +73,7 @@ public class FlorenceStack<T> implements Iterable<T> {
 
 
     class FlorenceStackIterator implements Iterator<T> {
-        Node<T> tempNode = head.next;
+        Node<T> tempNode = head.getNext();
         @Override
         public boolean hasNext() {
             return tempNode != null;
@@ -81,8 +81,8 @@ public class FlorenceStack<T> implements Iterable<T> {
 
         @Override
         public T next() {
-            T data = tempNode.data;
-            tempNode = tempNode.next;
+            T data = tempNode.getData();
+            tempNode = tempNode.getNext();
             return data;
         }
     }
