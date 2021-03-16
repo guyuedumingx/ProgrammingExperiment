@@ -1,4 +1,4 @@
-package experiment2.wangwei;
+package experiment2.wangwei.extra;
 
 class President implements Comparable<President>
 {
