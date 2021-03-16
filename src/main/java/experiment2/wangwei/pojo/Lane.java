@@ -1,8 +1,7 @@
 package experiment2.wangwei.pojo;
 
-import java.util.ArrayDeque;
+import experiment2.wangwei.utils.WQueue;
 import java.util.Iterator;
-import java.util.Queue;
 
 
 /**
@@ -10,7 +9,7 @@ import java.util.Queue;
  * @author yohoyes
  */
 public class Lane {
-    private Queue<Car> line = new ArrayDeque<>();
+    private WQueue<Car> line = new WQueue<>();
     private static Lane lane = new Lane();
 
     private Lane() {
