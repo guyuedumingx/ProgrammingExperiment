@@ -3,6 +3,7 @@ package experiment2.dqy.Model;
 public class Form {
     private String no;
     private String name;
+    private String google;
 
     public String getNo() {
         return no;
