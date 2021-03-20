@@ -50,8 +50,12 @@ public class CarPark {
      * @date 2021/3/20
      */
     public CarPark(double price, int capacity) {
+
+        // 成员变量赋值
         this.price = price;
         this.capacity = capacity;
+
+        // 创建顺序栈和链队列
         stack = new SeqStack<>(capacity);
         queue = new LinkQueue<>();
     }
@@ -65,6 +69,8 @@ public class CarPark {
      * @date 2021/3/20
      */
     private void arrival(String carNo) {
+
+        // 先判断停车系统中有没有这个车
         for (Car car : stack) {
             if (car.getNum().equals(carNo)) {
                 showTips("该车已经在停车场系统中！");
@@ -77,6 +83,8 @@ public class CarPark {
                 return;
             }
         }
+
+        // 如果没有，则按规则入栈/队列
         if (stack.isFull()) {
             queue.offer(new Car(carNo, new Date().getTime()));
         } else {
@@ -96,6 +104,8 @@ public class CarPark {
     private Car leave(String carNo) {
         Car now = null;
         int size = 0;
+
+        // 先获取这个车的对象和它的应位置
         for (Car car : stack) {
             if (car.getNum().equals(carNo)) {
                 now = car;
@@ -103,24 +113,36 @@ public class CarPark {
             }
             size++;
         }
+
+        // 如果停车场没有这个车则返回null
         if (now == null) {
             return null;
         } else {
+
+            // 如果有则执行驶离操作
             SeqStack<Car> stack2 = new SeqStack<>(size);
-            while (!stack.isEmpty()) {
+            while (true) {
                 Car t = stack.pop();
                 if (t == now) {
+
+                    // 如果找到了要驶离的车，则将另一个栈中的车再调回停车场栈中
                     while (!stack2.isEmpty()) {
                         stack.push(stack2.pop());
                     }
+
+                    // 如果便车道有车则驶入第一辆到停车场
                     if (!queue.isEmpty()) {
                         stack.push(queue.pool());
                     }
                     break;
                 } else {
+
+                    // 如果当期弹出的车不是要驶离的车，则将该车放到另一个栈中
                     stack2.push(t);
                 }
             }
+
+            // 设置驶离时间
             now.setLeave(new Date().getTime());
             return now;
         }
@@ -147,9 +169,14 @@ public class CarPark {
      * @date 2021/3/20
      */
     private void showPark() {
+
+        // 如果停车场没有车则显示提示语
         if (stack.isEmpty()) {
             showTips("The parking lot is empty");
+            return;
         }
+
+        // 按照顺序显示车辆
         showTips("Park:");
         int index = stack.size();
         for (Car car : stack) {
@@ -166,9 +193,13 @@ public class CarPark {
      * @date 2021/3/20
      */
     private void showWaiting() {
+
+        // 如果便车道没有车则不显示
         if (queue.isEmpty()) {
             return;
         }
+
+        // 按顺序显示车辆
         showTips("Waiting:");
         int index = 1;
         for (Car car : queue) {
@@ -185,7 +216,11 @@ public class CarPark {
      * @date 2021/3/20
      */
     private int getTime(Car car) {
+
+        // 计算等待时间
         long offset = car.getLeave() - car.getReach();
+
+        // 换算成分钟向上取整
         return (int) Math.ceil((offset + 0.0) / 60000);
     }
 
@@ -225,12 +260,17 @@ public class CarPark {
      * @date 2021/3/20
      */
     public void run() {
+
+        // 初始化
         showTips("欢迎使用停车场管理系统!");
-        CarPark carPark = new CarPark(3.2, 3);
         Scanner scanner = new Scanner(System.in);
-        String carNo;
+
+        // 结束标志
         boolean flag = false;
+
         while (!flag) {
+
+            // 显示菜单
             showMenu();
             int item = -1;
             while (true) {
@@ -238,38 +278,51 @@ public class CarPark {
                 try {
                     item = Integer.parseInt(inp);
                 } catch (Exception e) {
+                    // 如果输入的不是数字，则重来
                     showTips("\n输入有误，请重新选择：");
                     continue;
                 }
-                if (item > 0 && item < 5)
+
+                // 如果输入的没问题则跳出循环
+                if (item > 0 && item < 5) {
                     break;
+                }
+
+                // 输入有问题则不跳出循环，重来
                 showTips("\n输入有误，请重新选择：");
             }
             switch (item) {
                 case 1:
                     showTips("请输入车牌号：");
-                    carNo = scanner.nextLine();
-                    carPark.arrival(carNo);
+                    arrival(scanner.nextLine());
                     break;
                 case 2:
                     showTips("请输入车牌号：");
-                    carNo = scanner.nextLine();
-                    Car car = carPark.leave(carNo);
+
+                    // 车牌号
+                    String carNo = scanner.nextLine();
+                    Car car = leave(carNo);
+
+                    // 如果停车场中没有该车则显示提示信息
                     if (car == null) {
                         showTips("停车场中没有车牌号为" + carNo + "的车");
                         break;
                     }
+
+                    // 计算时间并显示消息
                     long time = getTime(car);
-                    DecimalFormat df = new DecimalFormat("#.00");
-                    String fee = df.format(carPark.charging(car));
-                    showTips("车辆" + carNo + "停车时长" + time + "分钟，共收费" + fee + "元。");
+                    showTips("车辆" + carNo + "停车时长" + time + "分钟，共收费" + new DecimalFormat("#.00").format(charging(car)) + "元。");
                     break;
                 case 3:
-                    carPark.showPark();
-                    carPark.showWaiting();
+
+                    // 显示停车场和便车道
+                    showPark();
+                    showWaiting();
                     break;
                 case 4:
                     showTips("谢谢使用！");
+
+                    // 更改结束标志
                     flag = true;
             }
         }
