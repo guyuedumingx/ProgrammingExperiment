@@ -8,12 +8,47 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * <p><b>类名：</b>{@code CarPark}</p>
+ * <p><b>功能：</b></p><br>停车场管理系统
+ * <p><b>方法：</b></p>
+ * <br> {@link #CarPark(double, int)}构造方法
+ * <br> {@link #run()}运行系统
+ *
+ * @author 60rzvvbj
+ * @date 2021/3/20
+ */
 public class CarPark {
+
+    /**
+     * 每分钟价钱
+     */
     private final double price;
+
+    /**
+     * 停车场容量
+     */
     private final int capacity;
+
+    /**
+     * 停车场
+     */
     private SeqStack<Car> stack;
+
+    /**
+     * 便车道
+     */
     private LinkQueue<Car> queue;
 
+    /**
+     * <p><b>方法名：</b>{@code CarPark}</p>
+     * <p><b>功能：</b></p><br>构造方法
+     *
+     * @param price    每分钟价钱
+     * @param capacity 停车场容量
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
     public CarPark(double price, int capacity) {
         this.price = price;
         this.capacity = capacity;
@@ -22,10 +57,12 @@ public class CarPark {
     }
 
     /**
-     * 功能： 将carNo车牌的汽车驶入，如果停车场有车位则进入停车场，设定入场时间，否则在便道等待进入
-     * 参数：
-     * carNo -- 车牌信息
-     * 返回值：
+     * <p><b>方法名：</b>{@code arrival}</p>
+     * <p><b>功能：</b></p><br>将carNo车牌的汽车驶入，如果停车场有车位则进入停车场，设定入场时间，否则在便道等待进入
+     *
+     * @param carNo 车牌号
+     * @author 60rzvvbj
+     * @date 2021/3/20
      */
     private void arrival(String carNo) {
         for (Car car : stack) {
@@ -48,12 +85,15 @@ public class CarPark {
     }
 
     /**
-     * 功能： 将carNo车牌的汽车驶离停车场，设定离开时间，同时便道汽车进入停车场，返回null代表要离开的车辆不存在
-     * 参数：
-     * carNo -- 车牌信息
-     * 返回值：离开汽车
+     * <p><b>方法名：</b>{@code leave}</p>
+     * <p><b>功能：</b></p><br>将carNo车牌的汽车驶离停车场，设定离开时间，同时便道汽车进入停车场，返回null代表要离开的车辆不存在
+     *
+     * @param carNo 车牌号
+     * @return 驶离的车
+     * @author 60rzvvbj
+     * @date 2021/3/20
      */
-    public Car leave(String carNo) {
+    private Car leave(String carNo) {
         Car now = null;
         int size = 0;
         for (Car car : stack) {
@@ -86,19 +126,27 @@ public class CarPark {
         }
     }
 
-
     /**
-     * 功能： 根据车辆的出入时间，计算费用及停车时长
-     * 参数：
-     * car -- 车辆信息
-     * 返回值：停车费用
+     * <p><b>方法名：</b>{@code charging}</p>
+     * <p><b>功能：</b></p><br>计算驶离的车的费用
+     *
+     * @param car 驶离的车
+     * @return 费用
+     * @author 60rzvvbj
+     * @date 2021/3/20
      */
-    public double charging(Car car) {
+    private double charging(Car car) {
         return getTime(car) * price;
     }
 
-    // 显示所有入库车辆信息
-    public void showPark() {
+    /**
+     * <p><b>方法名：</b>{@code showPark}</p>
+     * <p><b>功能：</b></p><br>显示所有入库车辆信息
+     *
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
+    private void showPark() {
         if (stack.isEmpty()) {
             showTips("The parking lot is empty");
         }
@@ -110,8 +158,14 @@ public class CarPark {
         }
     }
 
-    // 显示所有在便道上等待信息
-    public void showWaiting() {
+    /**
+     * <p><b>方法名：</b>{@code showWaiting}</p>
+     * <p><b>功能：</b></p><br>显示所有在便道上等待信息
+     *
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
+    private void showWaiting() {
         if (queue.isEmpty()) {
             return;
         }
@@ -123,13 +177,25 @@ public class CarPark {
         }
     }
 
-    // 计算停车时间
+    /**
+     * <p><b>方法名：</b>{@code getTime}</p>
+     * <p><b>功能：</b></p><br>计算停车时间
+     *
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
     private int getTime(Car car) {
         long offset = car.getLeave() - car.getReach();
         return (int) Math.ceil((offset + 0.0) / 60000);
     }
 
-    // 显示菜单
+    /**
+     * <p><b>方法名：</b>{@code showMenu}</p>
+     * <p><b>功能：</b></p><br>显示菜单
+     *
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
     private void showMenu() {
         // System.out.println("\n欢迎使用停车场系统.\t\n");
         showTips("");
@@ -140,18 +206,31 @@ public class CarPark {
         showTips("\n请选择：\t");
     }
 
-    // 显示提示信息
+    /**
+     * <p><b>方法名：</b>{@code showTips}</p>
+     * <p><b>功能：</b></p><br>显示提示信息
+     *
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
     private void showTips(String tips) {
         System.out.println(tips);
     }
 
-    // 运行
+    /**
+     * <p><b>方法名：</b>{@code run}</p>
+     * <p><b>功能：</b></p><br>运行系统
+     *
+     * @author 60rzvvbj
+     * @date 2021/3/20
+     */
     public void run() {
         showTips("欢迎使用停车场管理系统!");
         CarPark carPark = new CarPark(3.2, 3);
         Scanner scanner = new Scanner(System.in);
         String carNo;
-        while (true) {
+        boolean flag = false;
+        while (!flag) {
             showMenu();
             int item = -1;
             while (true) {
@@ -191,7 +270,7 @@ public class CarPark {
                     break;
                 case 4:
                     showTips("谢谢使用！");
-                    System.exit(0);
+                    flag = true;
             }
         }
     }

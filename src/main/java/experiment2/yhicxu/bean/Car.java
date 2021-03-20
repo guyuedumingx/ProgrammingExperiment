@@ -1,5 +1,6 @@
 package experiment2.yhicxu.bean;
 
+// 车类
 public class Car {
     private String num; // 车牌号
     private long reach; // 到达时间
