@@ -15,6 +15,7 @@ public class LinkQueue<T> implements Iterable<T> {
 
     private Node<T> head;
     private Node<T> last;
+    private int size;
 
     public LinkQueue() {
         head = null;
@@ -29,6 +30,7 @@ public class LinkQueue<T> implements Iterable<T> {
             head.next = new Node<>(t);
             head = head.next;
         }
+        size++;
     }
 
     public T peek() {
@@ -48,12 +50,17 @@ public class LinkQueue<T> implements Iterable<T> {
                 head = null;
             }
             last = last.next;
+            size--;
             return res;
         }
     }
 
     public boolean isEmpty() {
         return head == null && last == null;
+    }
+
+    public int size(){
+        return size;
     }
 
     @Override

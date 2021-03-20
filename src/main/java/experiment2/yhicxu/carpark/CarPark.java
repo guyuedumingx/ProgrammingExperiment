@@ -28,6 +28,18 @@ public class CarPark {
      * 返回值：
      */
     private void arrival(String carNo) {
+        for (Car car : stack) {
+            if (car.getNum().equals(carNo)) {
+                showTips("该车已经在停车场系统中！");
+                return;
+            }
+        }
+        for (Car car : queue) {
+            if (car.getNum().equals(carNo)) {
+                showTips("该车已经在停车场系统中！");
+                return;
+            }
+        }
         if (stack.isFull()) {
             queue.offer(new Car(carNo, new Date().getTime()));
         } else {
@@ -36,23 +48,25 @@ public class CarPark {
     }
 
     /**
-     * 功能： 将carNo车牌的汽车驶离停车场，设定离开时间，同时便道汽车进入停车场
+     * 功能： 将carNo车牌的汽车驶离停车场，设定离开时间，同时便道汽车进入停车场，返回null代表要离开的车辆不存在
      * 参数：
      * carNo -- 车牌信息
      * 返回值：离开汽车
      */
     public Car leave(String carNo) {
         Car now = null;
+        int size = 0;
         for (Car car : stack) {
             if (car.getNum().equals(carNo)) {
                 now = car;
                 break;
             }
+            size++;
         }
         if (now == null) {
             return null;
         } else {
-            SeqStack<Car> stack2 = new SeqStack<>(capacity);
+            SeqStack<Car> stack2 = new SeqStack<>(size);
             while (!stack.isEmpty()) {
                 Car t = stack.pop();
                 if (t == now) {
@@ -86,13 +100,13 @@ public class CarPark {
     // 显示所有入库车辆信息
     public void showPark() {
         if (stack.isEmpty()) {
-            System.out.println("The parking lot is empty");
+            showTips("The parking lot is empty");
         }
-        System.out.println("Park:");
-        int index = 1;
+        showTips("Park:");
+        int index = stack.size();
         for (Car car : stack) {
-            System.out.println(index + " : " + car.getNum());
-            index++;
+            showTips(index + " : " + car.getNum());
+            index--;
         }
     }
 
@@ -101,10 +115,10 @@ public class CarPark {
         if (queue.isEmpty()) {
             return;
         }
-        System.out.println("Waiting:");
+        showTips("Waiting:");
         int index = 1;
         for (Car car : queue) {
-            System.out.println(index + " : " + car.getNum());
+            showTips(index + " : " + car.getNum());
             index++;
         }
     }
@@ -117,16 +131,23 @@ public class CarPark {
 
     // 显示菜单
     private void showMenu() {
-        System.out.println("\n欢迎使用停车场系统.\t\n");
-        System.out.println("1. 车辆到达登记.\t");
-        System.out.println("2. 车辆离开登记.\t");
-        System.out.println("3. 显示车辆信息.\t");
-        System.out.println("4. 退出系统.\t");
-        System.out.println("\n请选择：\t");
+        // System.out.println("\n欢迎使用停车场系统.\t\n");
+        showTips("");
+        showTips("1. 车辆到达登记.\t");
+        showTips("2. 车辆离开登记.\t");
+        showTips("3. 显示车辆信息.\t");
+        showTips("4. 退出系统.\t");
+        showTips("\n请选择：\t");
+    }
+
+    // 显示提示信息
+    private void showTips(String tips) {
+        System.out.println(tips);
     }
 
     // 运行
     public void run() {
+        showTips("欢迎使用停车场管理系统!");
         CarPark carPark = new CarPark(3.2, 3);
         Scanner scanner = new Scanner(System.in);
         String carNo;
@@ -134,35 +155,42 @@ public class CarPark {
             showMenu();
             int item = -1;
             while (true) {
-                item = scanner.nextInt();
+                String inp = scanner.nextLine();
+                try {
+                    item = Integer.parseInt(inp);
+                } catch (Exception e) {
+                    showTips("\n输入有误，请重新选择：");
+                    continue;
+                }
                 if (item > 0 && item < 5)
                     break;
-                System.out.println("\n 输入有误，请重新选择： 1~4: ");
+                showTips("\n输入有误，请重新选择：");
             }
             switch (item) {
                 case 1:
-                    System.out.println("请输入车牌号：");
-                    carNo = scanner.next();
+                    showTips("请输入车牌号：");
+                    carNo = scanner.nextLine();
                     carPark.arrival(carNo);
                     break;
                 case 2:
-                    System.out.println("请输入车牌号：");
-                    carNo = scanner.next();
+                    showTips("请输入车牌号：");
+                    carNo = scanner.nextLine();
                     Car car = carPark.leave(carNo);
                     if (car == null) {
-                        System.out.println("停车场中没有车牌号为" + carNo + "的车");
+                        showTips("停车场中没有车牌号为" + carNo + "的车");
                         break;
                     }
                     long time = getTime(car);
                     DecimalFormat df = new DecimalFormat("#.00");
                     String fee = df.format(carPark.charging(car));
-                    System.out.println("车辆" + carNo + "停车时长" + time + "分钟，共收费" + fee + "元。");
+                    showTips("车辆" + carNo + "停车时长" + time + "分钟，共收费" + fee + "元。");
                     break;
                 case 3:
                     carPark.showPark();
                     carPark.showWaiting();
                     break;
                 case 4:
+                    showTips("谢谢使用！");
                     System.exit(0);
             }
         }

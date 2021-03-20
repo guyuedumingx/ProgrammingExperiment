@@ -54,25 +54,18 @@ public class SeqStack<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private int p = 0;
+            private int p = index - 1;
 
             @Override
             public boolean hasNext() {
-                return p != index;
+                return p != -1;
             }
 
             @Override
             public T next() {
-                return arr[p++];
+                return arr[p--];
             }
         };
-    }
-
-    public static void main(String[] args) {
-        SeqStack<Integer> stack = new SeqStack<>(10);
-        for (Integer t : stack) {
-
-        }
     }
 
 }
