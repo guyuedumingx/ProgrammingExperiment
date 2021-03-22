@@ -5,8 +5,8 @@ import java.util.Date;
 public class Car {
     private String no;
     private String name;
-    private Date enterTime;
-    private Date leavingTime;
+    private Long enterTime;
+    private Long leavingTime;
 
     public String getNo() {
         return no;
@@ -24,33 +24,35 @@ public class Car {
         this.name = name;
     }
 
-    public Date getEnterTime() {
+    public Long getEnterTime() {
         return enterTime;
     }
 
-    public void setEnterTime(Date enterTime) {
+    public void setEnterTime(Long enterTime) {
         this.enterTime = enterTime;
     }
 
-    public Date getLeavingTime() {
+    public Long getLeavingTime() {
         return leavingTime;
     }
 
-    public void setLeavingTime(Date leavingTime) {
+    public void setLeavingTime(Long leavingTime) {
         this.leavingTime = leavingTime;
     }
 
     public Car() {};
 
-    public Car(String no, String name, Date enterTime) {
+    public Car(String no, String name, Long enterTime) {
         this.no = no;
         this.name = name;
         this.enterTime = enterTime;
         this.leavingTime = null;
     }
 
-    public boolean equals(Car car) {
-        if (this.no == car.no) {
+    @Override
+    public boolean equals(Object car) {
+        Car cur = (Car) car;
+        if (this.no.equals(cur.no)) {
             return true;
         } else {
             return false;

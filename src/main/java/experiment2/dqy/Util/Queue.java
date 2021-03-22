@@ -1,7 +1,28 @@
 package experiment2.dqy.Util;
 
+import java.util.Iterator;
+
 public class Queue<T> {
-     class Node<T> {
+
+    //重写迭代器
+    private class Itr implements Iterator<T> {
+        Node<T> cur = head;
+
+        @Override
+        public boolean hasNext() {
+            return cur.next != null;
+        }
+
+        @Override
+        public T next() {
+            cur = cur.next;
+            return cur.val;
+        }
+    }
+
+    public Itr iterator() {return new Itr();}
+
+    class Node<T> {
         T val;
         Node next;
 
@@ -11,7 +32,7 @@ public class Queue<T> {
     }
 
     //头结点
-    public Node head = new Node(0);
+    private Node head = new Node(0);
 
     //压入队列
     public void push(T num) {
@@ -51,4 +72,6 @@ public class Queue<T> {
         }
         return s;
     }
+
+
 }
