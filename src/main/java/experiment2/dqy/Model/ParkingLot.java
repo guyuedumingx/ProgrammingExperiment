@@ -4,6 +4,7 @@ import experiment2.Florence.util.Node;
 import experiment2.dqy.Util.Queue;
 import experiment2.dqy.Util.Stack;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -11,8 +12,8 @@ public class ParkingLot {
     private Queue waitingLine = new Queue();
     private Stack parkingRoom = new Stack();
     private Stack tmpRoom = new Stack();
-    private int capacityOfParkingLot;
-    private int price;
+    private int capacityOfParkingLot = 2;
+    private int price = 200;
 
     public int getPrice() {
         return price;
@@ -75,11 +76,13 @@ public class ParkingLot {
         //表示当前停车场没有这车
         if(!isInParkingLot(car)) return -1;
         Iterator<Car> iterator = parkingRoom.iterator();
-        while (!iterator.next().equals(car)) {
+        Car cur = iterator.next();
+        while (!cur.equals(car)) {
             tmpRoom.push(parkingRoom.getTop());
             parkingRoom.pop();
+            cur = iterator.next();
         }
-        int money = getMoney(car);
+        int money = getMoney(cur);
         parkingRoom.pop();
         iterator = tmpRoom.iterator();
         while (iterator.hasNext()) {
@@ -99,29 +102,33 @@ public class ParkingLot {
     public void printParkingRoom() {
         Iterator<Car> iterator = parkingRoom.iterator();
         System.out.println("Information of cars in ParkingRoom:");
+        int idx = 1;
         while (iterator.hasNext()) {
             Car cur = iterator.next();
-            int idx = 1;
-            System.out.println("Information of car" + idx + ":");
+            System.out.println("Information of car " + idx + " :");
             System.out.println("Car Number:" + cur.getNo());
-            System.out.println("Owner of the car" + cur.getName());
-            System.out.println("EnterTime of the car" + cur.getEnterTime());
+            System.out.println("Owner of the car: " + cur.getName());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date = new Date(cur.getEnterTime());
+            String str = sdf.format(date);
+            System.out.println("EnterTime of the car: " + str);
             System.out.println();
+            idx++;
         }
     }
 
     //显示当前候车场中的所有车辆信息
     public void printWaitingLine() {
         Iterator<Car> iterator = waitingLine.iterator();
-        System.out.println("Information of cars in WaitingLine:\n");
+        System.out.println("Information of cars in WaitingLine:");
+        int idx = 1;
         while (iterator.hasNext()) {
             Car cur = iterator.next();
-            int idx = 1;
-            System.out.println("Information of car" + idx + ":");
-            System.out.println("Car Number:" + cur.getNo());
-            System.out.println("Owner of the car" + cur.getName());
-            System.out.println("EnterTime of the car" + cur.getEnterTime());
+            System.out.println("Information of car " + idx + " :");
+            System.out.println("Car Number: " + cur.getNo());
+            System.out.println("Owner of the car: " + cur.getName());
             System.out.println();
+            idx++;
         }
     }
 

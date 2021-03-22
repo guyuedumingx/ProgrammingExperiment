@@ -34,6 +34,7 @@ public class Main {
             } else if (op == 2) {
                 System.out.println("please input the Number of the car");
                 Car cur = new Car();
+                cur.setNo(src.next());
                 int money = pkl.leaveCar(cur);
                 if (money == -1) {
                     System.out.println("There is no such car!");
@@ -41,14 +42,23 @@ public class Main {
                     System.out.println("The car is out, please pay for you bill: " + money + " $");
                 }
             } else if (op == 3) {
-
+                System.out.println("please input the Number of the car");
+                Car cur = new Car();
+                cur.setNo(src.next());
+                if(pkl.isInParkingLot(cur)) {
+                    System.out.println("It's in ParkingLot");
+                } else {
+                    System.out.println("It's not in ParkingLot");
+                }
             } else if (op == 4) {
-
+                pkl.printParkingRoom();
             } else if (op == 5) {
-
+                pkl.printWaitingLine();
             } else {
                 System.out.println("Wrong order, please input again!");
             }
+            System.out.println("Please input the next order:");
+            op = src.nextInt();
         }
     }
 }
