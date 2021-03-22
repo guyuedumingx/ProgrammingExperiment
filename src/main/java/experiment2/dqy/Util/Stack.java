@@ -1,6 +1,27 @@
 package experiment2.dqy.Util;
 
+import java.util.Iterator;
+
 public class Stack<T> {
+
+    //重写迭代器
+    private class Itr implements Iterator<T> {
+        Node<T> cur = head;
+
+        @Override
+        public boolean hasNext() {
+            return cur.next != null;
+        }
+
+        @Override
+        public T next() {
+            cur = cur.next;
+            return cur.data;
+        }
+    }
+
+    public Itr iterator() {return new Itr();}
+
      class Node<T> {
         T data;
         Node next;
