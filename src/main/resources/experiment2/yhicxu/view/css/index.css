@@ -1,0 +1,19 @@
+.body{
+    /*-fx-background-color: #333;*/
+    -fx-background-color: linear-gradient(to top, #000 10%, #444);
+}
+
+.title{
+    -fx-font-size: 36px;
+    -fx-text-fill: #eee;
+    -fx-alignment: center;
+    /*-fx-background-color: #444;*/
+}
+
+.btn{
+    -fx-background-color: #ccc;
+}
+
+.btn:hover {
+    -fx-background-color: #eee;
+}

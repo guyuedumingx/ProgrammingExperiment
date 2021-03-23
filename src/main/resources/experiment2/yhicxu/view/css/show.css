@@ -1,0 +1,27 @@
+.body {
+    /*-fx-background-color: #333;*/
+    -fx-background-color: linear-gradient(to top, #000 10%, #444);
+}
+
+.scroll {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-border-color: #ddd;
+}
+
+.content {
+    -fx-padding: 10px;
+    -fx-text-fill: #eee;
+    -fx-background-color: #333;
+    -fx-wrap-text: true;
+    -fx-font-size: 30px;
+    -fx-alignment: center;
+}
+
+.btn {
+    -fx-background-color: #ccc;
+}
+
+.btn:hover {
+    -fx-background-color: #eee;
+}
