@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="559.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="559.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="experiment2.wangwei.controller.MainController">
    <children>
       <Line endX="200.0" layoutX="170.0" layoutY="65.0" startX="-100.0" />
       <Line endX="200.0" layoutX="170.0" layoutY="120.0" startX="-100.0" />
@@ -35,12 +35,12 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button fx:id="inBtn" layoutX="371.0" layoutY="506.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="入 库" textFill="#545454">
+      <Button fx:id="inBtn" layoutX="371.0" layoutY="506.0" mnemonicParsing="false" onAction="#inAction" prefHeight="39.0" prefWidth="100.0" text="入 库" textFill="#545454">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="outBtn" layoutX="486.0" layoutY="506.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="出 库" textFill="#545454">
+      <Button fx:id="outBtn" layoutX="486.0" layoutY="506.0" mnemonicParsing="false" onAction="#outAction" prefHeight="39.0" prefWidth="100.0" text="出 库" textFill="#545454">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
