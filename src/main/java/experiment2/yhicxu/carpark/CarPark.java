@@ -26,13 +26,23 @@ import java.util.Scanner;
  * <p><b>功能：</b></p><br>停车场管理系统
  * <p><b>方法：</b></p>
  * <br> {@link #CarPark(double, int)}构造方法
+ * <br> {@link #arrival(String)}将carNo车牌的汽车驶入
+ * <br> {@link }
+ * <br> {@link }
  *
  * @author 60rzvvbj
  * @date 2021/3/20
  */
 public class CarPark extends Application {
 
+    /**
+     * 每分钟价钱（无参构造时默认使用静态变量）
+     */
     private static double sPrice;
+
+    /**
+     * 停车场容量（无参构造时默认使用静态变量）
+     */
     private static int sCapacity;
 
 
@@ -49,12 +59,12 @@ public class CarPark extends Application {
     /**
      * 停车场
      */
-    private SeqStack<Car> stack;
+    private final SeqStack<Car> stack;
 
     /**
      * 便车道
      */
-    private LinkQueue<Car> queue;
+    private final LinkQueue<Car> queue;
 
     public CarPark() {
         this(sPrice, sCapacity);
@@ -316,7 +326,7 @@ public class CarPark extends Application {
 
             // 显示菜单
             showMenu();
-            int item = -1;
+            int item;
             while (true) {
                 String inp = scanner.nextLine();
                 try {
@@ -386,28 +396,39 @@ public class CarPark extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        if (sCapacity == 0 && sPrice == 0) {
+            new Exception("请使用TestCarPark来运行！").printStackTrace();
+            System.exit(0);
+        }
+
+        if (capacity <= 0 || price <= 0) {
+            new Exception("价钱和容量必须为正数！").printStackTrace();
+            System.exit(0);
+        }
+
         Map<String, Object> map = new HashMap<>();
-        FXMLLoader loader = null;
+        FXMLLoader loader;
 
         // 加载主页
         loader = load("../view/index.fxml");
         Scene index = new Scene(loader.load(), 600, 400);
-        IndexController indexController = (IndexController) loader.getController();
+        IndexController indexController = loader.getController();
 
         // 加载输入车牌号页
         loader = load("../view/inputCarNumber.fxml");
         Scene inputCarNumber = new Scene(loader.load(), 600, 400);
-        InputCarNumberController inputCarNumberController = (InputCarNumberController) loader.getController();
+        InputCarNumberController inputCarNumberController = loader.getController();
 
         // 加载提示页
         loader = load("../view/tips.fxml");
         Scene tips = new Scene(loader.load(), 600, 400);
-        TipsController tipsController = (TipsController) loader.getController();
+        TipsController tipsController = loader.getController();
 
         // 加载显示页
         loader = load("../view/show.fxml");
         Scene show = new Scene(loader.load(), 600, 400);
-        ShowController showController = (ShowController) loader.getController();
+        ShowController showController = loader.getController();
 
         // 初始化
         indexController.setCarPark(this);

@@ -8,10 +8,10 @@ public class TestCarPark {
         double price = 3.2;
         int capacity = 3;
 
-        // 控制台
+        // 控制运行台
         // new CarPark(price, capacity).run();
 
-        // 图形化界面
+        // 图形化界面运行
         CarPark.run(price, capacity);
 
     }
