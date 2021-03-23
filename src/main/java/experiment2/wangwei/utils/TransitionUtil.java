@@ -46,7 +46,7 @@ public class TransitionUtil {
      * @param milTime 持续时间
      */
     public static TranslateTransition translateTransition(Car car, int fromX, int toX, int milTime) {
-        TranslateTransition translateTransition=new TranslateTransition(Duration.millis(milTime), car);
+        TranslateTransition translateTransition=new TranslateTransition(Duration.millis(milTime), car.getShape());
         translateTransition.setFromX(fromX);
         translateTransition.setToX(toX);
         return translateTransition;
