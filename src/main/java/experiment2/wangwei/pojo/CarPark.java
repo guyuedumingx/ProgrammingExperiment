@@ -26,10 +26,10 @@ public class CarPark {
         }
     }
 
-    public Car leave(int no) {
+    public Car leave(String no) {
         CarPort pop = null;
         if(search(no) != -1) {
-            while ((pop = lot.pop()).getCar().getNo() != no) {
+            while (!(pop = lot.pop()).getCar().getNo().equals(no)) {
                 tempLot.push(pop);
             }
             while (!tempLot.isEmpty()) {
@@ -63,8 +63,7 @@ public class CarPark {
     /**
      * 查看停车场是否有这辆车
      */
-    public int search(int no) {
-        System.out.println(no);
+    public int search(String no) {
         return lot.search(no);
     }
 

@@ -8,7 +8,7 @@ package experiment2.wangwei.pojo;
 public class CarPort {
     private Car car;
     //车编号
-    private int no;
+    private String no;
     //停车场给这部车的编号
     private int serialNumber;
     //停车时间
@@ -29,11 +29,11 @@ public class CarPort {
         this.car = car;
     }
 
-    public int getNo() {
+    public String getNo() {
         return no;
     }
 
-    public void setNo(int no) {
+    public void setNo(String no) {
         this.no = no;
     }
 
@@ -55,8 +55,8 @@ public class CarPort {
 
     @Override
     public boolean equals(Object obj) {
-        int no = (Integer) obj;
-        return this.no == no;
+        String no = (String) obj;
+        return this.no.equals(no);
     }
 
     @Override

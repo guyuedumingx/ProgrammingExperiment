@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="559.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line endX="200.0" layoutX="170.0" layoutY="65.0" startX="-100.0" />
+      <Line endX="200.0" layoutX="170.0" layoutY="120.0" startX="-100.0" />
+      <Line endX="200.0" layoutX="170.0" layoutY="230.0" startX="-100.0" />
+      <Line endX="200.0" layoutX="170.0" layoutY="290.0" startX="-100.0" />
+      <Line endX="100.0" layoutY="261.0" rotate="90.0" startX="40.0" />
+      <Line endX="200.0" layoutX="170.0" layoutY="360.0" startX="-100.0" />
+      <Line endX="200.0" layoutX="170.0" layoutY="420.0" startX="-100.0" />
+      <Line endX="100.0" layoutX="2.0" layoutY="391.0" rotate="90.0" startX="40.0" />
+      <Label layoutX="166.0" layoutY="236.0" prefHeight="50.0" prefWidth="109.0" text="StackA" textAlignment="CENTER" textFill="#a4a4a4">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="166.0" layoutY="366.0" prefHeight="50.0" prefWidth="109.0" text="StackB" textAlignment="CENTER" textFill="#a4a4a4">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="166.0" layoutY="66.0" prefHeight="50.0" prefWidth="109.0" text="Line" textAlignment="CENTER" textFill="#a4a4a4">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Button fx:id="inBtn" layoutX="371.0" layoutY="506.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="入 库" textFill="#545454">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="outBtn" layoutX="486.0" layoutY="506.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="出 库" textFill="#545454">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

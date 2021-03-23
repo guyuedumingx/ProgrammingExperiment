@@ -6,24 +6,24 @@ package experiment2.wangwei.pojo;
  */
 public class Car {
     //车牌号
-    private int no;
+    private String no;
 
-    public Car(int no) {
+    public Car(String no) {
         this.no = no;
     }
 
-    public int getNo() {
+    public String getNo() {
         return no;
     }
 
-    public void setNo(int no) {
+    public void setNo(String no) {
         this.no = no;
     }
 
     @Override
     public boolean equals(Object obj) {
         Car car = (Car)obj;
-        return this.no == car.no;
+        return this.no.equals(car.no);
     }
 
     @Override
