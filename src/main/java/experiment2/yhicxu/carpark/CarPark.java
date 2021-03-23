@@ -1,11 +1,26 @@
 package experiment2.yhicxu.carpark;
 
 import experiment2.yhicxu.bean.Car;
+import experiment2.yhicxu.controller.IndexController;
+import experiment2.yhicxu.controller.InputCarNumberController;
+import experiment2.yhicxu.controller.ShowController;
+import experiment2.yhicxu.controller.TipsController;
 import experiment2.yhicxu.utils.LinkQueue;
 import experiment2.yhicxu.utils.SeqStack;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -13,12 +28,15 @@ import java.util.Scanner;
  * <p><b>功能：</b></p><br>停车场管理系统
  * <p><b>方法：</b></p>
  * <br> {@link #CarPark(double, int)}构造方法
- * <br> {@link #run()}运行系统
  *
  * @author 60rzvvbj
  * @date 2021/3/20
  */
-public class CarPark {
+public class CarPark extends Application {
+
+    private static double sPrice;
+    private static int sCapacity;
+
 
     /**
      * 每分钟价钱
@@ -39,6 +57,10 @@ public class CarPark {
      * 便车道
      */
     private LinkQueue<Car> queue;
+
+    public CarPark() {
+        this(sPrice, sCapacity);
+    }
 
     /**
      * <p><b>方法名：</b>{@code CarPark}</p>
@@ -68,19 +90,17 @@ public class CarPark {
      * @author 60rzvvbj
      * @date 2021/3/20
      */
-    private void arrival(String carNo) {
+    public boolean arrival(String carNo) {
 
         // 先判断停车系统中有没有这个车
         for (Car car : stack) {
             if (car.getNum().equals(carNo)) {
-                showTips("该车已经在停车场系统中！");
-                return;
+                return false;
             }
         }
         for (Car car : queue) {
             if (car.getNum().equals(carNo)) {
-                showTips("该车已经在停车场系统中！");
-                return;
+                return false;
             }
         }
 
@@ -90,6 +110,8 @@ public class CarPark {
         } else {
             stack.push(new Car(carNo, new Date().getTime()));
         }
+
+        return true;
     }
 
     /**
@@ -101,7 +123,7 @@ public class CarPark {
      * @author 60rzvvbj
      * @date 2021/3/20
      */
-    private Car leave(String carNo) {
+    public Car leave(String carNo) {
         Car now = null;
         int size = 0;
 
@@ -157,8 +179,26 @@ public class CarPark {
      * @author 60rzvvbj
      * @date 2021/3/20
      */
-    private double charging(Car car) {
+    public double charging(Car car) {
         return getTime(car) * price;
+    }
+
+    public Car[] getParkCar() {
+        Car[] res = new Car[stack.size()];
+        int index = 0;
+        for (Car t : stack) {
+            res[index++] = t;
+        }
+        return res;
+    }
+
+    public Car[] getWaitingCar() {
+        Car[] res = new Car[queue.size()];
+        int index = 0;
+        for (Car t : queue) {
+            res[index++] = t;
+        }
+        return res;
     }
 
     /**
@@ -215,7 +255,7 @@ public class CarPark {
      * @author 60rzvvbj
      * @date 2021/3/20
      */
-    private int getTime(Car car) {
+    public int getTime(Car car) {
 
         // 计算等待时间
         long offset = car.getLeave() - car.getReach();
@@ -250,6 +290,12 @@ public class CarPark {
      */
     private void showTips(String tips) {
         System.out.println(tips);
+    }
+
+    public static void run(double price, int capacity) {
+        sPrice = price;
+        sCapacity = capacity;
+        launch();
     }
 
     /**
@@ -294,7 +340,11 @@ public class CarPark {
             switch (item) {
                 case 1:
                     showTips("请输入车牌号：");
-                    arrival(scanner.nextLine());
+                    if (arrival(scanner.nextLine())) {
+                        showTips("车辆驶入成功！");
+                    } else {
+                        showTips("该车已在停车场系统中！");
+                    }
                     break;
                 case 2:
                     showTips("请输入车牌号：");
@@ -327,4 +377,75 @@ public class CarPark {
             }
         }
     }
+
+    private FXMLLoader load(String str) {
+        URL location = getClass().getResource(str);
+        FXMLLoader loader = new FXMLLoader(location);
+        loader.setLocation(location);
+        loader.setBuilderFactory(new JavaFXBuilderFactory());
+        return loader;
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        FXMLLoader loader = null;
+
+        // 加载主页
+        loader = load("../view/index.fxml");
+        Scene index = new Scene(loader.load(), 600, 400);
+        IndexController indexController = (IndexController) loader.getController();
+
+        // 加载输入车牌号页
+        loader = load("../view/inputCarNumber.fxml");
+        Scene inputCarNumber = new Scene(loader.load(), 600, 400);
+        InputCarNumberController inputCarNumberController = (InputCarNumberController) loader.getController();
+
+        // 加载提示页
+        loader = load("../view/tips.fxml");
+        Scene tips = new Scene(loader.load(), 600, 400);
+        TipsController tipsController = (TipsController) loader.getController();
+
+        // 加载显示页
+        loader = load("../view/show.fxml");
+        Scene show = new Scene(loader.load(), 600, 400);
+        ShowController showController = (ShowController) loader.getController();
+
+        // 初始化
+        indexController.setCarPark(this);
+        indexController.setStage(primaryStage);
+        indexController.setData(map);
+        indexController.setInputCarNumber(inputCarNumber);
+        indexController.setShow(show);
+        indexController.setTips(tips);
+
+        inputCarNumberController.setCarPark(this);
+        inputCarNumberController.setStage(primaryStage);
+        inputCarNumberController.setData(map);
+        inputCarNumberController.setIndex(index);
+        inputCarNumberController.setTips(tips);
+
+        tipsController.setCarPark(this);
+        tipsController.setStage(primaryStage);
+        tipsController.setData(map);
+        tipsController.setIndex(index);
+        tipsController.setInputCarNumber(inputCarNumber);
+
+        showController.setStage(primaryStage);
+        showController.setData(map);
+        showController.setIndex(index);
+
+        // 展示窗口
+        primaryStage.setScene(tips);
+        primaryStage.setScene(inputCarNumber);
+        primaryStage.setScene(index);
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("19计科1杨超旭");
+        Image img = new Image("https://profile.csdnimg.cn/B/C/E/3_ycx60rzvvbj");
+
+        primaryStage.getIcons().add(img);
+        primaryStage.show();
+
+    }
+
 }
