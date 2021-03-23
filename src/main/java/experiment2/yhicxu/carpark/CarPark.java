@@ -10,12 +10,10 @@ import experiment2.yhicxu.utils.SeqStack;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.Date;
