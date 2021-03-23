@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@../view/css/tips.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="experiment2.yhicxu.controller.TipsController">
+    <children>
+        <Label fx:id="content" layoutX="66.0" layoutY="67.0" prefHeight="131.0" prefWidth="469.0" styleClass="title"
+               text="提示语" textAlignment="CENTER" wrapText="true"/>
+        <Button fx:id="back" layoutX="245.0" layoutY="272.0" mnemonicParsing="false" onAction="#backEvent"
+                prefHeight="41.0" prefWidth="111.0" styleClass="btn" text="返回"/>
+    </children>
+</AnchorPane>

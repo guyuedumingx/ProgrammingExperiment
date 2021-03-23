@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@../view/css/index.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="experiment2.yhicxu.controller.IndexController">
+    <children>
+        <Label layoutX="161.0" layoutY="40.0" prefHeight="66.0" prefWidth="280.0" styleClass="title"
+               stylesheets="@css/index.css" text="停车场管理系统" textAlignment="CENTER" AnchorPane.bottomAnchor="294.0"
+               AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="40.0"/>
+        <Button fx:id="carIn" layoutX="233.0" layoutY="140.0" mnemonicParsing="false" onAction="#carInEvent"
+                prefHeight="37.0" prefWidth="137.0" styleClass="btn" text="车辆驶入登记"/>
+        <Button fx:id="carOut" layoutX="233.0" layoutY="197.0" mnemonicParsing="false" onAction="#carOutEvent"
+                prefHeight="37.0" prefWidth="137.0" styleClass="btn" text="车辆离开登记"/>
+        <Button fx:id="showCar" layoutX="233.0" layoutY="254.0" mnemonicParsing="false" onAction="#showCarEvent"
+                prefHeight="37.0" prefWidth="137.0" styleClass="btn" text="查看车辆信息"/>
+        <Button fx:id="exit" layoutX="233.0" layoutY="311.0" mnemonicParsing="false" onAction="#exitEvent"
+                prefHeight="37.0" prefWidth="137.0" styleClass="btn" text="退出系统"/>
+    </children>
+</AnchorPane>

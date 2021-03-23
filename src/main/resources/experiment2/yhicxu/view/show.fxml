@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@../view/css/show.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="experiment2.yhicxu.controller.ShowController">
+    <children>
+        <ScrollPane hbarPolicy="NEVER" layoutX="48.0" layoutY="43.0" prefHeight="267.0" prefWidth="507.0"
+                    styleClass="scroll" vbarPolicy="NEVER">
+            <content>
+                <TextFlow minHeight="267.0" prefWidth="507.0" style="-fx-background-color: #333;">
+                    <children>
+                        <Label fx:id="content" prefWidth="507.0" styleClass="content" text="content"
+                               textOverrun="CLIP"/>
+                    </children>
+                </TextFlow>
+            </content>
+        </ScrollPane>
+        <Button fx:id="back" layoutX="243.0" layoutY="328.0" mnemonicParsing="false" onAction="#backEvent"
+                prefHeight="43.0" prefWidth="116.0" styleClass="btn" text="返回"/>
+    </children>
+</AnchorPane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@../view/css/inputCarNumber.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="experiment2.yhicxu.controller.InputCarNumberController">
+   <children>
+      <Label layoutX="192.0" layoutY="59.0" styleClass="title" text="请输入车牌号" />
+      <TextField fx:id="inp" layoutX="168.0" layoutY="127.0" prefHeight="0.0" prefWidth="264.0" styleClass="inp"/>
+      <Button fx:id="submit" layoutX="238.0" layoutY="234.0" mnemonicParsing="false" onAction="#submitEvent" prefHeight="36.0" prefWidth="124.0" styleClass="btn" text="确定" />
+      <Button fx:id="back" layoutX="238.0" layoutY="293.0" mnemonicParsing="false" onAction="#backEvent" prefHeight="36.0" prefWidth="124.0" styleClass="btn" text="返回" />
+   </children>
+</AnchorPane>
