@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class CarPark {
     private WStack<CarPort> lot = new WStack<>();
     private WStack<CarPort> tempLot = new WStack<>();
-    public static final int PARKINGLOT_SIZE = 3;
+    public static final int PARKINGLOT_SIZE = 8;
     public static final double CHARGE_PER_MILLIS = 3;
     private static CarPark carPark = new CarPark();
     private static Lane lane = Lane.getLane();
@@ -19,11 +19,7 @@ public class CarPark {
     }
 
     public void arrival(Car car) {
-        if(!isFull()) {
-            lot.push(new CarPort(car, lot.size()));
-        }else {
-            lane.in(car);
-        }
+        lot.push(new CarPort(car, lot.size()));
     }
 
     public Car leave(String no) {

@@ -1,8 +1,11 @@
 package experiment2.wangwei.pojo;
 
+import experiment2.wangwei.utils.ColorUtil;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.nio.charset.CoderResult;
 
 /**
  * 汽车类
@@ -18,18 +21,18 @@ public class Car {
     //车的长度
     private int carHeight = 30;
     //车的X坐标
-    private int carX;
+    private int carX = 50;
     //车的Y坐标
-    private int carY;
+    private int carY = 75;
 
     public Car(String no) {
         this.no = no;
         Rectangle rectParallel = new Rectangle(10,1, carWidth, carHeight);
         rectParallel.setArcHeight(15);
         rectParallel.setArcWidth(15);
-        rectParallel.setFill(Color.DARKBLUE);
-        rectParallel.setTranslateX(50);
-        rectParallel.setTranslateY(75);
+        rectParallel.setFill(ColorUtil.NORMALCOLOR);
+        rectParallel.setTranslateX(carX);
+        rectParallel.setTranslateY(carY);
         this.shape = rectParallel;
     }
 

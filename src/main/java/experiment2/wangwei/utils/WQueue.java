@@ -10,6 +10,7 @@ import java.util.Iterator;
 public class WQueue<T> {
     private Node<T> head = new Node<>();
     private Node<T> last = head;
+    private int size = 0;
 
     public WQueue() {
     }
@@ -17,7 +18,11 @@ public class WQueue<T> {
     public T poll() {
         if(head.getNext() != null) {
             Node<T> next = head.getNext();
+            if(next.getNext() == null) {
+                last = head;
+            }
             head.setNext(next.getNext());
+            size--;
             return next.getData();
         }
         throw new RuntimeException("空队列异常");
@@ -27,6 +32,11 @@ public class WQueue<T> {
         Node<T> tNode = new Node<>(t);
         last.setNext(tNode);
         last = tNode;
+        size++;
+    }
+
+    public int size() {
+        return size;
     }
 
     public boolean isEmpty() {
@@ -37,8 +47,7 @@ public class WQueue<T> {
         return new Itr();
     }
 
-
-    private class Itr implements Iterator<T> {
+    public class Itr implements Iterator<T> {
         Node<T> cursor = head.getNext();
 
         @Override
@@ -53,7 +62,9 @@ public class WQueue<T> {
             return data;
         }
     }
+
 }
+
 
 class Node<T> {
     private T data = null;

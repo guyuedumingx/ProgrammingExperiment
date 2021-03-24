@@ -1,8 +1,12 @@
 package experiment2.wangwei.controller;
 
 import experiment2.wangwei.pojo.Car;
+import experiment2.wangwei.pojo.Lane;
+import experiment2.wangwei.utils.ColorUtil;
+import experiment2.wangwei.utils.WQueue;
 import javafx.animation.*;
-import javafx.scene.shape.Shape;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 
 import static experiment2.wangwei.utils.TransitionUtil.*;
 
@@ -14,6 +18,7 @@ import static experiment2.wangwei.utils.TransitionUtil.*;
 public class LineAnimation {
 
     private static LineAnimation animation = new LineAnimation();
+    private Lane lane = Lane.getLane();
 
     private int startX = 10;
 
@@ -34,6 +39,7 @@ public class LineAnimation {
     public void in(Car car) {
         this.carWidth = car.getCarWidth();
         this.carHeight = car.getCarHeight();
+        lane.in(car);
         inPlay(car);
     }
 
@@ -41,24 +47,63 @@ public class LineAnimation {
      * 进场动画
      */
     private void inPlay(Car car) {
+        car.getShape().setFill(ColorUtil.ACTIVECOLOR);
         //并行执行动画
         ParallelTransition parallelTransition=new ParallelTransition(
-                translateTransition(car,startX,transToX,2000), fadeTransition(car, 3000), rotateTransition(car, 360, 3, 1));
+                translateTransitionX(car,startX,transToX,2000), fadeTransition(car, 3000), rotateTransition(car, 360, 3, 1));
+        car.setCarX(transToX);
         transToX -= carWidth + carMargin;
         parallelTransition.play();
+        car.getShape().setFill(ColorUtil.NORMALCOLOR);
     }
 
     public static LineAnimation getAnimation() {
         return animation;
     }
 
-    public void outPlay(Car car) {
-        TranslateTransition translateTransition = translateTransition(car, car.getCarX(), 400, 1000);
-        translateTransition.play();
+    public Car outPlay() {
+        Car car = lane.out();
+        car.getShape().setFill(ColorUtil.ACTIVECOLOR);
+        change(lane);
+        int toX = 430;
+        TranslateTransition translateTransitionX = translateTransitionX(car, car.getCarX(), toX, 1000);
+        car.setCarX(toX);
 
-        //并行执行动画
-        ParallelTransition parallelTransition=new ParallelTransition(
-                fadeTransition(car,1000), rotateTransition(car,200,3,2),pathTransition(car,400,100,410,245,4000));
-        parallelTransition.play();
+        int toY = 245;
+        TranslateTransition translateTransitionY = translateTransitionY(car, car.getCarY(), toY, 2000);
+        car.setCarY(toY);
+
+        toX = car.getCarX() - 50;
+        TranslateTransition backTransition = translateTransitionX(car, car.getCarX(), toX, 1000);
+        ParallelTransition back=new ParallelTransition(
+                backTransition, fadeTransition(car, 1000), rotateTransition(car, 360, 2, 1000));
+        car.setCarX(toX);
+
+        SequentialTransition sequentialTransition = new SequentialTransition();
+        sequentialTransition.getChildren().addAll(
+            translateTransitionX,
+            translateTransitionY,
+            back,
+            CarParkAnimation.inPlay(car)
+        );
+        sequentialTransition.play();
+        car.getShape().setFill(ColorUtil.NORMALCOLOR);
+        return car;
+    }
+
+    private void change(Lane lane) {
+        WQueue<Car> line = lane.getLine();
+        WQueue.Itr iterator = line.iterator();
+        while (iterator.hasNext()) {
+            changeTransition((Car)iterator.next());
+        }
+        transToX += carWidth + carMargin;
+    }
+
+    private void changeTransition(Car car) {
+        int toX = car.getCarX() + carMargin + carHeight;
+        TranslateTransition translateTransitionX = translateTransitionX(car, car.getCarX(), toX, 1000);
+        car.setCarX(toX);
+        translateTransitionX.play();
     }
 }

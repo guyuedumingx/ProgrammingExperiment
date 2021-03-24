@@ -1,6 +1,8 @@
 package experiment2.wangwei.controller;
 
 import experiment2.wangwei.pojo.Car;
+import experiment2.wangwei.pojo.CarPark;
+import experiment2.wangwei.pojo.Lane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,17 +24,15 @@ public class MainController {
     private Button outBtn;
 
     private LineAnimation lineAnimation = LineAnimation.getAnimation();
-
-    private Car car = new Car(CarNoUtil.build());
-
     @FXML
     public void inAction(ActionEvent event) {
+        Car car = new Car(CarNoUtil.build());
         lineAnimation.in(car);
         pane.getChildren().add(car.getShape());
     }
 
     @FXML
     public void outAction(ActionEvent event) {
-        lineAnimation.outPlay(car);
+        Car car = lineAnimation.outPlay();
     }
 }

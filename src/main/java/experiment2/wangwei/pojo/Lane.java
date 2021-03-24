@@ -28,6 +28,10 @@ public class Lane {
         return line.isEmpty();
     }
 
+    public int size() {
+        return line.size();
+    }
+
     /**
      * 显示在便车道上所有车辆的信息
      */
@@ -37,6 +41,10 @@ public class Lane {
         while (iterator.hasNext()) {
             System.out.println(iterator.next().toString());
         }
+    }
+
+    public WQueue<Car> getLine() {
+        return line;
     }
 
     public static Lane getLane() {

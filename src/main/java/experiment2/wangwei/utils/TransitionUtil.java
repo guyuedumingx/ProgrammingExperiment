@@ -39,16 +39,30 @@ public class TransitionUtil {
     }
 
     /**
-     * 定义矩形的平移效果
+     * 定义矩形的左右平移效果
      * @param car
      * @param fromX 起始位置
      * @param toX 终止位置
      * @param milTime 持续时间
      */
-    public static TranslateTransition translateTransition(Car car, int fromX, int toX, int milTime) {
+    public static TranslateTransition translateTransitionX(Car car, int fromX, int toX, int milTime) {
         TranslateTransition translateTransition=new TranslateTransition(Duration.millis(milTime), car.getShape());
         translateTransition.setFromX(fromX);
         translateTransition.setToX(toX);
+        return translateTransition;
+    }
+
+    /**
+     * 定义矩形的上下平移效果
+     * @param car
+     * @param fromY 起始位置
+     * @param toY 终止位置
+     * @param milTime 持续时间
+     */
+    public static TranslateTransition translateTransitionY(Car car, int fromY, int toY, int milTime) {
+        TranslateTransition translateTransition=new TranslateTransition(Duration.millis(milTime), car.getShape());
+        translateTransition.setFromY(fromY);
+        translateTransition.setToY(toY);
         return translateTransition;
     }
 
@@ -72,10 +86,10 @@ public class TransitionUtil {
      * @param car 操作的车
      * @param angle 设置旋转的角度
      * @param count 设置旋转次数
-     * @param time 持续时间
+     * @param milTime 持续时间
      */
-    public static RotateTransition rotateTransition(Car car, int angle, int count, int time) {
-        RotateTransition rt = new RotateTransition(Duration.seconds(time), car.getShape());
+    public static RotateTransition rotateTransition(Car car, int angle, int count, int milTime) {
+        RotateTransition rt = new RotateTransition(Duration.millis(milTime), car.getShape());
         rt.setByAngle(angle);
         rt.setCycleCount(count);
         rt.setInterpolator(Interpolator.LINEAR);
