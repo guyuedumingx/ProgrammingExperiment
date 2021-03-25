@@ -9,15 +9,12 @@ public class CarPort {
     private Car car;
     //车编号
     private String no;
-    //停车场给这部车的编号
-    private int serialNumber;
     //停车时间
     private long parkTime;
 
-    public CarPort(Car car, int serialNumber) {
+    public CarPort(Car car) {
         this.car = car;
         this.no = car.getNo();
-        this.serialNumber = serialNumber;
         this.parkTime = System.currentTimeMillis();
     }
 
@@ -37,14 +34,6 @@ public class CarPort {
         this.no = no;
     }
 
-    public int getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(int serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
     public long getParkTime() {
         return parkTime;
     }
@@ -57,15 +46,6 @@ public class CarPort {
     public boolean equals(Object obj) {
         String no = (String) obj;
         return this.no.equals(no);
-    }
-
-    @Override
-    public String toString() {
-        return "Parking {\n"
-                + car.toString() +
-                "\n serialNumber=" + serialNumber +
-                "\n parkTime=" + parkTime +
-                "\n}";
     }
 }
 
