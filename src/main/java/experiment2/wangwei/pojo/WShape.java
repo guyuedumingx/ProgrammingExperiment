@@ -8,7 +8,7 @@ import javafx.scene.shape.Shape;
  * @date 2021/3/24 21:01
  */
 public interface WShape {
-    public static final int DEFAULT_TIME = 1000;
+    public static final int DEFAULT_TIME = 2000;
 
     double getX();
 

@@ -1,6 +1,5 @@
 package experiment2.wangwei.pojo;
 
-import experiment2.wangwei.controller.CarParkAnimation;
 import experiment2.wangwei.utils.ColorUtil;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
