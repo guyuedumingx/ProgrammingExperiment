@@ -24,6 +24,13 @@ public class WStack<T> {
         objects[++top] = t;
     }
 
+    public T peek(){
+        if(top > -1){
+            return (T)objects[top];
+        }
+        return null;
+    }
+
     public T pop() {
         if(top > -1) {
             return (T)objects[top--];

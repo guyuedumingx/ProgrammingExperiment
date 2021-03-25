@@ -1,5 +1,7 @@
 package experiment2.wangwei.pojo;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
@@ -27,6 +29,10 @@ public interface WShape {
     void moveTo(double x, double y, double mills);
 
     void moveTo(double x, double y, double mills, double delay);
+
+    void setOnFinished(EventHandler<ActionEvent> value);
+
+    void setOnHalf(EventHandler<ActionEvent> halfValue);
 
     void scaling(int mul);
 

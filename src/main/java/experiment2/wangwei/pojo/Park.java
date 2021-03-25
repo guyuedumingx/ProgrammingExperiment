@@ -32,20 +32,38 @@ public class Park {
         in(new CarPort(car), delay);
     }
 
+    public void in(Car car) {
+        in(new CarPort(car),0);
+    }
+
+    public void in(CarPort carPort) {
+        in(carPort,0);
+    }
+
     public void in(CarPort carPort, double delay) {
         Car car = carPort.getCar();
         shapeWidth = car.getWidth();
         lot.push(carPort);
-        car.moveTo(lotEndX+50, lotY);
+        car.moveTo(lotEndX+50, lotY, WShape.DEFAULT_TIME,delay);
         car.moveTo(nextShapeX, lotY);
         car.pause(1000);
         nextShapeX += shapeWidth + shapeMargin;
     }
 
+    public CarPort out(){
+        return  out(0);
+    }
+
     public CarPort out(double delay) {
         CarPort carPort = lot.pop();
         Car car = carPort.getCar();
-        car.moveTo(lotEndX+100, lotY, delay == 0 ? WShape.DEFAULT_TIME : WShape.DEFAULT_TIME + delay);
+        car.moveTo(lotEndX+100, lotY, delay == 0 ? WShape.DEFAULT_TIME : WShape.DEFAULT_TIME + delay, delay);
+        if(!lot.isEmpty()) {
+            CarPort peek = lot.peek();
+            Car peekCar = peek.getCar();
+            peekCar.pause(1000);
+            System.out.println(peekCar.getNo() + " Pause 1000");
+        }
         nextShapeX -= shapeWidth + shapeMargin;
         return carPort;
     }

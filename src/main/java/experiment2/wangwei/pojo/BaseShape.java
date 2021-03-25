@@ -31,6 +31,8 @@ public class BaseShape implements WShape{
     int delay;
     boolean isPlaying = false;
     WQueue<Package> packageWQueue = new WQueue<>();
+    EventHandler<ActionEvent> value;
+    EventHandler<ActionEvent> halfValue;
 
     @Override
     public double getX() {
@@ -94,12 +96,29 @@ public class BaseShape implements WShape{
                 isPlaying = false;
                 if(!packageWQueue.isEmpty()) {
                     playNext();
+                    if(halfValue != null) {
+                        halfValue.handle(new ActionEvent());
+                    }
+                }else {
+                    if(value != null){
+                        value.handle(new ActionEvent());
+                    }
                 }
             }
         });
         move.play();
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public void setOnFinished(EventHandler<ActionEvent> value) {
+        this.value = value;
+    }
+
+    @Override
+    public void setOnHalf(EventHandler<ActionEvent> halfValue) {
+        this.halfValue = halfValue;
     }
 
     private void playNext() {
@@ -115,6 +134,13 @@ public class BaseShape implements WShape{
                     isPlaying = false;
                     if(!packageWQueue.isEmpty()) {
                         playNext();
+                        if(halfValue != null) {
+                            halfValue.handle(new ActionEvent());
+                        }
+                    }else {
+                        if(value != null){
+                            value.handle(new ActionEvent());
+                        }
                     }
                 }
             });
@@ -137,6 +163,8 @@ public class BaseShape implements WShape{
         PauseTransition transition = new PauseTransition(Duration.millis(mills));
         if(isPlaying) {
             packageWQueue.add(new Package(transition));
+        }else {
+            transition.play();
         }
     }
 

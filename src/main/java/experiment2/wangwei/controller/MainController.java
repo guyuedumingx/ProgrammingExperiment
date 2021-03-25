@@ -4,6 +4,7 @@ import experiment2.wangwei.pojo.Car;
 import experiment2.wangwei.pojo.CarPort;
 import experiment2.wangwei.pojo.Lane;
 import experiment2.wangwei.pojo.Park;
+import experiment2.wangwei.utils.WQueue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,8 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
 import util.CarNoUtil;
-
-import java.util.Iterator;
 
 /**
  * @author yohoyes
@@ -32,6 +31,9 @@ public class MainController {
     private Lane lane = Lane.getLane();
     private Park carPark = new Park(65,330,245);
     private Park tempPark = new Park(65, 330, 375);
+    CarPort out = null;
+    private WQueue<CarPort> tempQueue = new WQueue<>();
+    private boolean access = true;
 
     @FXML
     public void inAction(ActionEvent event) {
@@ -56,28 +58,47 @@ public class MainController {
         });
     }
 
+    private CarPort getCarPort(String carNo) {
+        CarPort out = null;
+        while (!(out = carPark.out()).getCar().equals(carNo)) {
+            tempPark.in(out);
+        }
+        return out;
+    }
+
     private void temParkAction(String carNo) {
         if(carPark.search(carNo) != -1) {
-            CarPort out = null;
-            while (!(out = carPark.out(0)).equals(carNo)) {
-                tempPark.in(out,0);
-            }
-            Car car = out.getCar();
+            Car car = getCarPort(carNo).getCar();
             car.moveTo(600, car.getY());
-            int delay = 0;
-            while (!tempPark.isEmpty()) {
-                CarPort carOut = tempPark.out(delay);
-                carPark.in(carOut,0);
-                setCarOutAction(carOut.getCar());
-                delay += 500;
-            }
-            delay *= 3;
-            while (!carPark.isFull() && !lane.isEmpty()) {
-                Car landOut = lane.out();
-                carPark.in(landOut,delay);
-                setCarOutAction(landOut);
-                delay += 500;
-            }
+            car.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    CarPort carOut = null;
+                    while (!tempPark.isEmpty()) {
+                        carOut = tempPark.out();
+                        carPark.in(carOut);
+                        setCarOutAction(carOut.getCar());
+                    }
+                    if(carOut != null){
+                        carOut.getCar().setOnFinished(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                while (!carPark.isFull() && !lane.isEmpty()) {
+                                    Car landOut = lane.out();
+                                    carPark.in(landOut);
+                                    setCarOutAction(landOut);
+                                }
+                            }
+                        });
+                    }else{
+                        while (!carPark.isFull() && !lane.isEmpty()) {
+                            Car landOut = lane.out();
+                            carPark.in(landOut);
+                            setCarOutAction(landOut);
+                        }
+                    }
+                }
+            });
         }
     }
 
