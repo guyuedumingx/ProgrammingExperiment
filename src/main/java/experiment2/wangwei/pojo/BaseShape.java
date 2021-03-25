@@ -19,20 +19,47 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 是所有物体的公有实现类，实现了WShape接口，完成了部分基本实现
  * @author yohoyes
  * @date 2021/3/24 21:18
  */
 public class BaseShape implements WShape{
+    /**
+     * 物体形状
+     */
     Shape shape;
+    /**
+     * 物体宽度
+     */
     int width;
+    /**
+     * 物体高度
+     */
     int height;
+    /**
+     * 物体x坐标
+     */
     double x;
+    /**
+     * 物体y坐标
+     */
     double y;
+    /**
+     * 物体动画的延迟
+     */
     int delay;
+    /**
+     * 判断物体是否在移动
+     */
     boolean isPlaying = false;
+    /**
+     * 物体要执行的动画队列
+     */
     WQueue<Package> packageWQueue = new WQueue<>();
+    /**
+     * 动画执行完成的回调事件
+     */
     EventHandler<ActionEvent> value;
-    EventHandler<ActionEvent> halfValue;
 
     @Override
     public double getX() {
@@ -96,9 +123,6 @@ public class BaseShape implements WShape{
                 isPlaying = false;
                 if(!packageWQueue.isEmpty()) {
                     playNext();
-                    if(halfValue != null) {
-                        halfValue.handle(new ActionEvent());
-                    }
                 }else {
                     if(value != null){
                         value.handle(new ActionEvent());
@@ -116,11 +140,9 @@ public class BaseShape implements WShape{
         this.value = value;
     }
 
-    @Override
-    public void setOnHalf(EventHandler<ActionEvent> halfValue) {
-        this.halfValue = halfValue;
-    }
-
+    /**
+     * 播放队列中的下一个动画
+     */
     private void playNext() {
         Package poll = packageWQueue.poll();
         if(poll.isMove()) {
@@ -134,9 +156,6 @@ public class BaseShape implements WShape{
                     isPlaying = false;
                     if(!packageWQueue.isEmpty()) {
                         playNext();
-                        if(halfValue != null) {
-                            halfValue.handle(new ActionEvent());
-                        }
                     }else {
                         if(value != null){
                             value.handle(new ActionEvent());
