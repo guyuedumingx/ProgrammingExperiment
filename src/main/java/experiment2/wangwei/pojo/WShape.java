@@ -46,6 +46,11 @@ public interface WShape {
     void setOnFinished(EventHandler<ActionEvent> value);
 
     /**
+     * 移除物体执行完动画之后的回调函数
+     */
+    void removeFinishedAction();
+
+    /**
      * 把物体放大或缩小
      * @param mul 倍数
      */
