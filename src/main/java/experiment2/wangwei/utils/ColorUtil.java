@@ -11,6 +11,12 @@ public class ColorUtil {
     public static Color NORMALCOLOR = Color.DARKCYAN;
 
     public static Color getRamdonColor() {
-        return Color.color((float)Math.random(),(float)Math.random(),(float)Math.random());
+        return Color.color(getNumbers(),getNumbers(),getNumbers());
+    }
+
+    private static float getNumbers() {
+        float left = 0.62f;
+        float right = 0.86f;
+        return  (float)Math.random()*(right-left) + left;
     }
 }

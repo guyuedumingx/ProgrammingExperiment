@@ -90,11 +90,12 @@ public class MainController {
                                     Car landOut = lane.out();
                                     carPark.in(landOut);
                                     setCarOutAction(landOut);
-                                    carOut.getCar().removeFinishedAction();
                                 }
+                                carOut.getCar().removeFinishedAction();
                             }
                         });
                     }else{
+                        System.out.println("yoho bug");
                         while (!carPark.isFull() && !lane.isEmpty()) {
                             Car landOut = lane.out();
                             carPark.in(landOut);

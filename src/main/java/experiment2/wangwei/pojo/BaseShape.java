@@ -128,7 +128,11 @@ public class BaseShape implements WShape{
 
     @Override
     public void removeFinishedAction() {
-        this.value = null;
+        setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            }
+        });
     }
 
     @Override
