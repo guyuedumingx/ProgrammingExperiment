@@ -22,7 +22,7 @@ public class FxRunner extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = loadFxml("view/main.fxml");
+        FXMLLoader loader = loadFxml("view/Test.fxml");
         AnchorPane pane = (AnchorPane)loader.load();
         Scene scene = new Scene(pane,600,559);
         stage.setScene(scene);

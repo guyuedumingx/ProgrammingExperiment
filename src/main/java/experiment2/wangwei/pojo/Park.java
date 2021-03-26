@@ -51,21 +51,30 @@ public class Park {
     }
 
     public CarPort out(){
-        return  out(0);
+        return out(0);
     }
 
     public CarPort out(double delay) {
         CarPort carPort = lot.pop();
         Car car = carPort.getCar();
         car.moveTo(lotEndX+100, lotY, delay == 0 ? WShape.DEFAULT_TIME : WShape.DEFAULT_TIME + delay, delay);
-        if(!lot.isEmpty()) {
-            CarPort peek = lot.peek();
-            Car peekCar = peek.getCar();
-            peekCar.pause(1000);
-            System.out.println(peekCar.getNo() + " Pause 1000");
-        }
+        addOutAction();
         nextShapeX -= shapeWidth + shapeMargin;
         return carPort;
+    }
+
+    private void addOutAction() {
+        WStack<CarPort> temp = new WStack<>();
+        while (!lot.isEmpty()){
+            CarPort pop = lot.pop();
+            Car peekCar = pop.getCar();
+            peekCar.pause(1000);
+            System.out.println(peekCar.getNo() + " Pause 1000");
+            temp.push(pop);
+        }
+        while (!temp.isEmpty()) {
+            lot.push(temp.pop());
+        }
     }
 
     /**

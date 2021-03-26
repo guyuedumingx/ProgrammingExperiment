@@ -183,7 +183,21 @@ public class BaseShape implements WShape{
         if(isPlaying) {
             packageWQueue.add(new Package(transition));
         }else {
+            isPlaying = true;
             transition.play();
+            transition.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    isPlaying = false;
+                    if(!packageWQueue.isEmpty()) {
+                        playNext();
+                    }else {
+                        if(value != null){
+                            value.handle(new ActionEvent());
+                        }
+                    }
+                }
+            });
         }
     }
 
