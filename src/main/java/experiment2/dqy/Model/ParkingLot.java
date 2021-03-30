@@ -1,6 +1,5 @@
 package experiment2.dqy.Model;
 
-import experiment2.Florence.util.Node;
 import experiment2.dqy.Util.Queue;
 import experiment2.dqy.Util.Stack;
 
@@ -12,7 +11,7 @@ public class ParkingLot {
     private Queue waitingLine = new Queue();
     private Stack parkingRoom = new Stack();
     private Stack tmpRoom = new Stack();
-    private int capacityOfParkingLot = 2;
+    private int capacityOfParkingLot = 4;
     private int price = 200;
 
     public int getPrice() {
@@ -132,5 +131,17 @@ public class ParkingLot {
         }
     }
 
-
+    //候车场中的车离开
+    public int leaveCarFromWaitingLine(Car car) {
+        //表示当前停车场没有这车
+        if(!isInWaitingLine(car)) return -1;
+        Car cur = (Car) waitingLine.getFront();
+        while (!cur.equals(car)) {
+            waitingLine.push(cur);
+            waitingLine.pop();
+            cur = (Car) waitingLine.getFront();
+        }
+        waitingLine.pop();
+        return  1;
+    }
 }
