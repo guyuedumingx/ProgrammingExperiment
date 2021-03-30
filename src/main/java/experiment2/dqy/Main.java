@@ -16,8 +16,8 @@ public class Main {
         System.out.println("3: isInParkingLot");
         System.out.println("4: printParkingRoom");
         System.out.println("5: printWaitingLine");
-        System.out.println("5: leaveCarFromWaitingLine");
-        System.out.println("6: Exit");
+        System.out.println("6: leaveCarFromWaitingLine");
+        System.out.println("7: Exit");
         op = src.nextInt();
         while (op != 7) {
             if (op == 1) {
