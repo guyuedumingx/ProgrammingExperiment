@@ -66,6 +66,7 @@ public class MainController {
         return out;
     }
 
+    CarPort carOut = null;
     private void temParkAction(String carNo) {
         if(carPark.search(carNo) != -1) {
             Car car = getCarPort(carNo).getCar();
@@ -73,24 +74,28 @@ public class MainController {
             car.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    CarPort carOut = null;
                     while (!tempPark.isEmpty()) {
                         carOut = tempPark.out();
+                        System.out.println(carOut.getNo() + " to temp");
                         carPark.in(carOut);
                         setCarOutAction(carOut.getCar());
                     }
+                    System.out.println("carOut : " + carOut.getCar().getNo());
                     if(carOut != null){
                         carOut.getCar().setOnFinished(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
+                                System.out.println(carOut.getNo() + " back");
                                 while (!carPark.isFull() && !lane.isEmpty()) {
                                     Car landOut = lane.out();
                                     carPark.in(landOut);
                                     setCarOutAction(landOut);
                                 }
+                                carOut.getCar().removeFinishedAction();
                             }
                         });
                     }else{
+                        System.out.println("yoho bug");
                         while (!carPark.isFull() && !lane.isEmpty()) {
                             Car landOut = lane.out();
                             carPark.in(landOut);

@@ -46,7 +46,6 @@ public class Park {
         lot.push(carPort);
         car.moveTo(lotEndX+50, lotY, WShape.DEFAULT_TIME,delay);
         car.moveTo(nextShapeX, lotY);
-        car.pause(1000);
         nextShapeX += shapeWidth + shapeMargin;
     }
 
@@ -69,7 +68,6 @@ public class Park {
             CarPort pop = lot.pop();
             Car peekCar = pop.getCar();
             peekCar.pause(1000);
-            System.out.println(peekCar.getNo() + " Pause 1000");
             temp.push(pop);
         }
         while (!temp.isEmpty()) {

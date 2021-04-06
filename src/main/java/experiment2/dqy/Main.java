@@ -12,13 +12,14 @@ public class Main {
         int op;
         System.out.println("Welcome to the ParkingLot system, please enter your orders:");
         System.out.println("1: enterCar");
-        System.out.println("2: leaveCar");
+        System.out.println("2: leaveCarFromParkingRoom");
         System.out.println("3: isInParkingLot");
         System.out.println("4: printParkingRoom");
         System.out.println("5: printWaitingLine");
-        System.out.println("6: Exit");
+        System.out.println("6: leaveCarFromWaitingLine");
+        System.out.println("7: Exit");
         op = src.nextInt();
-        while (op != 6) {
+        while (op != 7) {
             if (op == 1) {
                 Car cur = new Car();
                 System.out.println("please input the information of the car");
@@ -26,7 +27,7 @@ public class Main {
                 cur.setNo(src.next());
                 System.out.print("Owner of the car: ");
                 cur.setName(src.next());
-                if(pkl.enterCar(cur)) {
+                if (pkl.enterCar(cur)) {
                     System.out.println("Success!");
                 } else {
                     System.out.println("The car is already in the system!");
@@ -45,7 +46,7 @@ public class Main {
                 System.out.println("please input the Number of the car");
                 Car cur = new Car();
                 cur.setNo(src.next());
-                if(pkl.isInParkingLot(cur)) {
+                if (pkl.isInParkingLot(cur)) {
                     System.out.println("It's in ParkingLot");
                 } else {
                     System.out.println("It's not in ParkingLot");
@@ -54,6 +55,13 @@ public class Main {
                 pkl.printParkingRoom();
             } else if (op == 5) {
                 pkl.printWaitingLine();
+            } else if(op == 6) {
+                System.out.println("please input the Number of the car");
+                Car cur = new Car();
+                cur.setNo(src.next());
+                int sta = pkl.leaveCarFromWaitingLine(cur);
+                if(sta == -1) System.out.println("It's not in WaitingLine");
+                else System.out.println("It's leaving");
             } else {
                 System.out.println("Wrong order, please input again!");
             }

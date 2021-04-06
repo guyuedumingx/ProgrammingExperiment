@@ -3,20 +3,11 @@ package experiment2.wangwei.pojo;
 import experiment2.wangwei.utils.TransitionUtil;
 import experiment2.wangwei.utils.WQueue;
 import javafx.animation.*;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-import util.TimeUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 是所有物体的公有实现类，实现了WShape接口，完成了部分基本实现
@@ -122,7 +113,7 @@ public class BaseShape implements WShape{
             public void handle(ActionEvent event) {
                 isPlaying = false;
                 if(!packageWQueue.isEmpty()) {
-                    playNext();
+                    next();
                 }else {
                     if(value != null){
                         value.handle(new ActionEvent());
@@ -136,33 +127,50 @@ public class BaseShape implements WShape{
     }
 
     @Override
+    public void removeFinishedAction() {
+        setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            }
+        });
+    }
+
+    @Override
     public void setOnFinished(EventHandler<ActionEvent> value) {
         this.value = value;
+    }
+
+    private void inPlayQueue(Animation animation) {
+        animation.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                isPlaying = false;
+                if(!packageWQueue.isEmpty()) {
+                    next();
+                }else {
+                    if(value != null){
+                        value.handle(new ActionEvent());
+                    }
+                }
+            }
+        });
+        packageWQueue.add(new Package(animation));
+        if(!isPlaying) {
+            isPlaying = true;
+            animation.play();
+        }
     }
 
     /**
      * 播放队列中的下一个动画
      */
-    private void playNext() {
+    private void next() {
         Package poll = packageWQueue.poll();
         if(poll.isMove()) {
             moveTo(poll.getX(),poll.getY());
         }else {
             isPlaying = true;
             Animation animation = poll.getAnimation();
-            animation.setOnFinished(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    isPlaying = false;
-                    if(!packageWQueue.isEmpty()) {
-                        playNext();
-                    }else {
-                        if(value != null){
-                            value.handle(new ActionEvent());
-                        }
-                    }
-                }
-            });
             animation.play();
         }
     }
@@ -180,25 +188,7 @@ public class BaseShape implements WShape{
     @Override
     public void pause(double mills) {
         PauseTransition transition = new PauseTransition(Duration.millis(mills));
-        if(isPlaying) {
-            packageWQueue.add(new Package(transition));
-        }else {
-            isPlaying = true;
-            transition.play();
-            transition.setOnFinished(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    isPlaying = false;
-                    if(!packageWQueue.isEmpty()) {
-                        playNext();
-                    }else {
-                        if(value != null){
-                            value.handle(new ActionEvent());
-                        }
-                    }
-                }
-            });
-        }
+        inPlayQueue(transition);
     }
 
     @Override
