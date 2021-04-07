@@ -3,7 +3,7 @@ package experiment3.yhicxu.huffman;
 public class Node<T> {
     public Node<T> left;
     public Node<T> right;
-    public int weight;
+    public double weight;
     private T data;
 
     public Node() {
@@ -14,7 +14,7 @@ public class Node<T> {
         this.data = data;
     }
 
-    public Node(T data, int weight) {
+    public Node(T data, double weight) {
         this.weight = weight;
         this.data = data;
     }
