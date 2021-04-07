@@ -14,5 +14,7 @@ public class TestHuffman {
         h.showCodeTable();
         String code = h.code("abacdac");
         System.out.println(code);
+        String message = h.decode(code);
+        System.out.println(message);
     }
 }

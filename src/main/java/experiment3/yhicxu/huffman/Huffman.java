@@ -12,15 +12,19 @@ public class Huffman {
         frequencyTable = getWeight(str);
         createHuffmanTree(frequencyTable);
         codeTable = new HashMap<>();
-        dfs(root, "");
+        updateCodeTable();
     }
 
-    public String code(String str) {
+    public String code(String message) {
         StringBuilder res = new StringBuilder();
-        for (char ch:str.toCharArray()) {
+        for (char ch : message.toCharArray()) {
             res.append(codeTable.get(ch));
         }
         return res.toString();
+    }
+
+    private void updateCodeTable() {
+        dfs(root, "");
     }
 
     private void dfs(Node node, String code) {
@@ -97,7 +101,25 @@ public class Huffman {
         return root;
     }
 
-    public void decode(Node<Character> root) {
+    public void setRoot(Node<Character> root) {
+        this.root = root;
+        updateCodeTable();
+    }
 
+    public String decode(String code) {
+        Node<Character> now = root;
+        String message = "";
+        for (char ch : code.toCharArray()) {
+            if (ch == '0') {
+                now = now.left;
+            } else {
+                now = now.right;
+            }
+            if (now.left == null && now.right == null) {
+                message += now.getData();
+                now = root;
+            }
+        }
+        return message;
     }
 }
