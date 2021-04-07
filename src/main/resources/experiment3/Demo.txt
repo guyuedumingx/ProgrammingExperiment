@@ -1,0 +1,11 @@
+a data structure models some abstract object. it implements a number of operations on this object, which usually can be classified into
+creation and deletion operations, update operations, and query operations. in the case of the dictionary, we want to create or delete the set itself, update the
+set by inserting or deleting elements, and query for the existence of an element in the set. once it has been created, the object is changed by the update operations.
+the query operations do not change the abstract object, although they might change the representation of the object in the data structure: this is called an
+adaptive data structure  it adapts to the query to answer future similar queries faster.
+data structures that allow updates and queries are called dynamic data structures. there are also simpler structures that are created just once for
+some given object and allow queries but no updates; these are called static data structures. dynamic data structures are preferable because they are more
+general, but we also need to discuss static structures because they are useful as building blocks for dynamic structures, and, for some of the more complex
+objects we encounter, no dynamic structure is known. we want to find data structures that realize a given abstract object and are
+fast. the size of structures is another quality measure, but it is usually of less importance. to express speed, we need a measure of comparison; this is the
+size of the underlying object, not our representation of that object. notice that a long sequence of update operations can still result in a small object.
