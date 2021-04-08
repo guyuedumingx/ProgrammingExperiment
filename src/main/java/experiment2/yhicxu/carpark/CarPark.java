@@ -27,8 +27,6 @@ import java.util.Scanner;
  * <p><b>方法：</b></p>
  * <br> {@link #CarPark(double, int)}构造方法
  * <br> {@link #arrival(String)}将carNo车牌的汽车驶入
- * <br> {@link }
- * <br> {@link }
  *
  * @author 60rzvvbj
  * @date 2021/3/20
