@@ -13,6 +13,7 @@ public class CarNoUtil {
 
     /**
      * 生成五位的车牌
+     * 例如 : 津32388
      * @return
      */
     public static String build() {

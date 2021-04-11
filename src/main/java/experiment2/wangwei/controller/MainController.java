@@ -76,7 +76,6 @@ public class MainController {
                 public void handle(ActionEvent event) {
                     while (!tempPark.isEmpty()) {
                         carOut = tempPark.out();
-                        System.out.println(carOut.getNo() + " to temp");
                         carPark.in(carOut);
                         setCarOutAction(carOut.getCar());
                     }
@@ -85,9 +84,9 @@ public class MainController {
                         carOut.getCar().setOnFinished(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
-                                System.out.println(carOut.getNo() + " back");
+                                Car landOut = null;
                                 while (!carPark.isFull() && !lane.isEmpty()) {
-                                    Car landOut = lane.out();
+                                    landOut = lane.out();
                                     carPark.in(landOut);
                                     setCarOutAction(landOut);
                                 }
@@ -95,7 +94,6 @@ public class MainController {
                             }
                         });
                     }else{
-                        System.out.println("yoho bug");
                         while (!carPark.isFull() && !lane.isEmpty()) {
                             Car landOut = lane.out();
                             carPark.in(landOut);
