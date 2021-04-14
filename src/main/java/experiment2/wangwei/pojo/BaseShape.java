@@ -3,6 +3,7 @@ package experiment2.wangwei.pojo;
 import experiment2.wangwei.utils.TransitionUtil;
 import experiment2.wangwei.utils.WQueue;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.shape.Path;
@@ -83,6 +84,8 @@ public class BaseShape implements WShape{
         this.height = height;
         shape.prefHeight(height);
     }
+
+    Transition move = null;
     @Override
     public void moveTo(double x, double y, double mills, double delay) {
         if(isPlaying){
@@ -90,7 +93,6 @@ public class BaseShape implements WShape{
             return;
         }
         isPlaying = true;
-        Transition move = null;
         if (this.x != x && this.y == y) {
             move = TransitionUtil.translateTransitionX(this, this.x, x, mills);
         } else if (this.x == x && y != y) {
@@ -121,7 +123,12 @@ public class BaseShape implements WShape{
                 }
             }
         });
-        move.play();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                move.play();
+            }
+        });
         this.x = x;
         this.y = y;
     }
@@ -171,7 +178,12 @@ public class BaseShape implements WShape{
         }else {
             isPlaying = true;
             Animation animation = poll.getAnimation();
-            animation.play();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    animation.play();
+                }
+            });
         }
     }
 
