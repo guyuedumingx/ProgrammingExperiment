@@ -1,12 +1,12 @@
-//import org.junit.Test;
+import org.junit.Test;
 
 import util.Resource;
 
 public class UtilsTest {
 
-    //    @Test
+    @Test
     public void getTest() {
         String s = Resource.get("experiment1/Presidents.csv");
-        System.out.println("google");
+        System.out.println(s);
     }
 }

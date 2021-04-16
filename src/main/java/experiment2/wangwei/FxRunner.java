@@ -29,7 +29,7 @@ public class FxRunner extends Application {
         stage.show();
     }
 
-    public FXMLLoader loadFxml(String str) {
+    public  FXMLLoader loadFxml(String str) {
         URL location = getClass().getResource(str);
         FXMLLoader loader = new FXMLLoader(location);
         loader.setLocation(location);
