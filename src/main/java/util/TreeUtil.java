@@ -23,15 +23,15 @@ public class TreeUtil {
         buildXmindTree(root.getRight(), rootTopic);
 
         try {
-            workbook.save( fileName + ".xmind");
-        }catch (Exception e) {
+            workbook.save(fileName);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
     private static void buildXmindTree(TreeNode node, ITopic parentTopic) {
-        if(node == null) {
+        if (node == null) {
             return;
         }
         ITopic topic = workbook.createTopic();
@@ -41,7 +41,7 @@ public class TreeUtil {
         buildXmindTree(node.getRight(), topic);
     }
 
-    public void printTree(TreeNode root) {
+    public static void printTree(TreeNode root) {
         LinkedList<TreeNode> allNode = new LinkedList<>();
         HashMap<TreeNode, Integer> nodeHeight = new HashMap<>();
         LinkedList<TreeNode> leafNode = new LinkedList<>();
@@ -73,10 +73,11 @@ public class TreeUtil {
             }
         }
         for (TreeNode node : allNode) {
-            String text = node.getData().replaceAll("\r", "\\r").replaceAll("\n", "\\n").replaceAll(" ", "凵");
-            setChar(chart, text, nodeX.get(node), nodeY.get(node));
-            chart[(nodeY.get(node) + nodeY.get(node.getLeft())) / 2][(nodeX.get(node) + nodeX.get(node.getLeft())) / 2] = '/';
-            chart[(nodeY.get(node) + nodeY.get(node.getRight())) / 2][(nodeX.get(node) + nodeX.get(node.getRight())) / 2 + 1] = '\\';
+            setChar(chart, node.getData(), nodeX.get(node), nodeY.get(node));
+            if (node.getLeft() != null && node.getRight() != null) {
+                chart[(nodeY.get(node) + nodeY.get(node.getLeft())) / 2][(nodeX.get(node) + nodeX.get(node.getLeft())) / 2] = '/';
+                chart[(nodeY.get(node) + nodeY.get(node.getRight())) / 2][(nodeX.get(node) + nodeX.get(node.getRight())) / 2 + 1] = '\\';
+            }
         }
         for (int i = 0; i < chart.length; i++) {
             for (int j = 0; j < chart[i].length; j++) {
@@ -86,17 +87,20 @@ public class TreeUtil {
         }
     }
 
-    private void setChar(char[][] chart, String str, int x, int y) {
-        char[] chars = str.toCharArray();
-        int len = chars.length;
-        int start = x - len / 2;
-        int index = 0;
-        for (int i = start; index < chars.length; i++) {
-            chart[y][i] = chars[index++];
+    private static void setChar(char[][] chart, String str, int x, int y) {
+        String[] strArr = str.split(" ");
+        for (int i = 0; i < strArr.length; i++) {
+            char[] chars = strArr[i].toCharArray();
+            int len = chars.length;
+            int start = x - len / 2;
+            int index = 0;
+            for (int j = start; index < chars.length; j++) {
+                chart[y + i][j] = chars[index++];
+            }
         }
     }
 
-    private void showTreeDfs(LinkedList<TreeNode> allNode, HashMap<TreeNode, Integer> nodeHeight, LinkedList<TreeNode> leafNode, int nowHeight, TreeNode node) {
+    private static void showTreeDfs(LinkedList<TreeNode> allNode, HashMap<TreeNode, Integer> nodeHeight, LinkedList<TreeNode> leafNode, int nowHeight, TreeNode node) {
         allNode.add(node);
         nodeHeight.put(node, nowHeight);
         if (node.getLeft() == null && node.getRight() == null) {

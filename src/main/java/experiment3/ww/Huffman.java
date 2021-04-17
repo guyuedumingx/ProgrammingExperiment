@@ -18,7 +18,7 @@ public class Huffman {
         Map<Character, Integer> map = CharUtil.countForMap("experiment3/Demo.txt");
         Set<Character> characters = map.keySet();
         PriorityQueue<Node> queue = new PriorityQueue<>();
-        for(Character character : characters) {
+        for (Character character : characters) {
             Node node = new Node(character, map.get(character));
             queue.add(node);
         }
@@ -30,8 +30,8 @@ public class Huffman {
         }
         Node root = queue.poll();
         buildCode(root, "");
-        TreeUtil.buildXmind(root, "1");
-        new TreeUtil().printTree(root);
+//        TreeUtil.buildXmind(root, "C:\\Users\\Administrator\\Desktop\\aaa\\1.xmind");
+        TreeUtil.printTree(root);
     }
 
     public static void buildCode(Node node, String code) {
@@ -39,8 +39,8 @@ public class Huffman {
             return;
         }
         node.setCode(code);
-        buildCode(node.getLeft(), code+"0");
-        buildCode(node.getRight(), code+"1");
+        buildCode(node.getLeft(), code + "0");
+        buildCode(node.getRight(), code + "1");
     }
 }
 
@@ -57,7 +57,7 @@ class Node implements Comparable<Node>, TreeNode {
         this.nums = left.nums + right.nums;
     }
 
-    public Node(Character key, Integer nums){
+    public Node(Character key, Integer nums) {
         this.key = key;
         this.nums = nums;
     }
@@ -114,19 +114,19 @@ class Node implements Comparable<Node>, TreeNode {
 
     @Override
     public String getData() {
-        if("".equals(code)) {
+        if ("".equals(code)) {
             return "root";
         }
-        if(key == null) {
+        if (key == null) {
             return code;
         }
-        if(key == '\n'){
+        if (key == '\n') {
             key = '↲';
         }
-        if(key == '\r') {
+        if (key == '\r') {
             key = '↓';
         }
-        if(key == ' ') {
+        if (key == ' ') {
             key = '凵';
         }
         return code + " " + key;
@@ -138,9 +138,9 @@ class Node implements Comparable<Node>, TreeNode {
 
     @Override
     public int compareTo(Node node) {
-        if(nums > node.nums){
+        if (nums > node.nums) {
             return 1;
-        }else if(nums == node.nums) {
+        } else if (nums == node.nums) {
             return 0;
         }
         return -1;

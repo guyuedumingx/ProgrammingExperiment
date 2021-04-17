@@ -1,7 +1,9 @@
 package experiment3.yhicxu.huffman;
 
+import util.TreeNode;
+
 // 哈弗曼树节点类
-public class Node<T> {
+public class Node<T> implements TreeNode {
     public Node<T> left;
     public Node<T> right;
 
@@ -9,26 +11,77 @@ public class Node<T> {
     public double weight;
 
     // 数据
-    private T data;
+    private T message;
+
+    // 编码
+    private String code;
 
     public Node() {
-        data = null;
+        message = null;
     }
 
     public Node(T data) {
-        this.data = data;
+        this.message = data;
     }
 
     public Node(T data, double weight) {
         this.weight = weight;
-        this.data = data;
+        this.message = data;
     }
 
-    public T getData() {
-        return data;
+    public T getMessage() {
+        return message;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setMessage(T message) {
+        this.message = message;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public void setLeft() {
+    }
+
+    @Override
+    public void setRight() {
+    }
+
+    @Override
+    public TreeNode getLeft() {
+        return left;
+    }
+
+    @Override
+    public TreeNode getRight() {
+        return right;
+    }
+
+    @Override
+    public void setData(Object object) {
+    }
+
+    @Override
+    public String getData() {
+        if ("".equals(code)) {
+            return "root";
+        }
+        if (message == null) {
+            return code;
+        } else {
+            Character key = message.toString().charAt(0);
+            if (key == '\n') {
+                key = '↲';
+            }
+            if (key == '\r') {
+                key = '↓';
+            }
+            if (key == ' ') {
+                key = '凵';
+            }
+            return code + " " + key;
+        }
     }
 }

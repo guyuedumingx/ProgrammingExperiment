@@ -92,7 +92,7 @@ public class Huffman {
                 now = now.right;
             }
             if (now.left == null && now.right == null) {
-                message.append(now.getData());
+                message.append(now.getMessage());
                 now = root;
             }
         }
@@ -164,81 +164,6 @@ public class Huffman {
         updateCodeTable();
     }
 
-    public void showTree() {
-        LinkedList<Node<Character>> allNode = new LinkedList<>();
-        HashMap<Node<Character>, Integer> nodeHeight = new HashMap<>();
-        LinkedList<Node<Character>> leafNode = new LinkedList<>();
-        showTreeDfs(allNode, nodeHeight, leafNode, 0, root);
-        HashMap<Node<Character>, Integer> nodeX = new HashMap<>();
-        HashMap<Node<Character>, Integer> nodeY = new HashMap<>();
-        int maxHeight = 0;
-        for (Node<Character> node : nodeHeight.keySet()) {
-            maxHeight = Math.max(nodeHeight.get(node), maxHeight);
-        }
-        int width = maxHeight + maxHeight / 2;
-        char[][] chart = new char[maxHeight * 2 + 2][width * (leafNode.size() + 1)];
-        for (int i = 0; i < chart.length; i++) {
-            for (int j = 0; j < chart[i].length; j++) {
-                chart[i][j] = ' ';
-            }
-        }
-        int x = width;
-        for (Node<Character> node : leafNode) {
-            nodeX.put(node, x);
-            x += width;
-        }
-        for (int y = maxHeight; y >= 0; y--) {
-            for (Node<Character> node : allNode) {
-                if (nodeHeight.get(node) == y) {
-                    nodeY.put(node, 2 * y);
-                    if (node.left != null || node.right != null) {
-                        nodeX.put(node, (nodeX.get(node.left) + nodeX.get(node.right)) / 2);
-                    }
-                }
-            }
-        }
-        for (Node<Character> node : allNode) {
-            if (node.getData() == null) {
-                String code = nodeCodeTable.get(node);
-                if (code.equals("")) {
-                    setChar(chart, "root", nodeX.get(node), nodeY.get(node));
-                } else {
-                    setChar(chart, nodeCodeTable.get(node), nodeX.get(node), nodeY.get(node));
-                }
-                chart[(nodeY.get(node) + nodeY.get(node.left)) / 2][(nodeX.get(node) + nodeX.get(node.left)) / 2] = '/';
-                chart[(nodeY.get(node) + nodeY.get(node.right)) / 2][(nodeX.get(node) + nodeX.get(node.right)) / 2 + 1] = '\\';
-            } else {
-                setChar(chart, nodeCodeTable.get(node), nodeX.get(node), nodeY.get(node));
-                char ch = node.getData();
-                if (ch == '\n') {
-                    setChar(chart, "\\n", nodeX.get(node), nodeY.get(node) + 1);
-                } else if (ch == '\r') {
-                    setChar(chart, "\\r", nodeX.get(node), nodeY.get(node) + 1);
-                } else if (ch == ' ') {
-                    setChar(chart, "凵", nodeX.get(node), nodeY.get(node) + 1);
-                } else {
-                    setChar(chart, node.getData() + "", nodeX.get(node), nodeY.get(node) + 1);
-                }
-            }
-        }
-        for (int i = 0; i < chart.length; i++) {
-            for (int j = 0; j < chart[i].length; j++) {
-                System.out.print(chart[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    private void setChar(char[][] chart, String str, int x, int y) {
-        char[] chars = str.toCharArray();
-        int len = chars.length;
-        int start = x - len / 2;
-        int index = 0;
-        for (int i = start; index < chars.length; i++) {
-            chart[y][i] = chars[index++];
-        }
-    }
-
     private void showTreeDfs(LinkedList<Node<Character>> allNode, HashMap<Node<Character>, Integer> nodeHeight, LinkedList<Node<Character>> leafNode, int nowHeight, Node<Character> node) {
         allNode.add(node);
         nodeHeight.put(node, nowHeight);
@@ -271,9 +196,10 @@ public class Huffman {
      * @date 2021/4/8
      */
     private void dfs(Node node, String code) {
+        node.setCode(code);
         nodeCodeTable.put(node, code);
         if (node.left == null && node.right == null) {
-            codeTable.put((Character) node.getData(), code);
+            codeTable.put((Character) node.getMessage(), code);
         } else {
             dfs(node.left, code + "0");
             dfs(node.right, code + "1");
