@@ -1,5 +1,11 @@
 package util;
 
+import org.xmind.core.ISheet;
+import org.xmind.core.ITopic;
+import org.xmind.core.IWorkbook;
+import org.xmind.core.IWorkbookBuilder;
+import org.xmind.core.internal.dom.WorkbookBuilderImpl;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;

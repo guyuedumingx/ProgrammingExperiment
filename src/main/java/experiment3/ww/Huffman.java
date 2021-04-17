@@ -31,6 +31,7 @@ public class Huffman {
         Node root = queue.poll();
         buildCode(root, "");
         TreeUtil.buildXmind(root, "1");
+        new TreeUtil().printTree(root);
     }
 
     public static void buildCode(Node node, String code) {
