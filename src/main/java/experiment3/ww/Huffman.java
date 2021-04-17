@@ -2,6 +2,7 @@ package experiment3.ww;
 
 import util.CharUtil;
 import util.TreeNode;
+import util.TreeUtil;
 
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -29,6 +30,7 @@ public class Huffman {
         }
         Node root = queue.poll();
         buildCode(root, "");
+        TreeUtil.buildXmind(root, "1");
     }
 
     public static void buildCode(Node node, String code) {
@@ -111,7 +113,22 @@ class Node implements Comparable<Node>, TreeNode {
 
     @Override
     public String getData() {
-        return key + " " + code;
+        if("".equals(code)) {
+            return "root";
+        }
+        if(key == null) {
+            return code;
+        }
+        if(key == '\n'){
+            key = '↲';
+        }
+        if(key == '\r') {
+            key = '↓';
+        }
+        if(key == ' ') {
+            key = '凵';
+        }
+        return code + " " + key;
     }
 
     public void setRight(Node right) {

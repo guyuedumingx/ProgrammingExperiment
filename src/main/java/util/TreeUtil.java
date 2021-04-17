@@ -5,8 +5,34 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class TreeUtil {
-    public void buildXmind() {
+    static IWorkbookBuilder builder = new WorkbookBuilderImpl();
+    static IWorkbook workbook;
 
+    public static void buildXmind(TreeNode root, String fileName) {
+        workbook = builder.createWorkbook();
+        ISheet sheet = workbook.getPrimarySheet();
+        ITopic rootTopic = sheet.getRootTopic();
+        rootTopic.setTitleText(root.getData());
+        buildXmindTree(root.getLeft(), rootTopic);
+        buildXmindTree(root.getRight(), rootTopic);
+
+        try {
+            workbook.save( fileName + ".xmind");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void buildXmindTree(TreeNode node, ITopic parentTopic) {
+        if(node == null) {
+            return;
+        }
+        ITopic topic = workbook.createTopic();
+        topic.setTitleText(node.getData());
+        parentTopic.add(topic);
+        buildXmindTree(node.getLeft(), topic);
+        buildXmindTree(node.getRight(), topic);
     }
 
     public void printTree(TreeNode root) {
