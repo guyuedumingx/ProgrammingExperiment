@@ -45,6 +45,7 @@ public class Huffman {
     public void createTree(String str) {
         frequencyTable = getFrequencyTable(str);
         createHuffmanTree(frequencyTable);
+//        createHuffmanTreeByLinkedList(frequencyTable);
         codeTable = new HashMap<>();
         updateCodeTable();
     }
@@ -234,6 +235,85 @@ public class Huffman {
             queue.offer(f);
         }
         root = queue.poll();
+    }
+
+    class LinkedListNode<T> {
+        public LinkedListNode<T> next;
+        public T data;
+
+        public LinkedListNode() {
+        }
+
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+
+        public LinkedListNode(LinkedListNode<T> next, T data) {
+            this.next = next;
+            this.data = data;
+        }
+    }
+
+    /**
+     * <p><b>方法名：</b>{@code createHuffmanTreeByLinkedList}</p>
+     * <p><b>功能：</b></p><br>通过链表创建哈弗曼树
+     *
+     * @param map 频率表
+     * @author 60rzvvbj
+     * @date 2021/4/17
+     */
+    private void createHuffmanTreeByLinkedList(HashMap<Character, Double> map) {
+        LinkedListNode<Node<Character>> head = new LinkedListNode<>();
+        LinkedListNode<Node<Character>> now = null;
+        for (char ch : map.keySet()) {
+            Node<Character> t = new Node<>(ch, map.get(ch));
+            if (now == null) {
+                head.next = new LinkedListNode<>(t);
+                now = head.next;
+            } else {
+                now.next = new LinkedListNode<>(t);
+                now = now.next;
+            }
+        }
+        now = head.next;
+        while (now != null) {
+            LinkedListNode<Node<Character>> node = head.next;
+            bubbling(node);
+            now = now.next;
+        }
+        now = head.next;
+        while (now.next != null) {
+            Node<Character> n1 = now.data;
+            Node<Character> n2 = now.next.data;
+            Node<Character> f = new Node<>();
+            f.weight = n1.weight + n2.weight;
+            f.left = n1;
+            f.right = n2;
+            now.data = f;
+            now.next = now.next.next;
+            LinkedListNode<Node<Character>> node = now;
+            bubbling(node);
+        }
+        root = now.data;
+    }
+
+    /**
+     * <p><b>方法名：</b>{@code bubbling}</p>
+     * <p><b>功能：</b></p><br>冒泡
+     *
+     * @param node 要冒泡的节点
+     * @author 60rzvvbj
+     * @date 2021/4/17
+     */
+    private void bubbling(LinkedListNode<Node<Character>> node) {
+        while (node.next != null) {
+            if (node.data.weight > node.next.data.weight) {
+                Node<Character> t = node.data;
+                node.data = node.next.data;
+                node.next.data = t;
+            }
+            node = node.next;
+        }
     }
 
 }
