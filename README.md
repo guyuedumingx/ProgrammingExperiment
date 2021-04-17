@@ -5,6 +5,8 @@
 
 #### [实验2](./src/main/java/experiment2)
 #### [实验3](./src/main/java/experiment3)
+1. [详解1](./src/main/java/experiment3/ww/README.md)  
+
 #### [课程资源](./src/main/resources)  
 包含了各个实验的资源，包含了老师提供的资料与ppt, 需要的自取，所有资源根据实验名分类  
 
