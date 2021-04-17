@@ -10,8 +10,8 @@ public class TestHuffman {
     public static void main(String[] args) throws IOException {
         String s = IOUtil.readFileText("experiment3/Demo.txt");
         Huffman h = new Huffman();
-        h.createTree("aaaab\n\n\nbbc\r\rcd      aaabbcccdddeeefffgggh");
-//        h.createTree(s);
+//        h.createTree("aaaab\n\n\nbbc\r\rcd      aaabbcccdddeeefffgggh");
+        h.createTree(s);
 //        h.showFrequencyTable();
 //        h.showCodeTable();
 //        String code = h.code("abd");

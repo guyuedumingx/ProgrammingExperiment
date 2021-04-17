@@ -175,17 +175,17 @@ public class Huffman {
         for (Node<Character> node : nodeHeight.keySet()) {
             maxHeight = Math.max(nodeHeight.get(node), maxHeight);
         }
-        int weight = maxHeight + maxHeight / 2;
-        char[][] chart = new char[maxHeight * 2 + 2][weight * (leafNode.size() + 1)];
+        int width = maxHeight + maxHeight / 2;
+        char[][] chart = new char[maxHeight * 2 + 2][width * (leafNode.size() + 1)];
         for (int i = 0; i < chart.length; i++) {
             for (int j = 0; j < chart[i].length; j++) {
                 chart[i][j] = ' ';
             }
         }
-        int x = weight;
+        int x = width;
         for (Node<Character> node : leafNode) {
             nodeX.put(node, x);
-            x += weight;
+            x += width;
         }
         for (int y = maxHeight; y >= 0; y--) {
             for (Node<Character> node : allNode) {
