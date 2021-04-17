@@ -16,12 +16,8 @@ public class TreeUtil {
         ISheet sheet = workbook.getPrimarySheet();
         ITopic rootTopic = sheet.getRootTopic();
         rootTopic.setTitleText(root.getData());
-        ITopic left = workbook.createTopic();
-        ITopic right = workbook.createTopic();
-        buildXmindTree(root.getLeft(), left);
-        buildXmindTree(root.getRight(), right);
-        rootTopic.add(left);
-        rootTopic.add(right);
+        buildXmindTree(root.getLeft(), rootTopic);
+        buildXmindTree(root.getRight(), rootTopic);
 
         try {
             workbook.save( fileName + ".xmind");
