@@ -1,5 +1,7 @@
 package util;
 
+import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,9 +12,29 @@ import java.util.Map;
  */
 public class CharUtil {
 
+    /**
+     * 统计resource文件中的各种字符的频率
+     * @param resource 文件位置 比如： experiment3/Demo.txt
+     * @return
+     */
     public static Map<Character, Integer> countForMap(String resource) {
-        String s = Resource.get(resource);
-
-        return null;
+        InputStream in = null;
+        Map<Character, Integer> map = new HashMap<>();
+        try {
+            String s = Resource.get(resource);
+            in = new FileInputStream(s);
+            int cur;
+            while ((cur = in.read()) != -1){
+                char curChar = (char)cur;
+                Integer nums = map.get(curChar);
+                if(nums == null) {
+                    nums = 0;
+                }
+                map.put(curChar,nums+1);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 }
