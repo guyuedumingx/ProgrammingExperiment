@@ -1,6 +1,8 @@
 package experiment3.ww;
 
 import util.CharUtil;
+import util.TreeNode;
+
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -39,7 +41,7 @@ public class Huffman {
     }
 }
 
-class Node implements Comparable<Node>{
+class Node implements Comparable<Node>, TreeNode {
     private Character key;
     private Integer nums;
     private String code;
@@ -81,6 +83,16 @@ class Node implements Comparable<Node>{
         this.code = code;
     }
 
+    @Override
+    public void setLeft() {
+        this.left = left;
+    }
+
+    @Override
+    public void setRight() {
+        this.right = right;
+    }
+
     public Node getLeft() {
         return left;
     }
@@ -91,6 +103,15 @@ class Node implements Comparable<Node>{
 
     public Node getRight() {
         return right;
+    }
+
+    @Override
+    public void setData(Object object) {
+    }
+
+    @Override
+    public String getData() {
+        return key + " " + code;
     }
 
     public void setRight(Node right) {
