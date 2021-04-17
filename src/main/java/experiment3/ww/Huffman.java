@@ -27,9 +27,17 @@ public class Huffman {
             Node parent = new Node(min1, min2);
             queue.add(parent);
         }
-        System.out.println(queue.size());
         Node root = queue.poll();
-        System.out.println(root);
+        buildCode(root, "");
+    }
+
+    public static void buildCode(Node node, String code) {
+        if (node == null) {
+            return;
+        }
+        node.setCode(code);
+        buildCode(node.getLeft(), code+"0");
+        buildCode(node.getRight(), code+"1");
     }
 }
 

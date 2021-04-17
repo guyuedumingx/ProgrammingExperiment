@@ -56,3 +56,134 @@ in = new FileInputStream(s);
 ------------------ 
 
 统计出字符串的频率之后，接下来需要我们依次取出最小的两个值用来生成子树  
+那么怎么依次取出最小的两个值呢？排序？当然可以，当时有一种结构叫优先队列(`PriorityQueue`)
+这玩意可以自动帮我们把传进去的对象进行排序，只要我们传进去的对象实现了`Comparable`方法，它就能自
+动工作了  
+那么首先我们先要有树的节点类  
+
+```java
+class Node implements Comparable<Node> {
+    private Character key;
+    private Integer nums;
+    private String code;
+    private Node left;
+    private Node right;
+
+    public Node(Node left, Node right) {
+        this.left = left;
+        this.right = right;
+        this.nums = left.nums + right.nums;
+    }
+
+    public Node(Character key, Integer nums) {
+        this.key = key;
+        this.nums = nums;
+    }
+
+    public Character getKey() {
+        return key;
+    }
+
+    public void setKey(Character key) {
+        this.key = key;
+    }
+
+    public Integer getNums() {
+        return nums;
+    }
+
+    public void setNums(Integer nums) {
+        this.nums = nums;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Node getLeft() {
+        return left;
+    }
+
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public Node getRight() {
+        return right;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
+    /**
+     * 用来给优先队列比较的
+     * @param node
+     * @return
+     */
+    @Override
+    public int compareTo(Node node) {
+        if (nums > node.nums) {
+            return 1;
+        } else if (nums == node.nums) {
+            return 0;
+        }
+        return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "key=" + key +
+                ", nums=" + nums +
+                ", code='" + code + '\'' +
+                ", left=" + left +
+                ", right=" + right +
+                '}';
+    }
+}
+```
+
+有了节点类之后，我们就要根据之前统计出来的字符频率生成优先队列了  
+```java
+Map<Character, Integer> map = CharUtil.countForMap("experiment3/Demo.txt");
+Set<Character> characters = map.keySet();
+PriorityQueue<Node> queue = new PriorityQueue<>();
+
+for(Character character : characters) {
+    Node node = new Node(character, map.get(character));
+    queue.add(node);
+}
+```
+现在`queue`就是我们的优先队列，有了它，我们就可以每次取出最小的两个值，进行组装，形成我们想要的`huffman树`了  
+
+```java
+while (queue.size() > 1) {
+    Node min1 = queue.poll();
+    Node min2 = queue.poll();
+    Node parent = new Node(min1, min2);
+    queue.add(parent);
+}
+Node root = queue.poll();
+```
+`huffman树`建好之后，`root`节点就是我们想要的根节点，有了根节点。接下来就是为每个节点设置`huffman编码`  
+
+```java
+public static void buildCode(Node node, String code) {
+    if (node == null) {
+        return;
+    }
+    node.setCode(code);
+    buildCode(node.getLeft(), code+"0");
+    buildCode(node.getRight(), code+"1");
+}
+```
+只要在主方法中简单的调用一下以上的方法，就能帮我们自动编码了  
+```java
+Node root = queue.poll();
+buildCode(root, "");
+```
