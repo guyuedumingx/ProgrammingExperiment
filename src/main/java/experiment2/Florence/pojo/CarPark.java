@@ -4,6 +4,8 @@ import experiment2.Florence.Factory.CarFactory;
 import experiment2.Florence.util.FlorenceQueue;
 import experiment2.Florence.util.FlorenceStack;
 
+import java.util.List;
+
 /**
  * @author Florence
  */
@@ -13,14 +15,19 @@ public class CarPark {
     private final FlorenceQueue<Car> waitQueue = new FlorenceQueue<>();
     private final FlorenceStack<Car> inPark= new FlorenceStack<>();
     private final FlorenceStack<Car> cachePark = new FlorenceStack<>();
+    private final List<String> list;
+    public CarPark(List<String> tokens) {
+        list=tokens;
+    }
 
-    public void arrival(String carNo) {
+    public boolean arrival(String carNo) {
         Car car = CarFactory.getCar(carNo);
         if (inPark.size()<maxSizeOfPark) {
             inPark.push(car);
-            return;
+            return true;
         }
         waitQueue.enQueue(car);
+        return false;
     }
 
     public void showPark() {
@@ -34,11 +41,12 @@ public class CarPark {
     }
 
     public Car leave(String carNo) {
+        Car topCar = null;
         while (!inPark.isEmpty()){
-            Car topCar = inPark.pop();
+            topCar = inPark.pop();
             if (carNo.equals(topCar.getCarNo())){
                 topCar.setLeave(System.currentTimeMillis());
-                return topCar;
+                break;
             }
             else {
                 cachePark.push(topCar);
@@ -47,7 +55,12 @@ public class CarPark {
         while (!cachePark.isEmpty()){
             inPark.push(cachePark.pop());
         }
-        return null;
+        if (waitQueue.size()!=0) {
+            Car car = waitQueue.deQueue();
+            inPark.push(car);
+            list.add(car.getCarNo());
+        }
+        return topCar ;
     }
 
     public double charging(Car car) {
