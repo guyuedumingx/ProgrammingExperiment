@@ -2,37 +2,56 @@ package experiment2.Florence.run;
 
 import experiment2.Florence.pojo.Car;
 import experiment2.Florence.pojo.CarPark;
+import experiment2.Florence.util.Md5Until;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+
+import static experiment2.Florence.util.Md5Until.getRandom;
 
 /**
  * @author Florence
  */
 public class Main {
-    public static void main(String[] args) {
-        CarPark carPark = new CarPark();
+    public static void main(String[] args) throws InterruptedException {
+        List<String> tokens = new ArrayList<>();
+        CarPark carPark = new CarPark(tokens);
         Scanner scanner = new Scanner(System.in);
         String carNo;
+        Random random = new Random(System.currentTimeMillis());
         while(true) {
             menu();
             int item = -1;
             while (true) {
-                item = scanner.nextInt();
+                item = getRandom(1,3);
                 if(item>0 && item <5) {
+                    System.out.print(item);
                     break;
                 }
                 System.out.println("\n 输入有误，请重新选择： 1~4: ");
             }
             switch(item) {
                 case 1:
-                    System.out.println("请输入车牌号：");
-                    carNo = scanner.next();
-                    carPark.arrival(carNo);
+                    carNo = Md5Until.getMd5(String.valueOf(System.currentTimeMillis()));
+                    System.out.println("请输入车牌号："+carNo);
+                    //true 是不在里面
+                    boolean isIn = carPark.arrival(carNo);
+                    if (isIn){
+                        tokens.add(carNo);
+                    }
                     break;
                 case 2:
-                    System.out.println("请输入车牌号：");
-                    carNo = scanner.next();
+                    if (tokens.size()==0){
+                        System.out.println("停车场内无车");
+                        break;
+                    }
+                    int indexRandom = getRandom(0,tokens.size());
+                    carNo = tokens.get(indexRandom);
+                    System.out.println("请输入车牌号："+carNo);
+                    tokens.remove(carNo);
                     Car car = carPark.leave(carNo);
                     long time = car.getPassTime();
                     DecimalFormat df = new DecimalFormat("#.00");
@@ -46,6 +65,9 @@ public class Main {
                 case 4:
                     System.exit(0);
             }
+            carPark.showPark();
+            carPark.showWaiting();
+            Thread.sleep(getRandom(1000,2000));
         }
 
     }
