@@ -2,10 +2,7 @@ package experiment3.ww;
 
 import util.CharUtil;
 import util.TreeNode;
-import util.TreeUtil;
-
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,8 +80,8 @@ class Node implements Comparable<Node>, TreeNode {
     private Character key;
     private Integer nums;
     private String code;
-    private Node left;
-    private Node right;
+    private TreeNode left;
+    private TreeNode right;
 
     public Node(Node left, Node right) {
         this.left = left;
@@ -121,26 +118,17 @@ class Node implements Comparable<Node>, TreeNode {
         this.code = code;
     }
 
-    @Override
-    public void setLeft() {
-        this.left = left;
-    }
-
-    @Override
-    public void setRight() {
-        this.right = right;
-    }
-
     public Node getLeft() {
-        return left;
+        return (Node)left;
     }
 
-    public void setLeft(Node left) {
+    @Override
+    public void setLeft(TreeNode left) {
         this.left = left;
     }
 
     public Node getRight() {
-        return right;
+        return (Node)right;
     }
 
     @Override
@@ -167,7 +155,8 @@ class Node implements Comparable<Node>, TreeNode {
         return code + " " + key;
     }
 
-    public void setRight(Node right) {
+    @Override
+    public void setRight(TreeNode right) {
         this.right = right;
     }
 
