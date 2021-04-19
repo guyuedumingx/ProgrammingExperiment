@@ -5,9 +5,9 @@ package util;
  * @date 2021/4/17 13:48
  */
 public interface TreeNode {
-    void setLeft();
+    void setLeft(TreeNode l);
 
-    void setRight();
+    void setRight(TreeNode r);
 
     TreeNode getLeft();
 
