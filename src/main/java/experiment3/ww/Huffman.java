@@ -4,8 +4,9 @@ import util.CharUtil;
 import util.TreeNode;
 import util.TreeUtil;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
@@ -13,11 +14,12 @@ import java.util.Set;
  * @date 2021/4/17 2:20
  */
 public class Huffman {
+    private static Map<Character, String> encodingTable = new HashMap<>();
 
     public static void main(String[] args) {
         Map<Character, Integer> map = CharUtil.countForMap("experiment3/Demo.txt");
         Set<Character> characters = map.keySet();
-        PriorityQueue<Node> queue = new PriorityQueue<>();
+        MyPriorityQueue<Node> queue = new MyPriorityQueue<>(map.size());
         for (Character character : characters) {
             Node node = new Node(character, map.get(character));
             queue.add(node);
@@ -30,8 +32,12 @@ public class Huffman {
         }
         Node root = queue.poll();
         buildCode(root, "");
-//        TreeUtil.buildXmind(root, "C:\\Users\\Administrator\\Desktop\\aaa\\1.xmind");
-        TreeUtil.printTree(root);
+//        TreeUtil.buildXmind(root, "1.xmind");
+//        TreeUtil.printTree(root);
+        String abcd = encoding("abcd");
+        System.out.println(abcd);
+        String decoding = decoding(abcd, root);
+        System.out.println(decoding);
     }
 
     public static void buildCode(Node node, String code) {
@@ -39,9 +45,38 @@ public class Huffman {
             return;
         }
         node.setCode(code);
+        encodingTable.put(node.getKey(),code);
         buildCode(node.getLeft(), code + "0");
         buildCode(node.getRight(), code + "1");
     }
+
+    public static String encoding(String str) {
+        char[] chars = str.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for(char ch : chars) {
+            sb.append(encodingTable.get(ch));
+        }
+        return sb.toString();
+    }
+
+    public static String decoding(String str, Node root) {
+        char[] chars = str.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Node cur = root;
+        for(char ch: chars) {
+            if(ch == '0') {
+                cur = cur.getLeft();
+            }else if(ch == '1') {
+                cur = cur.getRight();
+            }
+            if(cur.getLeft() == null && cur.getRight() == null) {
+                sb.append(cur.getKey());
+                cur = root;
+            }
+        }
+        return sb.toString();
+    }
+
 }
 
 class Node implements Comparable<Node>, TreeNode {
