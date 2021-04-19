@@ -76,27 +76,10 @@ public class FlorencePriorityQueue<T> {
         }
     }
 
-    private int compare(T object1,T object2){
+    private int compare(T object1,T object2) {
         T element1 = object1;
         T element2 = object2;
-        return comparator.compare(element1,element2);
-    }
-
-    public static void main(String[] args) {
-        FlorencePriorityQueue<Integer> integerFlorencePriorityQueue = new FlorencePriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1-o2;
-            }
-        });
-        for (int i=9;i>=0;i--){
-          integerFlorencePriorityQueue.offer(i);
-        }
-        while (!integerFlorencePriorityQueue.empty()){
-            Integer poll = integerFlorencePriorityQueue.poll();
-            System.out.println(poll);
-        }
-        System.out.println(integerFlorencePriorityQueue);
+        return comparator.compare(element1, element2);
     }
     private void resize(){
         int oldCapacity = objects.length;

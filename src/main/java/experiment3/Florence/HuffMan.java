@@ -202,6 +202,7 @@ public class HuffMan {
         HuffManTreeNode huffManTreeNode = buildHuffManTree(weightPriorityQueue);
         //遍历获取编码
         initEncodeMap(huffManTreeNode,new StringBuilder(),huffManTreeNode);
+        System.out.println(countMap);
         System.out.println(encodeMap);
         String decode = decode("1111011", huffManTreeNode);
         System.out.println(decode);
