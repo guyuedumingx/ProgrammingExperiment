@@ -42,11 +42,13 @@ public class Node<T> implements TreeNode {
     }
 
     @Override
-    public void setLeft() {
+    public void setLeft(TreeNode node) {
+        this.left = (Node<T>) node;
     }
 
     @Override
-    public void setRight() {
+    public void setRight(TreeNode node) {
+        this.right = (Node<T>) node;
     }
 
     @Override
