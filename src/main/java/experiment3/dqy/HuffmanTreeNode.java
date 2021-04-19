@@ -9,23 +9,23 @@ public class HuffmanTreeNode implements TreeNode {
     char key;
 
     @Override
-    public void setLeft() {
-
+    public void setLeft(TreeNode l) {
+        this.l = (HuffmanTreeNode) l;
     }
 
     @Override
-    public void setRight() {
-
+    public void setRight(TreeNode r) {
+        this.r = (HuffmanTreeNode) r;
     }
 
     @Override
-    public util.TreeNode getLeft() {
-        return null;
+    public TreeNode getLeft() {
+        return l;
     }
 
     @Override
-    public util.TreeNode getRight() {
-        return null;
+    public TreeNode getRight() {
+        return r;
     }
 
     @Override
@@ -35,6 +35,6 @@ public class HuffmanTreeNode implements TreeNode {
 
     @Override
     public String getData() {
-        return null;
+        return code;
     }
 }
