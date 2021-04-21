@@ -43,12 +43,10 @@ public class Node<T> implements TreeNode {
 
     @Override
     public void setLeft(TreeNode node) {
-        this.left = (Node<T>) node;
     }
 
     @Override
     public void setRight(TreeNode node) {
-        this.right = (Node<T>) node;
     }
 
     @Override
@@ -73,7 +71,7 @@ public class Node<T> implements TreeNode {
         if (message == null) {
             return code;
         } else {
-            Character key = message.toString().charAt(0);
+            char key = message.toString().charAt(0);
             if (key == '\n') {
                 key = '↲';
             }

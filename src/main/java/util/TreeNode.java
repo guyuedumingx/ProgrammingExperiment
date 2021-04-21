@@ -2,7 +2,7 @@ package util;
 
 /**
  * @author yohoyes
- * @date 2021/4/17 13:48
+ * @date 2021/4/17
  */
 public interface TreeNode {
     void setLeft(TreeNode l);

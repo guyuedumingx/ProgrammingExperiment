@@ -50,7 +50,6 @@ public class Huffman {
     public void createTree(String str) {
         frequencyTable = getFrequencyTable(str);
         createHuffmanTree(frequencyTable);
-//        createHuffmanTreeByLinkedList(frequencyTable);
         codeTable = new HashMap<>();
         nodeCodeTable = new HashMap<>();
         updateCodeTable();
@@ -113,8 +112,9 @@ public class Huffman {
         Arrays.sort(characters);
         for (char ch : characters) {
             String k = "" + ch;
-            if (ch == 10) k = "\\n";
-            if (ch == 13) k = "\\r";
+            if (ch == '\n') k = "↲";
+            if (ch == '\r') k = "↓";
+            if (ch == ' ') k = "凵";
             System.out.printf("%s:\t%.4f\n", k, frequencyTable.get(ch));
         }
     }
@@ -162,17 +162,6 @@ public class Huffman {
     public void setTree(Node<Character> root) {
         this.root = root;
         updateCodeTable();
-    }
-
-    private void showTreeDfs(LinkedList<Node<Character>> allNode, HashMap<Node<Character>, Integer> nodeHeight, LinkedList<Node<Character>> leafNode, int nowHeight, Node<Character> node) {
-        allNode.add(node);
-        nodeHeight.put(node, nowHeight);
-        if (node.left == null && node.right == null) {
-            leafNode.add(node);
-        } else {
-            showTreeDfs(allNode, nodeHeight, leafNode, nowHeight + 1, node.left);
-            showTreeDfs(allNode, nodeHeight, leafNode, nowHeight + 1, node.right);
-        }
     }
 
     /**
@@ -256,7 +245,26 @@ public class Huffman {
         root = queue.poll();
     }
 
-    class LinkedListNode<T> {
+    /**
+     * <p><b>方法名：</b>{@code getDisplayChar}</p>
+     *
+     * <p><b>功能：</b></p><br>获取用来显示的字符
+     *
+     * @param ch 源字符
+     * @return 用来显示的字符串
+     * @author 60rzvvbj
+     * @date 2021/4/21
+     */
+    private String getDisplayChar(char ch) {
+        String res = "" + ch;
+        if (ch == '\n') res = "↲";
+        if (ch == '\r') res = "↓";
+        if (ch == ' ') res = "凵";
+        return res;
+    }
+
+    @Deprecated
+    private class LinkedListNode<T> {
         public LinkedListNode<T> next;
         public T data;
 
@@ -281,6 +289,7 @@ public class Huffman {
      * @author 60rzvvbj
      * @date 2021/4/17
      */
+    @Deprecated
     private void createHuffmanTreeByLinkedList(HashMap<Character, Double> map) {
         LinkedListNode<Node<Character>> head = new LinkedListNode<>();
         LinkedListNode<Node<Character>> now = null;
@@ -324,6 +333,7 @@ public class Huffman {
      * @author 60rzvvbj
      * @date 2021/4/17
      */
+    @Deprecated
     private void bubbling(LinkedListNode<Node<Character>> node) {
         while (node.next != null) {
             if (node.data.weight > node.next.data.weight) {

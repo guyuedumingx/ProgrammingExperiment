@@ -10,6 +10,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * <p><b>类名：</b>{@code TreeUtil}</p>
+ * <p><b>功能：</b></p><br>树工具类
+ * <p><b>方法：</b></p>
+ * <br> {@link #buildXmind(TreeNode, String)}生成Xmind文件
+ * <br> {@link #printTree(TreeNode)}打印树
+ *
+ * @author 60rzvvbj
+ * @date 2021/4/21
+ */
 public class TreeUtil {
     static IWorkbookBuilder builder = new WorkbookBuilderImpl();
     static IWorkbook workbook;

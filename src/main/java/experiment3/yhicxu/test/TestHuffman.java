@@ -15,13 +15,7 @@ public class TestHuffman {
         h.createTree("aaaab\n\n\nbbc\r\rcd      aaabbcccdddeeefffgggh");
 //        h.createTree(s);
         Node<Character> root = h.getTree();
-//        TreeUtil.buildXmind(root, "C:\\Users\\Administrator\\Desktop\\aaa\\1.xmind");
         TreeUtil.printTree(root);
-//        h.showFrequencyTable();
-//        h.showCodeTable();
-//        String code = h.code("abd");
-//        System.out.println(code);
-//        String message = h.decode(code);
-//        System.out.println(message);
+        TreeUtil.buildXmind(root, "C:\\Users\\Administrator\\Desktop\\aaa\\huffman.xmind");
     }
 }
