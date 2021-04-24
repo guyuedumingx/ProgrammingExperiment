@@ -21,18 +21,21 @@ public class HuffmanTree {
         String url = Resource.get("experiment3/Demo.txt");
         FileReader fileReader = new FileReader(url);
         BufferedReader br = new BufferedReader(fileReader);
-        char read;
+        String a;
         //读入文件资源中的每一个字符
-        while ((read = (char)br.read()) != -1) {
+        while ((a = br.readLine()) != null) {
             //存在了则更新数量
-            if (cnt.containsKey(read)) {
-                int cur = cnt.get(read);
-                cnt.replace(read, cur + 1);
-            //则如果还没出现过要初始化
-            } else {
-                cnt.put(read, 1);
+            for (int i = 0; i < a.length(); i++) {
+                char read = a.charAt(i);
+                if (cnt.containsKey(read)) {
+                    int cur = cnt.get(read);
+                    cnt.replace(read, cur + 1);
+                    //则如果还没出现过要初始化
+                } else {
+                    cnt.put(read, 1);
+                }
+                System.out.println(read - 0);
             }
-            System.out.println(read - 0);
         }
         System.out.println("???????");
     }
@@ -102,13 +105,13 @@ public class HuffmanTree {
         tran.flush();
     }
 
-    void showCnt() {
-
-    }
-
-    void showMp() {
-
-    }
+//    void showCnt() {
+//
+//    }
+//
+//    void showMp() {
+//
+//    }
 
     public static void main(String[] args) throws IOException {
         new HuffmanTree().getFrequency();
