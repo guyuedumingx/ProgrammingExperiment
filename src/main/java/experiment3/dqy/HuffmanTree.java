@@ -10,11 +10,11 @@ import java.util.PriorityQueue;
 
 public class HuffmanTree {
     //哈希表用于记录每一个字符出现的次数
-    HashMap<Character, Integer> cnt = new HashMap<Character, Integer>();
+    public HashMap<Character, Integer> cnt = new HashMap<Character, Integer>();
     //用于创建每个字母对应的哈夫曼编码
-    HashMap<Character, String> mp = new HashMap<Character, String>();
+    public HashMap<Character, String> mp = new HashMap<Character, String>();
     //优先队列用于创建哈夫曼树
-    PriorityQueue<HuffmanTreeNode> helper = new PriorityQueue<HuffmanTreeNode>((o1, o2) -> o1.getFre() - o2.getFre());
+    public PriorityQueue<HuffmanTreeNode> helper = new PriorityQueue<HuffmanTreeNode>((o1, o2) -> o1.getFre() - o2.getFre());
     //对文件中的字母进行统计
     public void getFrequency() throws IOException {
         //获取资源文件
@@ -30,21 +30,21 @@ public class HuffmanTree {
                 if (cnt.containsKey(read)) {
                     int cur = cnt.get(read);
                     cnt.replace(read, cur + 1);
+//                    System.out.println(cur + 1);
                     //则如果还没出现过要初始化
                 } else {
                     cnt.put(read, 1);
+//                    System.out.println(read);
                 }
-                System.out.println(read - 0);
             }
         }
-        System.out.println("???????");
     }
 
     //创建哈夫曼树
     public HuffmanTreeNode BuildHuffmanTree() {
         //先把所有的点放入优先队列中
-        for (Map.Entry entry:cnt.entrySet()) {
-            helper.add(new HuffmanTreeNode((int)entry.getValue(), "", (char)entry.getKey()));
+        for (Character key : cnt.keySet()) {
+            helper.add(new HuffmanTreeNode(cnt.get(key), "", key));
         }
         //当合并剩下一个节点时跳出循环
         while (helper.size() != 1) {
@@ -53,8 +53,6 @@ public class HuffmanTree {
             //再拿出次小的点
             HuffmanTreeNode cur2= helper.poll();
             //合并连两个点
-            System.out.println(cur1);
-            System.out.println(cur2);
             HuffmanTreeNode newTree = new HuffmanTreeNode(cur1.getFre() + cur2.getFre(), "", '*');
             //设置当前树的大小
             newTree.size = cur1.size + cur2.size;
@@ -82,6 +80,7 @@ public class HuffmanTree {
         dfs((HuffmanTreeNode)cur.getRight(), code + "1");
     }
 
+    //进行编码
     public void getCode() {
         //先建树
         HuffmanTreeNode head = BuildHuffmanTree();
@@ -89,34 +88,42 @@ public class HuffmanTree {
         TreeUtil.printTree(head);
     }
 
-    void transform() throws IOException {
-        //获取资源文件
-        String in = Resource.get("experiment3/Demo.txt");
-        String out = Resource.get("experiment3/dqy/code/code1.txt");
-        FileReader fileReader1 = new FileReader(in);
-        FileWriter fileReader2 = new FileWriter(out);
-        BufferedReader ori = new BufferedReader(fileReader1);
-        BufferedWriter tran = new BufferedWriter(fileReader2);
-        char read;
-        //读入文件资源中的每一个字符
-        while ((read = (char)ori.read()) != -1) {
-            tran.write(mp.get(read));
+//    void transform() throws IOException {
+//        //获取资源文件
+//        String in = Resource.get("experiment3/Demo.txt");
+//        String out = "experiment3/dqy/code/code1.txt";
+//        FileReader fileReader1 = new FileReader(in);
+//        FileWriter fileReader2 = new FileWriter(new File(out));
+//        BufferedReader ori = new BufferedReader(fileReader1);
+//        BufferedWriter tran = new BufferedWriter(fileReader2);
+//        char read;
+//        //读入文件资源中的每一个字符
+//        while ((read = (char)ori.read()) != -1) {
+//            tran.write(mp.get(read));
+//        }
+//        tran.flush();
+//    }
+
+    //用于遍历展示cnt的键与值（频率统计）
+    void showCnt() {
+        for (Character key : cnt.keySet()) {
+            System.out.println(key + " : " + cnt.get(key));
         }
-        tran.flush();
     }
 
-//    void showCnt() {
-//
-//    }
-//
-//    void showMp() {
-//
-//    }
+    //用于遍历展示mp的键与值（编码）
+    void showMp() {
+        for (Character key : mp.keySet()) {
+            System.out.println(key + " : " + mp.get(key));
+        }
+    }
 
     public static void main(String[] args) throws IOException {
-        new HuffmanTree().getFrequency();
-        new HuffmanTree().getCode();
-
-//        new HuffmanTree().transform();
+        HuffmanTree tree = new HuffmanTree();
+        tree.getFrequency();
+        tree.getCode();
+        tree.showCnt();
+        System.out.println();
+        tree.showMp();
     }
 }
