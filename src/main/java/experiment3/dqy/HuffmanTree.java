@@ -1,11 +1,15 @@
 package experiment3.dqy;
-
 import experiment3.dqy.util.CodingMap;
 import experiment3.dqy.util.Frequency;
 import experiment3.dqy.util.HuffmanHeap;
 import util.Resource;
 import util.TreeUtil;
+
 import java.io.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 public class HuffmanTree {
     //哈希表用于记录每一个字符出现的次数
@@ -23,12 +27,13 @@ public class HuffmanTree {
         FileReader fileReader = new FileReader(url);
         BufferedReader br = new BufferedReader(fileReader);
         String read;
+
         //读入文件资源中的每行数据
         while ((read = br.readLine()) != null) {
+            System.out.println(read);
             //遍历整行
             for (int i = 0; i < read.length(); i++) {
                 char x = read.charAt(i);
-                //对应的字符数量加一
                 cnt.add(x);
             }
         }
@@ -112,36 +117,31 @@ public class HuffmanTree {
         }
     }
 
-    void decode() throws IOException {
-        String url = Resource.get("experiment3/Demo.txt");
-        FileReader fileReader = new FileReader(url);
-        BufferedReader br = new BufferedReader(fileReader);
-        String read;
+    void decode(String str) {
+        //编译出一个词
+        int idx = 0;
         HuffmanTreeNode cur = root;
-        while ((read = br.readLine()) != null) {
-            //编译出一个词
-            int idx = 0;
-            while (idx < read.length()) {
-                //当到达了根节点时我们输出结果
-                if (cur.getLeft() == null && cur.getRight() == null) {
-                    System.out.print(cur.getKey());
-                    cur = root;
-                }
-                //否则我们继续往下走
-                cur = read.charAt(idx) == '1' ? (HuffmanTreeNode)cur.getRight() : (HuffmanTreeNode)cur.getLeft();
-                idx++;
+        while (idx < str.length()) {
+            //当到达了根节点时我们输出结果
+            if (cur.getLeft() == null && cur.getRight() == null) {
+                System.out.print(cur.getKey());
+                cur = root;
             }
-            System.out.println();
+            //否则我们继续往下走
+            cur = str.charAt(idx) == '1' ? (HuffmanTreeNode)cur.getRight() : (HuffmanTreeNode)cur.getLeft();
+            idx++;
         }
+        System.out.println();
     }
 
     public static void main(String[] args) throws IOException {
         HuffmanTree tree = new HuffmanTree();
         tree.getFrequency();
         tree.getCode();
-//        tree.showCnt();
+        tree.showCnt();
         System.out.println();
-//        tree.showMp();
+        tree.showMp();
         tree.code();
+//        tree.decode();
     }
 }

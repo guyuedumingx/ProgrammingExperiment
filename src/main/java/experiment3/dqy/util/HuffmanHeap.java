@@ -11,8 +11,8 @@ public class HuffmanHeap {
     // 交换两个点，及其映射关系
     private void heap_swap(int a, int b) {
         HuffmanTreeNode temp = h[a];
-        h[a]=h[b];
-        h[b]=temp;
+        h[a] = h[b];
+        h[b] = temp;
     }
 
     //下沉
@@ -56,7 +56,7 @@ public class HuffmanHeap {
     public void pop() {
         //把堆顶的值与最后一个交换
         heap_swap(1, size);
-        //size - 1相当于删去最后一个点
+        //size - 1相当于删除最后一个点
         size--;
         down(1);
     }
