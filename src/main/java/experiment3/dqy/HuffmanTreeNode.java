@@ -42,6 +42,7 @@ public class HuffmanTreeNode implements TreeNode {
 
     @Override
     public String getData() {
+        if (this.l == null && this.r == null) return key + "";
         return code;
     }
 
