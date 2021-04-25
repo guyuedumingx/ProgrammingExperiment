@@ -1,4 +1,5 @@
 package experiment3.dqy;
+import experiment3.dqy.util.HuffmanHeap;
 import util.Resource;
 import util.TreeUtil;
 
@@ -14,7 +15,7 @@ public class HuffmanTree {
     //用于创建每个字母对应的哈夫曼编码
     public HashMap<Character, String> mp = new HashMap<Character, String>();
     //优先队列用于创建哈夫曼树
-    public PriorityQueue<HuffmanTreeNode> helper = new PriorityQueue<HuffmanTreeNode>((o1, o2) -> o1.getFre() - o2.getFre());
+    HuffmanHeap helper = new  HuffmanHeap();
     //对文件中的字母进行统计
     public void getFrequency() throws IOException {
         //获取资源文件
@@ -44,14 +45,16 @@ public class HuffmanTree {
     public HuffmanTreeNode BuildHuffmanTree() {
         //先把所有的点放入优先队列中
         for (Character key : cnt.keySet()) {
-            helper.add(new HuffmanTreeNode(cnt.get(key), "", key));
+            helper.insert(new HuffmanTreeNode(cnt.get(key), "", key));
         }
         //当合并剩下一个节点时跳出循环
-        while (helper.size() != 1) {
+        while (helper.getSize() != 1) {
             //先拿出当前最小的点
-            HuffmanTreeNode cur1 = helper.poll();
+            HuffmanTreeNode cur1 = helper.top();
+            helper.pop();
             //再拿出次小的点
-            HuffmanTreeNode cur2= helper.poll();
+            HuffmanTreeNode cur2= helper.top();
+            helper.pop();
             //合并连两个点
             HuffmanTreeNode newTree = new HuffmanTreeNode(cur1.getFre() + cur2.getFre(), "", '*');
             //设置当前树的大小
@@ -60,13 +63,15 @@ public class HuffmanTree {
             newTree.setLeft(cur1.size > cur2.size ? cur2 : cur1);
             newTree.setRight(cur1.size > cur2.size ? cur1: cur2);
             //把当前点放回去
-            helper.add(newTree);
+            helper.insert(newTree);
         }
-        return helper.peek();
+        dfs(helper.top(), "");
+        return helper.top();
     }
 
     //dfs遍历整棵树同时设置字符对应的code
     void dfs(HuffmanTreeNode cur, String code) {
+        System.out.println(code);
         //当遍历到叶子节点时我们记录下字符对应的编码
         if (cur.getLeft() == null && cur.getRight() == null) {
             mp.put(cur.getKey(), code);
@@ -84,8 +89,8 @@ public class HuffmanTree {
     public void getCode() {
         //先建树
         HuffmanTreeNode head = BuildHuffmanTree();
-        dfs(head, "");
-        TreeUtil.printTree(head);
+//        dfs(head, "");
+//        TreeUtil.printTree(head);
     }
 
 //    void transform() throws IOException {
@@ -117,6 +122,8 @@ public class HuffmanTree {
             System.out.println(key + " : " + mp.get(key));
         }
     }
+
+
 
     public static void main(String[] args) throws IOException {
         HuffmanTree tree = new HuffmanTree();

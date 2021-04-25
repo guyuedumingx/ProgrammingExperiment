@@ -70,7 +70,7 @@ public class HuffmanTreeNode implements TreeNode {
     }
 
     //无参的构造方法
-    HuffmanTreeNode() {}
+    public HuffmanTreeNode() {}
 
     //有参的构造方法
     HuffmanTreeNode(int fre, String code , char key) {
