@@ -40,6 +40,11 @@ public class HuffmanTreeNode implements TreeNode {
 
     }
 
+    @Override
+    public String getData() {
+        return code;
+    }
+
     public int getFre() {
         return fre;
     }
@@ -63,14 +68,6 @@ public class HuffmanTreeNode implements TreeNode {
     public void setKey(char key) {
         this.key = key;
     }
-
-    @Override
-    public String getData() {
-        return code;
-    }
-
-    //无参的构造方法
-    public HuffmanTreeNode() {}
 
     //有参的构造方法
     HuffmanTreeNode(int fre, String code , char key) {

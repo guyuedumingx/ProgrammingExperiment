@@ -65,13 +65,11 @@ public class HuffmanTree {
             //把当前点放回去
             helper.insert(newTree);
         }
-        dfs(helper.top(), "");
         return helper.top();
     }
 
     //dfs遍历整棵树同时设置字符对应的code
     void dfs(HuffmanTreeNode cur, String code) {
-        System.out.println(code);
         //当遍历到叶子节点时我们记录下字符对应的编码
         if (cur.getLeft() == null && cur.getRight() == null) {
             mp.put(cur.getKey(), code);
@@ -89,8 +87,8 @@ public class HuffmanTree {
     public void getCode() {
         //先建树
         HuffmanTreeNode head = BuildHuffmanTree();
-//        dfs(head, "");
-//        TreeUtil.printTree(head);
+        dfs(head, "");
+        TreeUtil.printTree(head);
     }
 
 //    void transform() throws IOException {
@@ -122,8 +120,6 @@ public class HuffmanTree {
             System.out.println(key + " : " + mp.get(key));
         }
     }
-
-
 
     public static void main(String[] args) throws IOException {
         HuffmanTree tree = new HuffmanTree();
