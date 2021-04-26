@@ -4,12 +4,8 @@ import experiment3.dqy.util.Frequency;
 import experiment3.dqy.util.HuffmanHeap;
 import util.Resource;
 import util.TreeUtil;
-
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.PriorityQueue;
+
 
 public class HuffmanTree {
     //哈希表用于记录每一个字符出现的次数
@@ -100,21 +96,23 @@ public class HuffmanTree {
         mp.showCodingMap();
     }
 
-    void code() throws IOException {
+    String code() throws IOException {
         //获取资源文件
-        String url = Resource.get("experiment3/Demo.txt");
+        String url = Resource.get("experiment3/test.txt");
         FileReader fileReader = new FileReader(url);
         BufferedReader br = new BufferedReader(fileReader);
-        String read;
+        String read, ans = "";
         //读入文件资源中的每行数据
         while ((read = br.readLine()) != null) {
             //遍历整行
             for (int i = 0; i < read.length(); i++) {
                 char x = read.charAt(i);
+                ans += mp.get(x);
                 System.out.print(mp.get(x));
             }
             System.out.println();
         }
+        return ans;
     }
 
     //找到一段文字对它进行编译
@@ -123,13 +121,12 @@ public class HuffmanTree {
         int idx = 0;
         HuffmanTreeNode cur = root;
         while (idx < str.length()) {
+            cur = str.charAt(idx) == '1' ? (HuffmanTreeNode)cur.getRight() : (HuffmanTreeNode)cur.getLeft();
             //当到达了根节点时我们输出结果
             if (cur.getLeft() == null && cur.getRight() == null) {
                 System.out.print(cur.getKey());
                 cur = root;
             }
-            //否则我们继续往下走
-            cur = str.charAt(idx) == '1' ? (HuffmanTreeNode)cur.getRight() : (HuffmanTreeNode)cur.getLeft();
             idx++;
         }
         System.out.println();
@@ -142,8 +139,7 @@ public class HuffmanTree {
         tree.showCnt();
         System.out.println();
         tree.showMp();
-        tree.code();
-        String a = "110110011100110100011011001100000011010100101100001010001100101001111000011111000100111111001001100001111110001010011011011101100000011011011011000010000111011101111010010101100001110111100101010001001010111110011111001111010111100010001000011001001101100001010100111100101110010011010000111110101000011111110010011011010001010100110010110010000110010100000011101010111001000011101110111101001010110000101111010011110110111010101101100111010010100110010100110101111011111011111100101101101001010010111001010010110011111101110011001010111101010101010111001001010100100000011";
+        String a = tree.code();
         tree.decode(a);
     }
 }

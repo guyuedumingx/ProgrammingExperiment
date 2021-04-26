@@ -1,5 +1,6 @@
 package experiment3.dqy.util;
 
+//字符为键，int为值的哈希
 public class Frequency {
     int[] cnt = new int[256];
     int size;

@@ -2,6 +2,7 @@ package experiment3.dqy.util;
 
 import experiment3.dqy.HuffmanTreeNode;
 
+//手写堆
 public class HuffmanHeap {
     // h[N]存储堆中的值, h[1]是堆顶，x的左儿子是2x, 右儿子是2x + 1
     final int N = 200010;

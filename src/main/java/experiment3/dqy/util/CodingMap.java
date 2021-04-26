@@ -1,5 +1,6 @@
 package experiment3.dqy.util;
 
+//字符为键，字符串为值的哈希
 public class CodingMap {
     String[] map = new String[256];
     int size;

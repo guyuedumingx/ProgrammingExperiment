@@ -5,7 +5,7 @@ import util.TreeNode;
 /**
  * 哈夫曼树的结点
  * 至于为什么要继承那个接口我也不知道
- * 大佬们叫我去继承一下我就去了
+ * 大佬们叫我去继承一下我就去了[Doge]
  */
 
 public class HuffmanTreeNode implements TreeNode {
