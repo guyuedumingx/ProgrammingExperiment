@@ -8,7 +8,7 @@
 ```java
 /**
  * 统计resource文件中的各种字符的频率
- * @param resource 文件位置 比如： experiment3/Demo.txt
+ * @param resource 文件位置 比如： experiment3/ori.txt
  * @return
  */
 public static Map<Character, Integer> countForMap(String resource) {

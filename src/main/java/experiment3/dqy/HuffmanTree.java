@@ -5,6 +5,7 @@ import experiment3.dqy.util.HuffmanHeap;
 import util.Resource;
 import util.TreeUtil;
 import java.io.*;
+import java.util.Scanner;
 
 
 public class HuffmanTree {
@@ -96,22 +97,15 @@ public class HuffmanTree {
         mp.showCodingMap();
     }
 
-    String code() throws IOException {
-        //获取资源文件
-        String url = Resource.get("experiment3/test.txt");
-        FileReader fileReader = new FileReader(url);
-        BufferedReader br = new BufferedReader(fileReader);
-        String read, ans = "";
-        //读入文件资源中的每行数据
-        while ((read = br.readLine()) != null) {
+    String code(String s) throws IOException {
+        String ans = "";
             //遍历整行
-            for (int i = 0; i < read.length(); i++) {
-                char x = read.charAt(i);
-                ans += mp.get(x);
-                System.out.print(mp.get(x));
-            }
-            System.out.println();
+        for (int i = 0; i < s.length(); i++) {
+            char x = s.charAt(i);
+            ans += mp.get(x);
+            System.out.print(mp.get(x));
         }
+        System.out.println();
         return ans;
     }
 
@@ -133,13 +127,15 @@ public class HuffmanTree {
     }
 
     public static void main(String[] args) throws IOException {
+        Scanner src = new Scanner(System.in);
         HuffmanTree tree = new HuffmanTree();
         tree.getFrequency();
         tree.getCode();
         tree.showCnt();
         System.out.println();
         tree.showMp();
-        String a = tree.code();
+        String b = src.next();
+        String a = tree.code(b);
         tree.decode(a);
     }
 }
