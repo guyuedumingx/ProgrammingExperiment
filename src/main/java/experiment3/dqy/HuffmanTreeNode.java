@@ -1,6 +1,6 @@
 package experiment3.dqy;
 
-import util.TreeNode;
+import util.treeUtil.TreeNode;
 
 /**
  * 哈夫曼树的结点

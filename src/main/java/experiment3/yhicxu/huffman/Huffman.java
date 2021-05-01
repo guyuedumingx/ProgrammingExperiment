@@ -7,7 +7,7 @@ import java.util.*;
  * <p><b>功能：</b></p><br>实现了哈夫曼编码的一系列功能
  * <p><b>方法：</b></p>
  * <br> {@link #createTree(String)}通过文本中字符出现频率构建哈弗曼树
- * <br> {@link #code(String)}将字符串进行编码
+ * <br> {@link #encode(String)}将字符串进行编码
  * <br> {@link #decode(String)}将编码后的01字符串进行解码
  * <br> {@link #showFrequencyTable()}显示频率表
  * <br> {@link #showCodeTable()}显示编码表
@@ -64,7 +64,7 @@ public class Huffman {
      * @author 60rzvvbj
      * @date 2021/4/8
      */
-    public String code(String message) {
+    public String encode(String message) {
         StringBuilder res = new StringBuilder();
         for (char ch : message.toCharArray()) {
             res.append(codeTable.get(ch));
@@ -133,8 +133,9 @@ public class Huffman {
         Arrays.sort(characters);
         for (char ch : characters) {
             String k = "" + ch;
-            if (ch == 10) k = "\\n";
-            if (ch == 13) k = "\\r";
+            if (ch == '\n') k = "↲";
+            if (ch == '\r') k = "↓";
+            if (ch == ' ') k = "凵";
             System.out.println(k + ":\t" + codeTable.get(ch));
         }
     }

@@ -3,7 +3,7 @@ import experiment3.dqy.util.CodingMap;
 import experiment3.dqy.util.Frequency;
 import experiment3.dqy.util.HuffmanHeap;
 import util.Resource;
-import util.TreeUtil;
+import util.treeUtil.TreeUtil;
 import java.io.*;
 import java.util.Scanner;
 

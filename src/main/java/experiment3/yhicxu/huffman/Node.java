@@ -1,6 +1,6 @@
 package experiment3.yhicxu.huffman;
 
-import util.TreeNode;
+import util.treeUtil.TreeNode;
 
 // 哈弗曼树节点类
 public class Node<T> implements TreeNode {
