@@ -1,9 +1,27 @@
 package util.graphutil;
 
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
+/**
+ * <p><b>类名：</b>{@code GraphUtil}</p>
+ * <p><b>功能：</b></p><br>图工具类
+ * <p><b>方法：</b></p>
+ * <br> {@link #exportGraph(Graph, String)}导出图
+ *
+ * @author 60rzvvbj
+ * @date 2021/5/2
+ */
 public class GraphUtil {
+
+    /**
+     * <p><b>方法名：</b>{@code exportGraph}</p>
+     * <p><b>功能：</b></p><br>导出图
+     *
+     * @param graph 要导出的图
+     * @param path  文件的输出路径（文件后缀名需为.ycx）
+     * @author 60rzvvbj
+     * @date 2021/5/2
+     */
     public static boolean exportGraph(Graph graph, String path) {
         PrintStream printStream = null;
         try {
