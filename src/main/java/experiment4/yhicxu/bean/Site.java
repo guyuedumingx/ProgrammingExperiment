@@ -22,6 +22,10 @@ public class Site implements GraphNode {
         adjacentSites.add(adjacentSite);
     }
 
+    public Set<Site> getAdjacentSites(){
+        return adjacentSites;
+    }
+
     @Override
     public boolean equals(Object o) {
         return this.name.equals(((Site) o).getName());

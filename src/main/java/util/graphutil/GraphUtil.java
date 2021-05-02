@@ -40,6 +40,30 @@ public class GraphUtil {
                 }
                 count++;
             }
+            printStream.println("\t],");
+
+            // routes
+            len = graph.getRoutes().size();
+            count = 0;
+            printStream.println("\t\"routes\": [");
+            for (GraphRoute route : graph.getRoutes()) {
+                String end = ",";
+                if (count == len - 1) {
+                    end = "";
+                }
+                printStream.print("\t\t[\"" + route.getName() + "\", ");
+                int tLen = route.getNodes().size();
+                int tCount = 0;
+                for (GraphNode node : route.getNodes()) {
+                    if (tCount == tLen - 1) {
+                        printStream.println("\"" + node.getName() + "\"]" + end);
+                    } else {
+                        printStream.print("\"" + node.getName() + "\", ");
+                    }
+                    tCount++;
+                }
+                count++;
+            }
             printStream.println("\t]");
 
             // end

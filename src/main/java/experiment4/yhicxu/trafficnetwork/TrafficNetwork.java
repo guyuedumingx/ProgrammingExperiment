@@ -1,16 +1,14 @@
 package experiment4.yhicxu.trafficnetwork;
 
 import experiment4.yhicxu.bean.Road;
+import experiment4.yhicxu.bean.Route;
 import experiment4.yhicxu.bean.Site;
 import util.graphutil.Graph;
 import util.graphutil.GraphEdge;
 import util.graphutil.GraphNode;
 import util.graphutil.GraphRoute;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TrafficNetwork implements Graph {
 
@@ -56,6 +54,42 @@ public class TrafficNetwork implements Graph {
         }
     }
 
+    public boolean addRoute(String name, String[] sNames) {
+        Set<String> set = new HashSet<>();
+        for (String sName : sNames) {
+            if (siteName.get(sName) == null) {
+                return false;
+            }
+            set.add(sName);
+        }
+        if (set.size() != sNames.length) {
+            return false;
+        }
+        Site now = siteName.get(sNames[0]);
+        for (int i = 1; i < sNames.length; i++) {
+            Set<Site> nowAdjacentSites = now.getAdjacentSites();
+            for (Site s : nowAdjacentSites) {
+                if (s.getName().equals(sNames[i])) {
+                    now = s;
+                    break;
+                }
+            }
+        }
+        List<GraphNode> list = new ArrayList<>(sNames.length);
+        for (int i = 0; i < sNames.length; i++) {
+            list.add(i, siteName.get(sNames[i]));
+        }
+        Route r = new Route(name, list);
+        for (GraphRoute t : routes) {
+            if (t.equals(r)) {
+                return false;
+            }
+        }
+        routes.add(r);
+        return true;
+    }
+
+
     @Override
     public int getType() {
         return 0;
@@ -73,6 +107,6 @@ public class TrafficNetwork implements Graph {
 
     @Override
     public List<GraphRoute> getRoutes() {
-        return null;
+        return routes;
     }
 }
