@@ -3,17 +3,18 @@ package experiment4.yhicxu.bean;
 import util.graphutil.GraphNode;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Set;
 
 public class Site implements GraphNode {
+
+    private int id;
 
     private String name;
 
     private Set<Site> adjacentSites;
 
-    public Site(String name) {
+    public Site(int id, String name) {
+        this.id = id;
         this.name = name;
         adjacentSites = new HashSet<>();
     }
@@ -22,13 +23,25 @@ public class Site implements GraphNode {
         adjacentSites.add(adjacentSite);
     }
 
-    public Set<Site> getAdjacentSites(){
+    public void removeAdjacentSite(Site adjacentSite) {
+        adjacentSites.remove(adjacentSite);
+    }
+
+    public Set<Site> getAdjacentSites() {
         return adjacentSites;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     @Override
     public boolean equals(Object o) {
-        return this.name.equals(((Site) o).getName());
+        return this.id == ((Site) o).id;
     }
 
     @Override

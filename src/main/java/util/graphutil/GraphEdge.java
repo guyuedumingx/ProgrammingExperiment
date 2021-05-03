@@ -15,7 +15,7 @@ public interface GraphEdge {
 
     /**
      * <p><b>方法名：</b>{@code getRank}</p>
-     * <p><b>功能：</b></p><br>获取边的权值（目前工具类中未投入使用）
+     * <p><b>功能：</b></p><br>获取边的权值（目前工具类中未投入使用，以后可能会用到）
      *
      * @return 权值
      * @author 60rzvvbj

@@ -1,18 +1,39 @@
 package experiment4.yhicxu.bean;
 
 import util.graphutil.GraphEdge;
-import util.graphutil.GraphNode;
 
 public class Road implements GraphEdge {
 
-    private int rank;
+    private int length;
+    private int routeNum;
     private Site firstNode;
     private Site secondNode;
 
-    public Road(Site firstNode, Site secondNode) {
-        this.rank = 0;
+    public Road(Site firstNode, Site secondNode, int length) {
+        this.routeNum = 0;
+        this.length = length;
         this.firstNode = firstNode;
         this.secondNode = secondNode;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getRouteNum() {
+        return routeNum;
+    }
+
+    public void addRoute() {
+        routeNum++;
+    }
+
+    public void subRoute() {
+        routeNum--;
     }
 
     @Override
@@ -28,7 +49,7 @@ public class Road implements GraphEdge {
 
     @Override
     public int getRank() {
-        return rank;
+        return this.getLength();
     }
 
     @Override
