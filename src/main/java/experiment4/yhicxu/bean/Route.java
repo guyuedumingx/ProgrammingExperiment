@@ -15,6 +15,10 @@ public class Route implements GraphRoute {
         this.sites = sites;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         Route that = (Route) o;
