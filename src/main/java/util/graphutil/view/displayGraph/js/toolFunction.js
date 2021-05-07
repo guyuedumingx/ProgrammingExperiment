@@ -1575,3 +1575,24 @@ function debounce (fn, delay) {
 function removeDom (node) {
     node.parentNode.removeChild(node);
 }
+
+Node.prototype.removeDom = function () {
+    removeDom(this);
+}
+
+/**
+ * 
+ * 函数功能：删除元素的所有子元素
+ * 
+ * @param {Node} node dom元素
+ * @author 60rzvvbj
+ */
+function removeAllChild (node) {
+    while (node.children.length) {
+        node.removeChild(node.children[0]);
+    }
+}
+
+Node.prototype.removeAllChild = function () {
+    removeAllChild(this);
+}

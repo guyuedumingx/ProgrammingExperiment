@@ -3,10 +3,7 @@ package experiment4.yhicxu.trafficnetwork;
 import experiment4.yhicxu.bean.Road;
 import experiment4.yhicxu.bean.Route;
 import experiment4.yhicxu.bean.Site;
-import util.graphutil.Graph;
-import util.graphutil.GraphEdge;
-import util.graphutil.GraphNode;
-import util.graphutil.GraphRoute;
+import util.graphutil.*;
 
 import java.util.*;
 
@@ -18,6 +15,27 @@ public class TrafficNetwork implements Graph {
     private Map<String, Road> roads; // 道路集合，键为道路两端两个节点中小的id+空格+大的id组成的字符串
     private Map<String, Route> routes; // 线路集合，键为线路名
 
+    // 通过图的数据构造
+    public TrafficNetwork(GraphData graphData) {
+        this(graphData.getType());
+        for (String siteName : graphData.getNodes()) {
+            addSite(siteName);
+        }
+        for (List<String> list : graphData.getEdges()) {
+            addRoad(list.get(0), list.get(1), 0);
+        }
+        for (List<String> list : graphData.getRoutes()) {
+            String name = list.get(0);
+            int len = list.size();
+            String[] strArr = new String[len - 1];
+            for (int i = 0; i < strArr.length; i++) {
+                strArr[i] = list.get(i + 1);
+            }
+            addRoute(name, strArr);
+        }
+    }
+
+    // 构造
     public TrafficNetwork(int type) {
         this.type = type;
         routes = new HashMap<>();
@@ -201,7 +219,7 @@ public class TrafficNetwork implements Graph {
         }
 
         // 判断线路是否合理
-        if (judgeRoute(sNames)) {
+        if (!judgeRoute(sNames)) {
             return false;
         }
 
@@ -236,6 +254,165 @@ public class TrafficNetwork implements Graph {
         // 成功删除
         routes.remove(name);
         return true;
+    }
+
+    // 查询某个节点的信息
+    public Site querySite(String name) {
+        return sites.get(name);
+    }
+
+    // 查询某个节点的邻居节点
+    public Set<Site> queryAdjacentSites(String name) {
+        Site site = sites.get(name);
+        if (site == null) {
+            throw new RuntimeException("该节点不存在！");
+        } else {
+            return site.getAdjacentSites();
+        }
+    }
+
+
+    // 查询某个站点上所有线路
+    private Set<Route> queryRouteAtSite(Site site) {
+        Set<Route> set = new HashSet<>();
+        for (String routeName : routes.keySet()) {
+            Route route = routes.get(routeName);
+            for (GraphNode graphNode : route.getNodes()) {
+                if (graphNode.equals(site)) {
+                    set.add(route);
+                    break;
+                }
+            }
+        }
+        return set;
+    }
+
+    // 查询某条线路上的所有线路
+    private Set<Route> queryRouteAtRoute(Route route) {
+        Set<Route> res = new HashSet<>();
+        for (GraphNode site : route.getNodes()) {
+            Set<Route> set = queryRouteAtSite((Site) site);
+            res.addAll(set);
+        }
+        return res;
+    }
+
+    // 判断站点是否在线路中
+    private boolean judgeWhetherSiteIsInRoute(Site site, Route route) {
+        for (GraphNode node : route.getNodes()) {
+            if (site.equals(node)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 查询可达线路
+    public Map<List<Route>, Integer> findFeasibleRoutes(String startName, String endName) {
+        Site start = sites.get(startName);
+        Site end = sites.get(endName);
+        if (start == null) {
+            throw new RuntimeException("起点不存在！");
+        }
+        if (end == null) {
+            throw new RuntimeException("终点不存在！");
+        }
+        Map<List<Route>, Integer> res = new HashMap<>();
+        findFeasibleRoutesDFS(res, new HashMap<>(), new LinkedList<>(), start, end);
+        showRouteList(res, start, end);
+        return res;
+    }
+
+    // 深度优先搜索寻找可达路线
+    private void findFeasibleRoutesDFS(Map<List<Route>, Integer> res, Map<String, Boolean> status, LinkedList<Route> list, Site start, Site end) {
+        if (list.size() == 0) {
+            for (Route route : queryRouteAtSite(start)) {
+
+                // 如果该线路经过终点则记录
+                if (judgeWhetherSiteIsInRoute(end, route)) {
+                    List<Route> l = new ArrayList<>(list.size() + 1);
+                    l.addAll(list);
+                    l.add(route);
+                    res.put(l, calculateSiteNumber(l, start, end));
+                }
+
+                // 递归
+                list.offerLast(route);
+                status.put(route.getName(), true);
+                findFeasibleRoutesDFS(res, status, list, start, end);
+                status.put(route.getName(), false);
+                list.pollLast();
+            }
+        } else {
+            for (Route route : queryRouteAtRoute(list.getLast())) {
+
+                // 判断该线路是否走过
+                Boolean statusValue = status.get(route.getName());
+                if (statusValue != null && statusValue) {
+                    continue;
+                }
+
+                // 判断该线路和上一条线路是否相交于终点
+                if (end.equals(findRouteIntersection(route, list.getLast()))) {
+                    continue;
+                }
+
+                // 如果该线路经过终点则记录
+                if (judgeWhetherSiteIsInRoute(end, route)) {
+                    List<Route> l = new ArrayList<>(list.size());
+                    l.addAll(list);
+                    l.add(route);
+                    res.put(l, calculateSiteNumber(l, start, end));
+                }
+
+                // 递归
+                list.offerLast(route);
+                status.put(route.getName(), true);
+                findFeasibleRoutesDFS(res, status, list, start, end);
+                status.put(route.getName(), false);
+                list.pollLast();
+            }
+        }
+
+    }
+
+    // 寻找两个线路的交点
+    private Site findRouteIntersection(Route route1, Route route2) {
+        for (GraphNode node1 : route1.getNodes()) {
+            for (GraphNode node2 : route2.getNodes()) {
+                if (node1.equals(node2)) {
+                    return (Site) node1;
+                }
+            }
+        }
+        return null;
+    }
+
+    // 计算方案的总站数
+    private int calculateSiteNumber(List<Route> routeList, Site start, Site end) {
+        int len = routeList.size();
+        List<Site> siteList = findTransferSite(routeList);
+        int res = 0;
+        if (len <= 1) {
+            res += routeList.get(0).calculateDistance(start, end);
+        } else {
+            res += routeList.get(0).calculateDistance(start, siteList.get(0));
+            for (int i = 1; i < len - 1; i++) {
+                res += routeList.get(i).calculateDistance(siteList.get(i - 1), siteList.get(i));
+            }
+            res += routeList.get(len - 1).calculateDistance(siteList.get(len - 2), end);
+        }
+        return res;
+    }
+
+    // 找出方案中的中转站
+    public List<Site> findTransferSite(List<Route> routeList) {
+        int len = routeList.size();
+        List<Site> res = new ArrayList<>(len - 1);
+        for (int i = 1; i < len; i++) {
+            res.add(findRouteIntersection(routeList.get(i - 1), routeList.get(i)));
+        }
+        return res;
     }
 
     // 判断线路是否合理
@@ -364,4 +541,22 @@ public class TrafficNetwork implements Graph {
     private Road getRoadByRoadKey(String roadKey) {
         return roads.get(roadKey);
     }
+
+    // 显示线路方案
+    public void showRouteList(Map<List<Route>, Integer> map, Site start, Site end) {
+        for (List<Route> routeList : map.keySet()) {
+            int len = routeList.size();
+            List<Site> siteList = findTransferSite(routeList);
+            System.out.print(start.getName() + " ");
+            for (int i = 0; i < len; i++) {
+                System.out.print(routeList.get(i).getName() + " ");
+                if (i != len - 1) {
+                    System.out.print(siteList.get(i).getName() + " ");
+                }
+            }
+            System.out.print(end.getName() + " ");
+            System.out.println(map.get(routeList));
+        }
+    }
+
 }
