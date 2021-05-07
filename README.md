@@ -22,8 +22,10 @@
 **`Eclipse`导入教程**  
 百度一下，你就知道  
 
-## 解决OpenSSL SSL_read: Connection was reset, errno 10054的问题
+**解决 OpenSSL SSL_read: Connection was reset, errno 10054的问题**
+```shell
 git config --global http.sslVerify "false"
+```
 
 ### 参与  
 请通过某种方式联系我`yohoyes`,可以微信联系我
