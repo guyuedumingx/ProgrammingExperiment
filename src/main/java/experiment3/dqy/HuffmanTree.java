@@ -56,8 +56,8 @@ public class HuffmanTree {
             //设置当前树的大小
             newTree.size = cur1.size + cur2.size;
             //根据子树的大小决定
-            newTree.setLeft(cur1.size > cur2.size ? cur2 : cur1);
-            newTree.setRight(cur1.size > cur2.size ? cur1: cur2);
+            newTree.setLeft(cur1.getFre() > cur2.getFre() ? cur2 : cur1);
+            newTree.setRight(cur1.getFre() > cur2.getFre() ? cur1: cur2);
             //把当前点放回去
             helper.insert(newTree);
         }
