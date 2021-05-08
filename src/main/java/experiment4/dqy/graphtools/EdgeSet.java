@@ -9,12 +9,7 @@ public class EdgeSet {
 
     //判断边集中是否存在某条边
     private boolean hasEdge(Edge edge) {
-        Iterator iterator = edgeSet.iterator();
-        while (iterator.hasNext()) {
-            Edge cur = (Edge) iterator.next();
-            if (cur.equals(edge)) return true;
-        }
-        return false;
+        return edgeSet.contains(edge);
     }
 
     //加边
