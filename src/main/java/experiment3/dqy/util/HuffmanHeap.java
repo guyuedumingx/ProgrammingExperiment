@@ -20,9 +20,9 @@ public class HuffmanHeap {
     private void down(int u) {
         int t = u;
         //当前点与左子树进行比较
-        if (u * 2 <= size && h[u * 2].getFre() < h[t].getFre()) t = u * 2;
+        if (u * 2 <= size && h[u * 2].getFre() <= h[t].getFre()) t = u * 2;
         //当前点与右子树进行比较
-        if (u * 2 + 1 <= size && h[u * 2 + 1].getFre() < h[t].getFre()) t = u * 2 + 1;
+        if (u * 2 + 1 <= size && h[u * 2 + 1].getFre() <= h[t].getFre()) t = u * 2 + 1;
         //如果当前点比两个子节点都小，那么可以停止了
         if (u != t) {
             heap_swap(u, t);
@@ -33,7 +33,7 @@ public class HuffmanHeap {
     //上浮
     private void up(int u) {
         //只要当前点比父节点要小就一直上浮
-        while (u / 2 != 0 && h[u].getFre() < h[u / 2].getFre()) {
+        while (u / 2 != 0 && h[u].getFre() <= h[u / 2].getFre()) {
             heap_swap(u, u / 2);
             u >>= 1;
         }
