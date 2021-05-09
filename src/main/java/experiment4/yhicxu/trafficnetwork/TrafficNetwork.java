@@ -336,6 +336,7 @@ public class TrafficNetwork implements Graph {
                 }
 
                 // 递归
+                siteStatus.add(end.getName());
                 siteStatus.add(start.getName());
                 routeStatus.add(route.getName());
                 list.offerLast(route);
@@ -343,6 +344,7 @@ public class TrafficNetwork implements Graph {
                 list.pollLast();
                 routeStatus.remove(route.getName());
                 siteStatus.remove(start.getName());
+                siteStatus.remove(end.getName());
             }
         } else {
             for (Route route : queryRouteAtRoute(list.getLast())) {
@@ -357,9 +359,10 @@ public class TrafficNetwork implements Graph {
 
                 Site site = findRouteIntersection(route, list.getLast(), siteStatus);
                 if (site == null) {
-                    System.out.println("!!!" + route.getName() + "!!!");
-                    System.out.println("!!!" + list.getLast().getName() + "!!!");
-                    System.out.println("!!!" + Arrays.toString(siteStatus.toArray(new String[0])));
+                    // debug
+                    // System.out.println("!!!" + route.getName() + "!!!");
+                    // System.out.println("!!!" + list.getLast().getName() + "!!!");
+                    // System.out.println("!!!" + Arrays.toString(siteStatus.toArray(new String[0])));
                     continue;
                 }
                 siteName = site.getName();
@@ -371,14 +374,16 @@ public class TrafficNetwork implements Graph {
                     continue;
                 }
 
+                // 如果交点为终点则跳过
+//                if (site.equals(end)) {
+//                    continue;
+//                }
+
                 siteStatus.add(siteName);
                 routeStatus.add(routeName);
 
                 // 如果该线路经过终点则记录
                 if (judgeWhetherSiteIsInRoute(end, route)) {
-                    if (siteStatus.contains(end.getName())) {
-                        continue;
-                    }
                     List<Route> l = new ArrayList<>(list.size());
                     l.addAll(list);
                     l.add(route);

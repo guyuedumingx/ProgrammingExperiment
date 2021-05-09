@@ -211,9 +211,10 @@ public class Controller {
         String path = inputDevice.readString("请输入文件路径：");
         try {
             tn = new TrafficNetwork(GraphUtil.importGraph(path));
-            System.out.println(tn.getNodes());
-            System.out.println(tn.getEdges());
-            System.out.println(tn.getRoutes());
+            // debug用
+            // System.out.println(tn.getNodes());
+            // System.out.println(tn.getEdges());
+            // System.out.println(tn.getRoutes());
             monitor.showTips("导入成功");
         } catch (Exception e) {
             monitor.showTips("导入失败");
