@@ -113,7 +113,7 @@ public class GraphUtil {
                 res.append(new String(chars, 0, len));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         } finally {
             if (reader != null) {
                 try {

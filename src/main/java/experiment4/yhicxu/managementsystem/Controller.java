@@ -29,6 +29,7 @@ public class Controller {
             cover();
         }
         tn = new TrafficNetwork(0);
+        monitor.showTips("创建成功！");
     }
 
     // 覆盖
@@ -79,7 +80,7 @@ public class Controller {
                     monitor.showTips("修改失败");
                 }
             } else if (type == 3) {
-                String name = inputDevice.readString("请输入站点名 :");
+                String name = inputDevice.readString("请输入站点名：");
                 if (tn.removeSite(name)) {
                     monitor.showTips("删除成功");
                 } else {
@@ -190,13 +191,21 @@ public class Controller {
             } else if (type == 6) {
                 String name = inputDevice.readString("请输入站点名称：");
                 Site site = tn.getSite(name);
-                monitor.showSiteAllRoute(site, tn.queryRouteAtSite(site));
+                if (site == null) {
+                    monitor.showTips("站点不存在！");
+                } else {
+                    monitor.showSiteAllRoute(site, tn.queryRouteAtSite(site));
+                }
             } else if (type == 7) {
                 String startName = inputDevice.readString("请输入起点站名称：");
                 String endName = inputDevice.readString("请输入终点站名称：");
-                Map<List<Route>, Integer> feasibleRoutes = tn.findFeasibleRoutes(startName, endName);
-                Map<List<Route>, List<Site>> allTransferSite = tn.findAllTransferSite(feasibleRoutes.keySet(), startName, endName);
-                monitor.showAllScheme(feasibleRoutes, allTransferSite, startName, endName);
+                try {
+                    Map<List<Route>, Integer> feasibleRoutes = tn.findFeasibleRoutes(startName, endName);
+                    Map<List<Route>, List<Site>> allTransferSite = tn.findAllTransferSite(feasibleRoutes.keySet(), startName, endName);
+                    monitor.showAllScheme(feasibleRoutes, allTransferSite, startName, endName);
+                } catch (Exception e) {
+                    monitor.showTips(e.getMessage());
+                }
             } else {
                 break;
             }
@@ -211,10 +220,6 @@ public class Controller {
         String path = inputDevice.readString("请输入文件路径：");
         try {
             tn = new TrafficNetwork(GraphUtil.importGraph(path));
-            // debug用
-            // System.out.println(tn.getNodes());
-            // System.out.println(tn.getEdges());
-            // System.out.println(tn.getRoutes());
             monitor.showTips("导入成功");
         } catch (Exception e) {
             monitor.showTips("导入失败");
