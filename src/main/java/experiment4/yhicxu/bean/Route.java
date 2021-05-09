@@ -50,4 +50,12 @@ public class Route implements GraphRoute {
     public List<GraphNode> getNodes() {
         return sites;
     }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "name='" + name + '\'' +
+                ", sites=" + sites +
+                '}';
+    }
 }

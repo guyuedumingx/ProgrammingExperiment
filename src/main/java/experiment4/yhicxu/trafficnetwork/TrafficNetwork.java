@@ -273,7 +273,7 @@ public class TrafficNetwork implements Graph {
 
 
     // 查询某个站点上所有线路
-    private Set<Route> queryRouteAtSite(Site site) {
+    public Set<Route> queryRouteAtSite(Site site) {
         Set<Route> set = new HashSet<>();
         for (String routeName : routes.keySet()) {
             Route route = routes.get(routeName);
@@ -318,13 +318,12 @@ public class TrafficNetwork implements Graph {
             throw new RuntimeException("终点不存在！");
         }
         Map<List<Route>, Integer> res = new HashMap<>();
-        findFeasibleRoutesDFS(res, new HashMap<>(), new LinkedList<>(), start, end);
-        showRouteList(res, start, end);
+        findFeasibleRoutesDFS(res, new HashSet<>(), new HashSet<>(), new LinkedList<>(), start, end);
         return res;
     }
 
     // 深度优先搜索寻找可达路线
-    private void findFeasibleRoutesDFS(Map<List<Route>, Integer> res, Map<String, Boolean> status, LinkedList<Route> list, Site start, Site end) {
+    private void findFeasibleRoutesDFS(Map<List<Route>, Integer> res, Set<String> routeStatus, Set<String> siteStatus, LinkedList<Route> list, Site start, Site end) {
         if (list.size() == 0) {
             for (Route route : queryRouteAtSite(start)) {
 
@@ -337,28 +336,49 @@ public class TrafficNetwork implements Graph {
                 }
 
                 // 递归
+                siteStatus.add(start.getName());
+                routeStatus.add(route.getName());
                 list.offerLast(route);
-                status.put(route.getName(), true);
-                findFeasibleRoutesDFS(res, status, list, start, end);
-                status.put(route.getName(), false);
+                findFeasibleRoutesDFS(res, routeStatus, siteStatus, list, start, end);
                 list.pollLast();
+                routeStatus.remove(route.getName());
+                siteStatus.remove(start.getName());
             }
         } else {
             for (Route route : queryRouteAtRoute(list.getLast())) {
 
                 // 判断该线路是否走过
-                Boolean statusValue = status.get(route.getName());
-                if (statusValue != null && statusValue) {
+                if (routeStatus.contains(route.getName())) {
                     continue;
                 }
 
-                // 判断该线路和上一条线路是否相交于终点
-                if (end.equals(findRouteIntersection(route, list.getLast()))) {
+                String routeName = route.getName();
+                String siteName;
+
+                Site site = findRouteIntersection(route, list.getLast(), siteStatus);
+                if (site == null) {
+                    System.out.println("!!!" + route.getName() + "!!!");
+                    System.out.println("!!!" + list.getLast().getName() + "!!!");
+                    System.out.println("!!!" + Arrays.toString(siteStatus.toArray(new String[0])));
                     continue;
                 }
+                siteName = site.getName();
+
+//                String siteName = findRouteIntersection(route, list.getLast(), siteStatus).getName();
+
+                // 判断交点是否已走过
+                if (siteStatus.contains(siteName)) {
+                    continue;
+                }
+
+                siteStatus.add(siteName);
+                routeStatus.add(routeName);
 
                 // 如果该线路经过终点则记录
                 if (judgeWhetherSiteIsInRoute(end, route)) {
+                    if (siteStatus.contains(end.getName())) {
+                        continue;
+                    }
                     List<Route> l = new ArrayList<>(list.size());
                     l.addAll(list);
                     l.add(route);
@@ -367,20 +387,23 @@ public class TrafficNetwork implements Graph {
 
                 // 递归
                 list.offerLast(route);
-                status.put(route.getName(), true);
-                findFeasibleRoutesDFS(res, status, list, start, end);
-                status.put(route.getName(), false);
+                findFeasibleRoutesDFS(res, routeStatus, siteStatus, list, start, end);
                 list.pollLast();
+                routeStatus.remove(routeName);
+                siteStatus.remove(siteName);
             }
         }
 
     }
 
     // 寻找两个线路的交点
-    private Site findRouteIntersection(Route route1, Route route2) {
+    private Site findRouteIntersection(Route route1, Route route2, Set<String> siteStatus) {
         for (GraphNode node1 : route1.getNodes()) {
             for (GraphNode node2 : route2.getNodes()) {
                 if (node1.equals(node2)) {
+                    if (siteStatus.contains(node1.getName())) {
+                        continue;
+                    }
                     return (Site) node1;
                 }
             }
@@ -391,7 +414,7 @@ public class TrafficNetwork implements Graph {
     // 计算方案的总站数
     private int calculateSiteNumber(List<Route> routeList, Site start, Site end) {
         int len = routeList.size();
-        List<Site> siteList = findTransferSite(routeList);
+        List<Site> siteList = findTransferSite(routeList, start, end);
         int res = 0;
         if (len <= 1) {
             res += routeList.get(0).calculateDistance(start, end);
@@ -405,12 +428,26 @@ public class TrafficNetwork implements Graph {
         return res;
     }
 
+    // 找出所有方案的中转站
+    public Map<List<Route>, List<Site>> findAllTransferSite(Set<List<Route>> set, String startName, String endName) {
+        Map<List<Route>, List<Site>> res = new HashMap<>();
+        for (List<Route> list : set) {
+            res.put(list, findTransferSite(list, sites.get(startName), sites.get(endName)));
+        }
+        return res;
+    }
+
     // 找出方案中的中转站
-    public List<Site> findTransferSite(List<Route> routeList) {
+    public List<Site> findTransferSite(List<Route> routeList, Site start, Site end) {
+        Set<String> siteStatus = new HashSet<>();
+        siteStatus.add(start.getName());
+        siteStatus.add(end.getName());
         int len = routeList.size();
         List<Site> res = new ArrayList<>(len - 1);
         for (int i = 1; i < len; i++) {
-            res.add(findRouteIntersection(routeList.get(i - 1), routeList.get(i)));
+            Site site = findRouteIntersection(routeList.get(i - 1), routeList.get(i), siteStatus);
+            siteStatus.add(site.getName());
+            res.add(site);
         }
         return res;
     }
@@ -543,10 +580,10 @@ public class TrafficNetwork implements Graph {
     }
 
     // 显示线路方案
-    public void showRouteList(Map<List<Route>, Integer> map, Site start, Site end) {
+    private void showRouteList(Map<List<Route>, Integer> map, Site start, Site end) {
         for (List<Route> routeList : map.keySet()) {
             int len = routeList.size();
-            List<Site> siteList = findTransferSite(routeList);
+            List<Site> siteList = findTransferSite(routeList, start, end);
             System.out.print(start.getName() + " ");
             for (int i = 0; i < len; i++) {
                 System.out.print(routeList.get(i).getName() + " ");
@@ -559,4 +596,8 @@ public class TrafficNetwork implements Graph {
         }
     }
 
+    // 获取站点
+    public Site getSite(String name) {
+        return sites.get(name);
+    }
 }

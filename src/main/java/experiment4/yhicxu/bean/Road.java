@@ -61,4 +61,13 @@ public class Road implements GraphEdge {
     public Site getSecond() {
         return secondNode;
     }
+
+    @Override
+    public String toString() {
+        return "Road{" +
+                ", routeNum=" + routeNum +
+                ", firstNode=" + firstNode +
+                ", secondNode=" + secondNode +
+                '}';
+    }
 }
