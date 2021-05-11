@@ -19,6 +19,13 @@ public class Route implements GraphRoute {
         this.name = name;
     }
 
+    // 计算两个站点的距离
+    public int calculateDistance(Site site1, Site site2) {
+        int s1 = sites.indexOf(site1);
+        int s2 = sites.indexOf(site2);
+        return Math.abs(s1 - s2);
+    }
+
     @Override
     public boolean equals(Object o) {
         Route that = (Route) o;
@@ -42,5 +49,13 @@ public class Route implements GraphRoute {
     @Override
     public List<GraphNode> getNodes() {
         return sites;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "name='" + name + '\'' +
+                ", sites=" + sites +
+                '}';
     }
 }

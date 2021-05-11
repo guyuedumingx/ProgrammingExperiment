@@ -85,7 +85,7 @@ function selectReset () {
     span.innerText = '＋';
     select.appendChild(span);
     select.title = '';
-    nowFile = null;
+    // nowFile = null;
     input.files = initialFileList;
 }
 
@@ -232,7 +232,7 @@ function start () {
     let userPerformance = 5; // 性能参数
 
     let nowNode; // 当前正在拖动的节点
-    let bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
+    let bfb = 0.5; // 节点之间线的松紧，紧0 - 1松
     let nodeSet = new Set(); // 节点集合
     let constraintArr = new Array(); // 记录约束的数组
     let setLineArr = new Array(); // 记录要添加线条的数组
@@ -325,8 +325,12 @@ function start () {
         for (let j = i + 1; j < data.nodes.length; j++) {
             let node2 = nodeMap.get(data.nodes[j]);
             addConstraint(node1, node2, 2, 200);
-            addConstraint(node1, node2, 1, 400);
         }
+    }
+    for (let edge of setLineArr) {
+        let node1 = edge.l;
+        let node2 = edge.r;
+        addConstraint(node1, node2, 1, 300);
     }
 
     // 通过两点找边
@@ -660,7 +664,7 @@ function start () {
     }
 
     // 维护约束的定时器
-    setInterval(function () {
+    let constraintTimer = setInterval(function () {
         if (!lockingNode.state) {
             for (let i = 0; i < constraintArr.length; i++) {
                 let node1 = constraintArr[i][0];
@@ -673,7 +677,7 @@ function start () {
     }, userPerformance);
 
     // 维护节点间线条的定时器
-    setInterval(function () {
+    let lineTimer = setInterval(function () {
         for (let i = 0; i < setLineArr.length; i++) {
             setline(setLineArr[i]);
         }
@@ -685,8 +689,37 @@ function start () {
     //         setPosition(node);
     //     }
     // }, userPerformance);
+
+    window.graphReload = function () {
+        routeList.removeAllChild();
+        clearInterval(constraintTimer);
+        clearInterval(lineTimer);
+        for (let node of nodeSet) {
+            node.removeDom();
+        }
+        for (let line of setLineArr) {
+            line.line.removeDom();
+        }
+        nodeSet = new Set();
+        constraintArr = new Array();
+        setLineArr = new Array();
+        nowNodeBox.hide();
+        let reader = new FileReader();
+        reader.readAsText(nowFile);
+        reader.onload = function () {
+            console.log(1);
+            data = JSON.parse(reader.result);
+            start();
+        }
+    }
 }
 
 if (model == 'debug') {
     start();
 }
+
+// document.addEventListener('keydown', function (e) {
+//     if (e.key == 'r') {
+//         window.graphReload();
+//     }
+// });

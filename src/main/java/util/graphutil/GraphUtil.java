@@ -1,6 +1,11 @@
 package util.graphutil;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.Reader;
 
 /**
  * <p><b>类名：</b>{@code GraphUtil}</p>
@@ -95,4 +100,38 @@ public class GraphUtil {
         }
         return false;
     }
+
+    // 导入
+    public static GraphData importGraph(String path) {
+        Reader reader = null;
+        char[] chars = new char[1024];
+        int len;
+        StringBuilder res = new StringBuilder();
+        try {
+            reader = new FileReader(path);
+            while ((len = reader.read(chars)) != -1) {
+                res.append(new String(chars, 0, len));
+            }
+        } catch (IOException e) {
+            return null;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        GraphData graphData = null;
+        try {
+            graphData = mapper.readValue(res.toString(), GraphData.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return graphData;
+    }
 }
+
+

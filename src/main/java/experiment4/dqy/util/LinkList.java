@@ -39,6 +39,15 @@ public class LinkList<T> {
 
     public Itr iterator() {return new Itr();}
 
+    public boolean contains(T data) {
+        Node cur = head;
+        while (cur.next != null) {
+            cur = cur.next;
+            if (cur.data.equals(data)) return true;
+        }
+        return  false;
+    }
+
     //从前面插入结点
     public void addFront(T date) {
         Node cur = new Node(date);
