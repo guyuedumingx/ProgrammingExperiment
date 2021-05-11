@@ -1,5 +1,7 @@
 package experiment4.ww.util;
 
+import util.graphutil.GraphNode;
+
 /**
  * 邻接链表的节点
  * @author yohoyes
@@ -45,5 +47,14 @@ public class LinkedNode<T> {
 
     public void setLen(float len) {
         this.len = len;
+    }
+
+    @Override
+    public String toString() {
+        String str = ((GraphNode)data).getName();
+        if(len != 0){
+            str += "(" + len + ")";
+        }
+        return str;
     }
 }
