@@ -2,6 +2,8 @@ package experiment3.ww;
 
 import util.CharUtil;
 import util.treeUtil.TreeNode;
+import util.treeUtil.TreeUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -29,9 +31,9 @@ public class Huffman {
         }
         Node root = queue.poll();
         buildCode(root, "");
-//        TreeUtil.buildXmind(root, "1.xmind");
+        TreeUtil.buildXmind(root, "1.xmind");
 //        TreeUtil.printTree(root);
-        String abcd = encoding("abcd");
+        String abcd = encoding("are you ok");
         System.out.println(abcd);
         String decoding = decoding(abcd, root);
         System.out.println(decoding);
