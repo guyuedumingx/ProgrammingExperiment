@@ -232,7 +232,7 @@ function start () {
     let userPerformance = 5; // 性能参数
 
     let nowNode; // 当前正在拖动的节点
-    let bfb = 0.5; // 节点之间线的松紧，紧0 - 1松
+    let bfb = 0.8; // 节点之间线的松紧，紧0 - 1松
     let nodeSet = new Set(); // 节点集合
     let constraintArr = new Array(); // 记录约束的数组
     let setLineArr = new Array(); // 记录要添加线条的数组

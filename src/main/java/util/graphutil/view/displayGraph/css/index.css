@@ -242,7 +242,7 @@ body {
     top: 0px;
     left: 0px;
     z-index: 30;
-    width: 160px;
+    width: 240px;
     height: 100%;
     background-color: rgba(49, 49, 49, 0.8);
 }
@@ -255,10 +255,11 @@ body {
 
 .view .routeBox ul li {
     height: 40px;
-    padding-left: 20px;
+    padding: 0px 20px;
     overflow: hidden;
     font-size: 18px;
     line-height: 40px;
+    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #d0d0d0;
