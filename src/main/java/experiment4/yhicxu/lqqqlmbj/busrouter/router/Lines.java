@@ -135,12 +135,15 @@ public class Lines {
      * true -- 成功
      */
     public boolean removeLine(int index) {
+        // 判断是否已经没有线路了
         if (size == 0) return false;
+        // 判断线路索引是否合法
         if (index < 0 || index >= size) return false;
+        // 将线路索引处之后的所有线路往前移一位
         for (int j = index; j < size - 1; j++)
             routes[j] = routes[j + 1];
+        // 线路总数减一
         size--;
-
         return true;
     }
 
@@ -155,10 +158,13 @@ public class Lines {
     public boolean queryLine(int begin, int end) {
         if (begin == end) return false; // 起始和目的站点时同一站点
         boolean yn = false;
+        // 遍历所有线路
         for (int i = 0; i < size; i++) {
             Line line = routes[i];
+            // 获取起点和终点在线路中的索引
             int beginIndex = line.inLine(begin);
             int endIndex = line.inLine(end);
+            // 如果起点和终点都在此线路中
             if (beginIndex >= 0 && endIndex >= 0) {
                 // 起始站点索引位置>目的站点索引位置，进行交换
                 if (beginIndex > endIndex) {
@@ -168,7 +174,9 @@ public class Lines {
                 }
                 // 输出从起始站点-->目的站点的线路
                 System.out.println("公交线路为：");
+                // 从起点开始遍历到终点
                 for (int j = beginIndex; j <= endIndex; j++) {
+                    // 输出节点的id
                     System.out.print(line.vexs[j].id);
                     if (j != endIndex)
                         System.out.print("-");
@@ -177,6 +185,7 @@ public class Lines {
                 yn = true;
             }
         }
+        // 返回结果
         return yn;
     }
 

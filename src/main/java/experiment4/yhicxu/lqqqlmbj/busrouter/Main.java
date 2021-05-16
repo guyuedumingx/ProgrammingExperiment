@@ -29,7 +29,7 @@ public class Main {
         printStream.println("13. 退出");
         printStream.println("==================");
         printStream.println();
-        printStream.println("请选择操作类型(1~11)：");
+        printStream.println("请选择操作类型(1~13)：");
     }
 
     public static void main(String[] args) {
