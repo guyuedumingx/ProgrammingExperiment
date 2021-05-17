@@ -6,6 +6,7 @@ import experiment4.yhicxu.bean.Site;
 import util.graphutil.*;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TrafficNetwork implements Graph {
 
@@ -38,9 +39,9 @@ public class TrafficNetwork implements Graph {
     // 构造
     public TrafficNetwork(int type) {
         this.type = type;
-        routes = new HashMap<>();
-        sites = new HashMap<>();
-        roads = new HashMap<>();
+        routes = new ConcurrentHashMap<>();
+        sites = new ConcurrentHashMap<>();
+        roads = new ConcurrentHashMap<>();
     }
 
     // 添加站点
@@ -82,9 +83,10 @@ public class TrafficNetwork implements Graph {
                     return false;
                 }
             }
+            Site[] siteSet = adjacentSites.toArray(new Site[0]);
 
             // 删除所有关联的边
-            for (Site s : adjacentSites) {
+            for (Site s : siteSet) {
                 removeRoad(s.getName(), site.getName());
             }
 
