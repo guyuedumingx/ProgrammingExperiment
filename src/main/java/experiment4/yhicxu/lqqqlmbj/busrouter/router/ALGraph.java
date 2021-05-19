@@ -144,7 +144,7 @@ public class ALGraph implements Graph {
             p = p.nextArc;
         }
         // 删除边结点
-        if (pre == vexs[uIndex].firstArc)
+        if (pre == vexs[uIndex].firstArc && p == pre)
             vexs[uIndex].firstArc = pre.nextArc; // correct
         else
             pre.nextArc = p.nextArc;
@@ -160,7 +160,7 @@ public class ALGraph implements Graph {
             p = p.nextArc;
         }
         // 删除边结点
-        if (pre == vexs[vIndex].firstArc)
+        if (pre == vexs[vIndex].firstArc && pre == p)
             vexs[vIndex].firstArc = pre.nextArc; // correct
         else
             pre.nextArc = p.nextArc;

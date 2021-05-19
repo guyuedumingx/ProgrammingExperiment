@@ -118,7 +118,7 @@ public class Line {
         // 新、旧站点需要有一致的前驱与后继站点
         if (index > 0)
             yn = yn && g.isAdjVertex(vexs[index - 1].id, newId);
-        if (index < size)
+        if (index + 1 < size)
             yn = yn && g.isAdjVertex(newId, vexs[index + 1].id);
         if (yn) { // 站点替换
             vexs[index] = g.vexs[g.findNode(newId)];
