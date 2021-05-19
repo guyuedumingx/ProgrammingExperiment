@@ -1,4 +1,4 @@
-package experiment5.ww;
+package experiment5.ww.pojo;
 
 /**
  * 卡类
@@ -53,5 +53,11 @@ public class Card {
 
     public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Card card = (Card) obj;
+        return this.getNo().equals(card.getNo());
     }
 }

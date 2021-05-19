@@ -1,4 +1,4 @@
-package experiment5.ww;
+package experiment5.ww.pojo;
 
 /**
  * 公共接口
@@ -11,14 +11,14 @@ public interface BaseOpera {
      * 查询卡信息
      * @param no 卡号
      */
-    void query(String no);
+    Card query(String no);
 
     /**
      * 登录接口
      * @param name 用户名
      * @param pwd 用户密码
      */
-    void login(String name, String pwd);
+    boolean login(String name, String pwd);
 
     /**
      * 修改密码接口
@@ -26,5 +26,5 @@ public interface BaseOpera {
      * @param prePwd 原用户密码
      * @param afterPwd 现用户密码
      */
-    void chPwd(String name, String prePwd, String afterPwd);
+    boolean chPwd(String name, String prePwd, String afterPwd);
 }
