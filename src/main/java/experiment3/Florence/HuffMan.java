@@ -10,9 +10,6 @@ import java.util.*;
  */
 public class HuffMan {
 
-    /**
-     * 权重类
-     */
     static final Map<Character,String> encodeMap = new HashMap<>(50);
 
     static class HuffManTreeNode {
@@ -102,13 +99,7 @@ public class HuffMan {
      * @return
      */
     public static FlorencePriorityQueue<HuffManTreeNode> getWeightPriorityQueue(Map<Character,Integer> dataMap){
-        FlorencePriorityQueue<HuffManTreeNode> weightFlorencePriorityQueue = new FlorencePriorityQueue<>(new Comparator<HuffManTreeNode>() {
-
-            @Override
-            public int compare(HuffManTreeNode o1, HuffManTreeNode o2) {
-                return o1.weight-o2.weight;
-            }
-        });
+        FlorencePriorityQueue<HuffManTreeNode> weightFlorencePriorityQueue = new FlorencePriorityQueue<>(Comparator.comparingInt(o -> o.weight));
         for (Map.Entry<Character, Integer> entry : dataMap.entrySet()) {
             weightFlorencePriorityQueue.offer(new HuffManTreeNode(entry.getKey(),entry.getValue()));
         }
@@ -162,6 +153,7 @@ public class HuffMan {
         }
         return target.toString();
     }
+
     public static String decode(String target,HuffManTreeNode huffManTree){
         StringBuilder source= new StringBuilder();
         dfsHuffManTree(0,target,source,huffManTree);
@@ -204,8 +196,9 @@ public class HuffMan {
         initEncodeMap(huffManTreeNode,new StringBuilder(),huffManTreeNode);
         System.out.println(countMap);
         System.out.println(encodeMap);
-        String decode = decode("1111011", huffManTreeNode);
+//        System.out.println(encode(""));
+        String decode = decode("11000111011001010011111001000011001010100100011011100111001101000101100100100010110010", huffManTreeNode);
         System.out.println(decode);
+//        System.out.println(decode);
     }
-
 }
