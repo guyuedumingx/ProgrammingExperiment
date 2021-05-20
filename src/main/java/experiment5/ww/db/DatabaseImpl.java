@@ -19,15 +19,17 @@ public class DatabaseImpl implements Database{
         head.setNext(cardNode);
     }
 
-    public void deleteByNo(String no) {
+    public boolean deleteByNo(String no) {
         Node<Card> cur = head;
         while (cur.getNext() != null) {
             Card data = cur.getNext().getData();
             if(data.getNo().equals(no)) {
                 cur.setNext(cur.getNext().getNext());
+                return true;
             }
             cur = cur.getNext();
         }
+        return false;
     }
 
     public Card selectByName(String name) {

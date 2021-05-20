@@ -21,7 +21,7 @@ public interface Database {
      * 根据卡号从数据库删除一个卡
      * @param no 卡号
      */
-    void deleteByNo(String no);
+    boolean deleteByNo(String no);
 
     /**
      * 更新一个卡
