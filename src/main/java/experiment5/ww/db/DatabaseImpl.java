@@ -2,6 +2,9 @@ package experiment5.ww.db;
 
 import experiment5.ww.pojo.Card;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 数据库实现类
  * @author yohoyes
@@ -26,6 +29,29 @@ public class DatabaseImpl implements Database{
             cur = cur.getNext();
         }
     }
+
+    public Card selectByName(String name) {
+        Node<Card> cur = head.getNext();
+        while (cur != null) {
+            Card data = cur.getData();
+            if(data.getUserName().equals(name)) {
+                return data;
+            }
+            cur = cur.getNext();
+        }
+       return null;
+    }
+
+    public List<Card> selectAll() {
+        List<Card> list = new ArrayList<>();
+        Node<Card> cur = head.getNext();
+        while (cur != null) {
+            Card data = cur.getData();
+            list.add(data);
+        }
+        return list;
+    }
+
 
     public void update(Card card) {
        Node<Card> cur = head.getNext();

@@ -21,38 +21,56 @@ public class Card {
     /**
      * 余额
      */
-    private String balance;
+    private double balance;
+
+    /**
+     * 是否激活
+     */
+    private boolean active = true;
 
     public String getNo() {
         return no;
     }
 
-    public void setNo(String no) {
+    public Card setNo(String no) {
         this.no = no;
+        return this;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public Card setUserName(String userName) {
         this.userName = userName;
+        return this;
     }
 
     public String getUserPassword() {
         return userPassword;
     }
 
-    public void setUserPassword(String userPassword) {
+    public Card setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+        return this;
     }
 
-    public String getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public Card setBalance(double balance) {
         this.balance = balance;
+        return this;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public Card setActive(boolean active) {
+        this.active = active;
+        return this;
     }
 
     @Override
