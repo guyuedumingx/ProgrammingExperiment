@@ -11,14 +11,18 @@ public interface CardUser extends BaseOpera {
 
     /**
      * 充值
-     * @param no 卡号
      * @param money 钱数
      */
-    boolean topUp(String no, int money);
+    boolean topUp(int money);
 
     /**
      * 消费
      * @param money 钱数
      */
     boolean consumption(int money);
+
+    /**
+     * 查询卡余额
+     */
+    double balance();
 }

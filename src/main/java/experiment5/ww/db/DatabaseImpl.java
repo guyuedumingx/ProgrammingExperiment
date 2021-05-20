@@ -1,12 +1,12 @@
 package experiment5.ww.db;
 
 import experiment5.ww.pojo.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 数据库实现类
+ * 用链表来实现一个基本的数据存储功能
  * @author yohoyes
  * @date 2021/5/17 10:26
  */
