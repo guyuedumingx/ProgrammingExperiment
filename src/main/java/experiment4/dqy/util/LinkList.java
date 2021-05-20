@@ -37,7 +37,9 @@ public class LinkList<T> {
         }
     }
 
-    public Itr iterator() {return new Itr();}
+    public Itr iterator() {
+        return new Itr();
+    }
 
     public boolean contains(T data) {
         Node cur = head;
@@ -45,7 +47,7 @@ public class LinkList<T> {
             cur = cur.next;
             if (cur.data.equals(data)) return true;
         }
-        return  false;
+        return false;
     }
 
     //从前面插入结点
@@ -65,9 +67,9 @@ public class LinkList<T> {
     //在第index个点后面添加结点
     public boolean addAt(int index, T data) {
         Node cur = head;
-        for(int i = 1; i <= index; i++) {
+        for (int i = 1; i <= index; i++) {
             cur = cur.next;
-            if(cur == null) return false;
+            if (cur == null) return false;
         }
         cur.next = new Node(data);
         return true;
@@ -76,9 +78,9 @@ public class LinkList<T> {
     //修改第index个点
     public boolean modify(int index, T data) {
         Node cur = head;
-        for(int i = 1; i <= index - 1; i++) {
+        for (int i = 1; i <= index - 1; i++) {
             cur = cur.next;
-            if(cur == null) return false;
+            if (cur == null) return false;
         }
         Node tmp = cur.next.next;
         cur.next = new Node(data);
@@ -87,13 +89,19 @@ public class LinkList<T> {
         return true;
     }
 
+    //删除结点
     public void delete(T v) {
         Node cur = head;
         while (cur.next != null) {
-            if(cur.next.equals(v)) {
+            if (cur.next.equals(v)) {
                 cur.next = cur.next.next;
                 return;
             }
         }
+    }
+
+    //清空链表
+    public void clear() {
+        head.next =null;
     }
 }

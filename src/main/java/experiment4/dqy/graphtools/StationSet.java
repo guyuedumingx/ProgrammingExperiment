@@ -4,6 +4,7 @@ import experiment4.dqy.util.LinkList;
 import java.util.Iterator;
 
 public class StationSet {
+    private int size;
     private LinkList place = new LinkList();
 
     /**
@@ -22,7 +23,8 @@ public class StationSet {
     }
 
     //获取某个点的邻接点
-    public LinkList getConnection(Station start) {
+    public LinkList getConnection(String name) {
+        Station start = this.getStation(name);
         Iterator iterator = place.iterator();
         while (iterator.hasNext()) {
             Station station = (Station) iterator.next();
@@ -32,17 +34,20 @@ public class StationSet {
     }
 
     //判断是否存在某个点
-    public boolean contains(Station s) {
+    public boolean contains(String name) {
+        Station s = new Station(name);
         return place.contains(s);
     }
 
     //加点
-    public void addStation(Station station) {
-        place.addBack(station);
+    public void addStation(String name) {
+        place.addBack(new Station(name));
+        size++;
     }
 
     //删点
-    public void deleteStation(Station station) {
+    public void deleteStation(String name) {
+        Station station = this.getStation(name);
         Iterator iterator = place.iterator();
         while (iterator.hasNext()) {
             Station cur = (Station) iterator.next();
@@ -50,11 +55,13 @@ public class StationSet {
             cur.cancelConnection(station);
         }
         place.delete(station);
+        size--;
     }
 
     //改点
-    public void modifyStation(Station s, String name) {
-        s.setName(name);
+    public void modifyStation(String name, String newName) {
+        Station station = this.getStation(name);
+        station.setName(name);
     }
 
     /**
@@ -62,19 +69,23 @@ public class StationSet {
      */
 
     //连接两点
-    public void connect(Station u, Station v) {
+    public void connect(String nameU, String nameV) {
+        Station u = this.getStation(nameU);
+        Station v = this.getStation(nameV);
         u.connectTo(v);
         v.connectTo(u);
     }
 
     //解除两点的连接关系
-    public void disconnect(Station u, Station v) {
+    public void disconnect(String nameU, String nameV) {
+        Station u = this.getStation(nameU);
+        Station v = this.getStation(nameV);
         u.cancelConnection(v);
         v.cancelConnection(u);
     }
 }
 
-class Station<T> {
+class Station {
     private String name;
     private LinkList connection = new LinkList();
     @Override
