@@ -29,6 +29,6 @@ public class Main {
         card.setNo(build)
             .setBalance(100)
             .setUserPassword("123456")
-            .setUserName(name);
+            .setName(name);
     }
 }

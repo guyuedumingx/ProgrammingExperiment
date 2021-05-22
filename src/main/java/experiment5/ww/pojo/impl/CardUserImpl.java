@@ -16,7 +16,7 @@ public class CardUserImpl implements CardUser {
      * 被操作的卡
      */
     private Card card = null;
-    private Database db = DbUtil.getDb();
+    private Database<Card> db = DbUtil.getDb();
 
     /**
      * 空实现

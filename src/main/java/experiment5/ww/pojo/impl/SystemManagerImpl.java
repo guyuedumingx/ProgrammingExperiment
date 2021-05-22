@@ -15,7 +15,7 @@ public class SystemManagerImpl implements SystemManager {
      * 被操作的卡
      */
     private Card card = null;
-    private Database db = DbUtil.getDb();
+    private Database<Card> db = DbUtil.getDb();
 
     @Override
     public boolean login(String name, String pwd) {
@@ -43,7 +43,7 @@ public class SystemManagerImpl implements SystemManager {
             no = NoUtil.build(userName);
         }
 
-        card.setUserName(userName)
+        card.setName(userName)
                 .setUserPassword(pwd)
                 .setBalance(0)
                 .setNo(no);

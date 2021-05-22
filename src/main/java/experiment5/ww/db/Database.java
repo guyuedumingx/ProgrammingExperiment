@@ -9,41 +9,39 @@ import java.util.List;
  * @author yohoyes
  * @date 2021/5/19 17:02
  */
-public interface Database {
+public interface Database<T> {
 
     /**
-     * 插入一个卡
-     * @param card
+     * 插入一列
      */
-    void insert(Card card);
+    void insert(T t);
 
     /**
-     * 根据卡号从数据库删除一个卡
-     * @param no 卡号
+     * 根据主键删除一列
+     * @param no 主键
      */
     boolean deleteByNo(String no);
 
     /**
-     * 更新一个卡
+     * 更新一个列
      */
-    void update(Card card);
+    void update(T t);
 
     /**
-     * 查询一个卡
-     * @param no 卡号
+     * 查询
      * @return 卡片类
      */
-    Card selectByNo(String no);
+    T selectByNo(String no);
 
     /**
-     * 根据卡持有者姓名查询一个卡
+     * 根据姓名查询一列
      * @param name 持有者姓名
      * @return 卡
      */
-    Card selectByName(String name);
+    T selectByName(String name);
 
     /**
-     * 获取所有的卡
+     * 获取所有列
      */
-    List<Card> selectAll();
+    List<T> selectAll();
 }

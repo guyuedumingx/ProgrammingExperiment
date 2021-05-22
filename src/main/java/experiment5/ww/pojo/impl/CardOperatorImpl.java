@@ -17,7 +17,7 @@ public class CardOperatorImpl implements CardOperator {
      * 被操作的卡
      */
     private Card card = null;
-    private Database db = DbUtil.getDb();
+    private Database<Card> db = DbUtil.getDb();
 
     @Override
     public Card query(String no) {
@@ -54,7 +54,7 @@ public class CardOperatorImpl implements CardOperator {
             no = NoUtil.build(userName);
         }
 
-        card.setUserName(userName)
+        card.setName(userName)
             .setUserPassword(pwd)
             .setBalance(0)
             .setNo(no);

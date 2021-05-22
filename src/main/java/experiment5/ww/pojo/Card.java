@@ -1,11 +1,13 @@
 package experiment5.ww.pojo;
 
+import experiment5.ww.db.DbNode;
+
 /**
  * 卡类
  * @author yohoyes
  * @date 2021/5/17 9:15
  */
-public class Card {
+public class Card implements DbNode {
     /**
      * 卡号
      */
@@ -13,7 +15,7 @@ public class Card {
     /**
      * 用户名
      */
-    private String userName;
+    private String name;
     /**
      * 用户密码
      */
@@ -28,6 +30,7 @@ public class Card {
      */
     private boolean active = true;
 
+    @Override
     public String getNo() {
         return no;
     }
@@ -37,12 +40,13 @@ public class Card {
         return this;
     }
 
-    public String getUserName() {
-        return userName;
+    @Override
+    public String getName() {
+        return name;
     }
 
-    public Card setUserName(String userName) {
-        this.userName = userName;
+    public Card setName(String name) {
+        this.name = name;
         return this;
     }
 
