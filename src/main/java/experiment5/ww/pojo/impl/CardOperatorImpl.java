@@ -30,10 +30,10 @@ public class CardOperatorImpl implements CardOperator {
 
     @Override
     public boolean login(String name, String pwd) {
-        card = db.selectByName(name);
-        if(card!=null && card.getUserPassword().equals(pwd)){
-            return true;
-        }
+//        card = db.selectByName(name);
+//        if(card!=null && card.getUserPassword().equals(pwd)){
+//            return true;
+//        }
         return false;
     }
 

@@ -34,13 +34,6 @@ public interface Database<T> {
     T selectByNo(String no);
 
     /**
-     * 根据姓名查询一列
-     * @param name 持有者姓名
-     * @return 卡
-     */
-    T selectByName(String name);
-
-    /**
      * 获取所有列
      */
     List<T> selectAll();

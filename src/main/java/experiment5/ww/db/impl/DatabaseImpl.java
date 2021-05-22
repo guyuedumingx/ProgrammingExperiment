@@ -1,7 +1,7 @@
 package experiment5.ww.db.impl;
 
 import experiment5.ww.db.Database;
-import experiment5.ww.db.DbNode;
+import experiment5.ww.db.DBNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author yohoyes
  * @date 2021/5/17 10:26
  */
-public class DatabaseImpl<T extends DbNode> implements Database<T> {
+public class DatabaseImpl<T extends DBNode> implements Database<T> {
     private Node<T> head = new Node<T>();
 
     public void insert(T t) {
@@ -32,18 +32,6 @@ public class DatabaseImpl<T extends DbNode> implements Database<T> {
             cur = cur.getNext();
         }
         return false;
-    }
-
-    public T selectByName(String name) {
-        Node<T> cur = head.getNext();
-        while (cur != null) {
-            T data = cur.getData();
-            if(data.getName().equals(name)) {
-                return data;
-            }
-            cur = cur.getNext();
-        }
-       return null;
     }
 
     public List<T> selectAll() {

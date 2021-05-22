@@ -1,13 +1,13 @@
 package experiment5.ww.pojo;
 
-import experiment5.ww.db.DbNode;
+import experiment5.ww.db.DBNode;
 
 /**
  * 卡类
  * @author yohoyes
  * @date 2021/5/17 9:15
  */
-public class Card implements DbNode {
+public class Card implements DBNode {
     /**
      * 卡号
      */
