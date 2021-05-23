@@ -13,9 +13,9 @@ public class Card implements DBNode {
      */
     private String no;
     /**
-     * 用户名
+     * 用户no
      */
-    private String name;
+    private String personNo;
     /**
      * 用户密码
      */
@@ -40,13 +40,12 @@ public class Card implements DBNode {
         return this;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public String getPersonNo() {
+        return personNo;
     }
 
-    public Card setName(String name) {
-        this.name = name;
+    public Card setPersonNo(String personNo) {
+        this.personNo = personNo;
         return this;
     }
 
