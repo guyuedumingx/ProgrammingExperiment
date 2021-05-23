@@ -79,7 +79,6 @@ public class SystemManagerImpl implements SystemManager {
 
     @Override
     public boolean delete(String no) {
-        personDB
         boolean b = cardDB.deleteByNo(no);
         return b;
     }
