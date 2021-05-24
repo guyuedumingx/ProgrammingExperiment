@@ -23,7 +23,7 @@ public class CardOperatorImpl implements CardOperator {
     public Card query(String no) {
         card = db.selectByNo(no);
         if(card != null) {
-            card.setUserPassword("*****");
+            card.setPwd("*****");
         }
         return card;
     }
@@ -40,7 +40,7 @@ public class CardOperatorImpl implements CardOperator {
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
-            card.setUserPassword(afterPwd);
+            card.setPwd(afterPwd);
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ public class CardOperatorImpl implements CardOperator {
         }
 
         card.setPersonNo(userName)
-            .setUserPassword(pwd)
+            .setPwd(pwd)
             .setBalance(0)
             .setNo(no);
         db.insert(card);

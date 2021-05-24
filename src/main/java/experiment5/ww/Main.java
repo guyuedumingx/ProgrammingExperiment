@@ -28,7 +28,7 @@ public class Main {
         Card card = new Card();
         card.setNo(build)
             .setBalance(100)
-            .setUserPassword("123456")
+            .setPwd("123456")
             .setPersonNo(name);
     }
 }

@@ -19,7 +19,7 @@ public class Card implements DBNode {
     /**
      * 用户密码
      */
-    private String userPassword;
+    private String pwd;
     /**
      * 余额
      */
@@ -49,12 +49,12 @@ public class Card implements DBNode {
         return this;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPwd() {
+        return pwd;
     }
 
-    public Card setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public Card setPwd(String pwd) {
+        this.pwd = pwd;
         return this;
     }
 

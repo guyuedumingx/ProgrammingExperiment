@@ -37,7 +37,9 @@ public class SystemManagerImpl implements SystemManager {
     @Override
     public boolean login(String no, String pwd) {
         person = personDB.selectByNo(no);
-        if(person.getCard().getUserPassword().equals(pwd)) {
+        String cardNo = person.getCard();
+        card = cardDB.selectByNo(cardNo);
+        if(card.getPwd().equals(pwd)) {
             return true;
         }else {
             return false;
@@ -53,7 +55,7 @@ public class SystemManagerImpl implements SystemManager {
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
-            card.setUserPassword(afterPwd);
+            card.setPwd(afterPwd);
             cardDB.update(card);
             return true;
         }
@@ -69,7 +71,7 @@ public class SystemManagerImpl implements SystemManager {
         }
 
         card.setPersonNo(userName)
-                .setUserPassword(pwd)
+                .setPwd(pwd)
                 .setBalance(0)
                 .setNo(no);
         cardDB.insert(card);

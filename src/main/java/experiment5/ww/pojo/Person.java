@@ -11,7 +11,7 @@ public class Person implements DBNode {
     private String no;
     private String name;
     private String age;
-    private Card card;
+    private String cardNo;
 
     public String getNo() {
         return no;
@@ -37,12 +37,12 @@ public class Person implements DBNode {
         this.age = age;
     }
 
-    public Card getCard() {
-        return card;
+    public String getCard() {
+        return cardNo;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCard(String cardNo) {
+        this.cardNo = cardNo;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Person implements DBNode {
                 "no='" + no + '\'' +
                 ", name='" + name + '\'' +
                 ", age='" + age + '\'' +
-                ", card=" + card +
+                ", card=" + cardNo +
                 '}';
     }
 }

@@ -43,7 +43,7 @@ public class CardUserImpl implements CardUser {
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
-            card.setUserPassword(afterPwd);
+            card.setPwd(afterPwd);
             return true;
         }
         return false;
