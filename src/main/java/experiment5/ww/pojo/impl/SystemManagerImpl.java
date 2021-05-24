@@ -2,7 +2,6 @@ package experiment5.ww.pojo.impl;
 
 import experiment5.ww.db.Database;
 import experiment5.ww.pojo.Card;
-import experiment5.ww.pojo.Person;
 import experiment5.ww.pojo.SystemManager;
 import experiment5.ww.util.DbUtil;
 import experiment5.ww.util.NoUtil;
@@ -18,15 +17,10 @@ public class SystemManagerImpl implements SystemManager {
      */
     private Card card = null;
 
-    private Person person = null;
     /**
      * 卡数据库
      */
-    private Database<Card> cardDB = DbUtil.getCardDB();
-    /**
-     * 用户数据库
-     */
-    private Database<Person> personDB = DbUtil.getPersonDB();
+    private Database<Card> db = DbUtil.getCardDB();
 
     /**
      * 根据学号和密码登录
@@ -36,14 +30,8 @@ public class SystemManagerImpl implements SystemManager {
      */
     @Override
     public boolean login(String no, String pwd) {
-        person = personDB.selectByNo(no);
-        String cardNo = person.getCard();
-        card = cardDB.selectByNo(cardNo);
-        if(card.getPwd().equals(pwd)) {
-            return true;
-        }else {
-            return false;
-        }
+        card = db.selectByNo(no);
+        return card.getPwd().equals(pwd);
     }
 
     /**
@@ -56,7 +44,7 @@ public class SystemManagerImpl implements SystemManager {
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
             card.setPwd(afterPwd);
-            cardDB.update(card);
+            db.update(card);
             return true;
         }
         return false;
@@ -66,28 +54,27 @@ public class SystemManagerImpl implements SystemManager {
     public String register(String userName, String pwd) {
         card = new Card();
         String no = NoUtil.build(userName);
-        while (cardDB.selectByNo(no) != null){
+        while (db.selectByNo(no) != null){
             no = NoUtil.build(userName);
         }
 
-        card.setPersonNo(userName)
+        card.setName(userName)
                 .setPwd(pwd)
                 .setBalance(0)
                 .setNo(no);
-        cardDB.insert(card);
+        db.insert(card);
 
         return card.getNo();
     }
 
     @Override
     public boolean delete(String no) {
-        boolean b = cardDB.deleteByNo(no);
-        return b;
+        return db.deleteByNo(no);
     }
 
     @Override
     public Card query(String no) {
-        card = cardDB.selectByNo(no);
+        card = db.selectByNo(no);
         return card;
     }
 }

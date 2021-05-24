@@ -32,18 +32,16 @@ public class CardUserImpl implements CardUser {
     }
 
     @Override
-    public boolean login(String name, String pwd) {
-//        card = db.selectByName(name);
-//        if(card!=null && card.getUserPassword().equals(pwd)){
-//            return true;
-//        }
-        return false;
+    public boolean login(String no, String pwd) {
+        card = db.selectByNo(no);
+        return card.getPwd().equals(pwd);
     }
 
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
             card.setPwd(afterPwd);
+            db.update(card);
             return true;
         }
         return false;

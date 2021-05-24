@@ -29,18 +29,16 @@ public class CardOperatorImpl implements CardOperator {
     }
 
     @Override
-    public boolean login(String name, String pwd) {
-//        card = db.selectByName(name);
-//        if(card!=null && card.getUserPassword().equals(pwd)){
-//            return true;
-//        }
-        return false;
+    public boolean login(String no, String pwd) {
+        card = db.selectByNo(no);
+        return card.getPwd().equals(pwd);
     }
 
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
             card.setPwd(afterPwd);
+            db.update(card);
             return true;
         }
         return false;
@@ -54,7 +52,7 @@ public class CardOperatorImpl implements CardOperator {
             no = NoUtil.build(userName);
         }
 
-        card.setPersonNo(userName)
+        card.setName(userName)
             .setPwd(pwd)
             .setBalance(0)
             .setNo(no);
