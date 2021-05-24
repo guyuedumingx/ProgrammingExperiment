@@ -1,5 +1,6 @@
 package experiment5.ww;
 
+import experiment5.ww.db.Database;
 import experiment5.ww.pojo.Card;
 import experiment5.ww.pojo.CardOperator;
 import experiment5.ww.pojo.CardUser;
@@ -7,6 +8,7 @@ import experiment5.ww.pojo.SystemManager;
 import experiment5.ww.pojo.impl.CardOperatorImpl;
 import experiment5.ww.pojo.impl.CardUserImpl;
 import experiment5.ww.pojo.impl.SystemManagerImpl;
+import experiment5.ww.util.DbUtil;
 import experiment5.ww.util.NoUtil;
 import java.util.Scanner;
 
@@ -17,9 +19,6 @@ import java.util.Scanner;
  */
 public class Main {
 
-    private static SystemManager manager = new SystemManagerImpl();
-    private static CardOperator operator = new CardOperatorImpl();
-    private static CardUser user = new CardUserImpl();
     private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -29,6 +28,9 @@ public class Main {
         card.setNo(build)
             .setBalance(100)
             .setPwd("123456")
-            .setPersonNo(name);
+            .setName(name);
+//        db.insert(card);
+//        Card card1 = db.selectByNo(card.getNo());
+//        System.out.println(card1);
     }
 }

@@ -81,4 +81,15 @@ public class Card implements DBNode {
         Card card = (Card) obj;
         return this.getNo().equals(card.getNo());
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", balance=" + balance +
+                ", active=" + active +
+                '}';
+    }
 }
