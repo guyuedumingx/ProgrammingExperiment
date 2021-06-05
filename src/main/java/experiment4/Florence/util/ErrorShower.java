@@ -15,4 +15,8 @@ public class ErrorShower {
     public void BusNodeExist() {
         System.out.println("节点已存在");
     }
+
+    public void lineLengthNoEnough() {
+        System.out.println("线路长度不够");
+    }
 }
