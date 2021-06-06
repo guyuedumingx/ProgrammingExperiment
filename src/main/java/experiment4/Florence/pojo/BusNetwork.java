@@ -12,9 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BusNetwork {
 
     private int size=0;
-    private final List<BusNode> nodes = new ArrayList<>();
-    private final Set<Edge> edges  = new HashSet<>();
-    private final Map<String,Integer> nameToId=new ConcurrentHashMap<>();
+    private final static List<BusNode> nodes = new ArrayList<>();
+    private final static Set<Edge> edges  = new HashSet<>();
+    private final static Map<String,Integer> nameToId=new ConcurrentHashMap<>();
     private final ErrorShower errorShower = new ErrorShower();
 
     /**
@@ -45,7 +45,7 @@ public class BusNetwork {
             nameToId.remove(oldName);
             return;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(oldName,newName);
     }
 
     /**
@@ -71,7 +71,7 @@ public class BusNetwork {
         if (busNode!=null){
            return busNode.getList();
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name);
         return null;
     }
 
@@ -89,7 +89,7 @@ public class BusNetwork {
             moveIndexAhead(id);
             size--;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name);
     }
 
     private void moveIndexAhead(long id){
@@ -151,7 +151,7 @@ public class BusNetwork {
             node2.addAdj(node1);
             return;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name1,name2);
     }
 
     /**
@@ -169,7 +169,7 @@ public class BusNetwork {
             node2.deleteAdj(node1);
             return;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name1,name2);
     }
 
 
@@ -186,10 +186,27 @@ public class BusNetwork {
     }
 
 
+    public Edge getEdge(Edge wantToGetEdge){
+        for (Edge edge:edges){
+            if (wantToGetEdge.equals(edge)){
+                return edge;
+            }
+        }
+        return null;
+    }
+    public List<BusNode> getNodes() {
+        return nodes;
+    }
+
+    public Set<Edge> getEdges() {
+        return edges;
+    }
+
+
     /**
      * 边类
      */
-     public class Edge{
+     public static class Edge{
         Integer id1;
         Integer id2;
         Integer lines=0;

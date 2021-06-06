@@ -1,5 +1,7 @@
 package experiment4.Florence.pojo;
 
+import experiment4.dqy.Bus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +13,9 @@ import java.util.Objects;
 public class BusNode {
     private int id;
     private String inf;
+    /**
+     * 邻接表
+     */
     private List<BusNode> adjNodes = new ArrayList<>();
 
 
@@ -21,6 +26,10 @@ public class BusNode {
     }
 
     public BusNode() {
+    }
+
+    public BusNode getAdjNodeByIndex(int index){
+        return adjNodes.get(index);
     }
 
     public void addAdj(BusNode busNode){

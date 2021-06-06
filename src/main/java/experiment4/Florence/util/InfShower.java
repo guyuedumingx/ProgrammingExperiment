@@ -1,5 +1,6 @@
 package experiment4.Florence.util;
 
+import experiment4.Florence.pojo.BusLine;
 import experiment4.Florence.pojo.BusNode;
 
 import java.util.Iterator;
@@ -20,9 +21,40 @@ public class InfShower {
         int index=0;
         for (BusNode busNode:adjNodes){
             if (!alreadyExistNodes.contains(busNode)){
-                System.out.println((index++)+":"+busNode.getInf());
+                System.out.println((index)+":"+busNode.getInf());
             }
+            index++;
         }
-        System.out.println("-1:结束站点建立");
+        System.out.println("-1:结束线路建立");
+    }
+
+    public void showAddLineSuccess(BusLine busLine) {
+        System.out.println("添加线路:"+busLine+"成功");
+    }
+
+    public void menu(){
+        System.out.println("欢迎来到公交线路系统:输入对应序号使用功能~");
+        System.out.println("1:添加站点");
+        System.out.println("2:查询站点信息");
+        System.out.println("3:查询某站点的所有相邻站点");
+        System.out.println("4:添加线路");
+        System.out.println("5:查询线路");
+        System.out.println("exit:退出程序");
+    }
+
+    public void inputNodeName() {
+        System.out.println("请输入站点名");
+    }
+
+    public void inputNodeNameAndLineName() {
+        System.out.println("请输入站点名和线路名（空格隔开）");
+    }
+
+    public void inputBeginNameAndEndName() {
+        System.out.println("请输入起点站点名与终点站点名");
+    }
+
+    public void after() {
+        System.out.println("===============================");
     }
 }

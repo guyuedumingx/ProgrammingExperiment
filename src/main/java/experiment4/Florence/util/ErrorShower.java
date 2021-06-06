@@ -4,8 +4,14 @@ package experiment4.Florence.util;
  * @author Florence
  */
 public class ErrorShower {
-    public void noExistBusNode(){
-        System.out.println("无此节点");
+    public void noExistBusNode(String... nodes){
+        StringBuilder stringBuilder = new StringBuilder("节点：");
+        for (String s:nodes){
+            stringBuilder.append(s);
+            stringBuilder.append(" ");
+        }
+        stringBuilder.append("不存在");
+        System.out.println(stringBuilder.toString());
     }
 
     public void noExistEdge() {
