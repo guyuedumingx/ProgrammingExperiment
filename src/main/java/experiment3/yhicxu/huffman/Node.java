@@ -1,9 +1,9 @@
 package experiment3.yhicxu.huffman;
 
-import util.treeUtil.TreeNode;
+import util.treeUtil.HuffmanNode;
 
 // 哈弗曼树节点类
-public class Node<T> implements TreeNode {
+public class Node<T> implements HuffmanNode {
     public Node<T> left;
     public Node<T> right;
 
@@ -42,20 +42,20 @@ public class Node<T> implements TreeNode {
     }
 
     @Override
-    public void setLeft(TreeNode node) {
+    public void setLeft(HuffmanNode node) {
     }
 
     @Override
-    public void setRight(TreeNode node) {
+    public void setRight(HuffmanNode node) {
     }
 
     @Override
-    public TreeNode getLeft() {
+    public HuffmanNode getLeft() {
         return left;
     }
 
     @Override
-    public TreeNode getRight() {
+    public HuffmanNode getRight() {
         return right;
     }
 

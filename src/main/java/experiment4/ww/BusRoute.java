@@ -61,8 +61,34 @@ public class BusRoute implements GraphRoute {
         }
     }
 
-    public LinkedNode<WGraphNode> getRouteHead() {
-        return routeHead;
+    public boolean contains(WGraphNode node){
+        LinkedNode<WGraphNode> cur = routeHead;
+        while (cur.getNext() != null){
+            if(node.equals(cur.getNext().getData())){
+                return true;
+            }
+            cur = cur.getNext();
+        }
+        return false;
+    }
+
+    public List<WGraphNode> getNeighborInRoute(WGraphNode node){
+        List<WGraphNode> list = new ArrayList<>();
+        LinkedNode<WGraphNode> cur = routeHead;
+        while (cur.getNext() != null){
+            if(node.equals(cur.getNext().getData())){
+                if(cur!=routeHead){
+                    list.add(cur.getData());
+                }
+                LinkedNode<WGraphNode> next = cur.getNext().getNext();
+                if(next!=null){
+                    list.add(next.getData());
+                }
+                break;
+            }
+            cur = cur.getNext();
+        }
+        return list;
     }
 
     @Override

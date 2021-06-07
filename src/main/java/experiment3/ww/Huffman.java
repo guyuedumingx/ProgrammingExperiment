@@ -1,7 +1,7 @@
 package experiment3.ww;
 
 import util.CharUtil;
-import util.treeUtil.TreeNode;
+import util.treeUtil.HuffmanNode;
 import util.treeUtil.TreeUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,12 +77,12 @@ public class Huffman {
 
 }
 
-class Node implements Comparable<Node>, TreeNode {
+class Node implements Comparable<Node>, HuffmanNode {
     private Character key;
     private Integer nums;
     private String code;
-    private TreeNode left;
-    private TreeNode right;
+    private HuffmanNode left;
+    private HuffmanNode right;
 
     public Node(Node left, Node right) {
         this.left = left;
@@ -124,7 +124,7 @@ class Node implements Comparable<Node>, TreeNode {
     }
 
     @Override
-    public void setLeft(TreeNode left) {
+    public void setLeft(HuffmanNode left) {
         this.left = left;
     }
 
@@ -157,7 +157,7 @@ class Node implements Comparable<Node>, TreeNode {
     }
 
     @Override
-    public void setRight(TreeNode right) {
+    public void setRight(HuffmanNode right) {
         this.right = right;
     }
 

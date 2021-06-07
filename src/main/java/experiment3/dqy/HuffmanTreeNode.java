@@ -1,6 +1,6 @@
 package experiment3.dqy;
 
-import util.treeUtil.TreeNode;
+import util.treeUtil.HuffmanNode;
 
 /**
  * 哈夫曼树的结点
@@ -8,7 +8,7 @@ import util.treeUtil.TreeNode;
  * 大佬们叫我去继承一下我就去了[Doge]
  */
 
-public class HuffmanTreeNode implements TreeNode {
+public class HuffmanTreeNode implements HuffmanNode {
     private HuffmanTreeNode l, r;
     private int fre;
     private String code;
@@ -16,22 +16,22 @@ public class HuffmanTreeNode implements TreeNode {
     int size = 1;
 
     @Override
-    public void setLeft(TreeNode l) {
+    public void setLeft(HuffmanNode l) {
         this.l = (HuffmanTreeNode) l;
     }
 
     @Override
-    public void setRight(TreeNode r) {
+    public void setRight(HuffmanNode r) {
         this.r = (HuffmanTreeNode) r;
     }
 
     @Override
-    public TreeNode getLeft() {
+    public HuffmanNode getLeft() {
         return l;
     }
 
     @Override
-    public TreeNode getRight() {
+    public HuffmanNode getRight() {
         return r;
     }
 
@@ -75,5 +75,17 @@ public class HuffmanTreeNode implements TreeNode {
         this.code = code;
         this.fre = fre;
         this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "HuffmanTreeNode{" +
+                "l=" + l +
+                ", r=" + r +
+                ", fre=" + fre +
+                ", code='" + code + '\'' +
+                ", key=" + key +
+                ", size=" + size +
+                '}';
     }
 }
