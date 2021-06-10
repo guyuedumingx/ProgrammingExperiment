@@ -3,6 +3,7 @@ package experiment4.ww;
 import experiment4.ww.util.LinkedNode;
 import util.graphutil.GraphNode;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 站点类
@@ -14,6 +15,15 @@ public class WGraphNode implements GraphNode {
     private String name = null;
     //邻接链表
     private LinkedNode<WGraphNode> linkedHead = new LinkedNode<>(this);
+    private List<BusRoute> routes = new ArrayList<>();
+
+    public void addToRoute(BusRoute route) {
+        routes.add(route);
+    }
+
+    public List<BusRoute> getAllRoutes(){
+        return routes;
+    }
 
     public WGraphNode(String name){
         this.name = name;

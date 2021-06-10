@@ -1,12 +1,15 @@
 package experiment4.ww;
 
+import experiment4.dqy.Bus;
 import experiment4.ww.exception.NoNeighborException;
 import experiment4.ww.exception.NodeExistException;
 import experiment4.ww.util.LinkedNode;
 import util.graphutil.GraphNode;
 import util.graphutil.GraphRoute;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 公交线路
@@ -30,6 +33,13 @@ public class BusRoute implements GraphRoute {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public void addFist(WGraphNode node) {
+        LinkedNode<WGraphNode> routeHead = this.routeHead;
+        LinkedNode<WGraphNode> routeNode = new LinkedNode<>(node);
+        routeNode.setNext(routeHead.getNext());
+        routeHead.setNext(routeNode);
     }
 
     private void addNodeForRoute(WGraphNode node) throws NodeExistException, NoNeighborException{
@@ -56,6 +66,7 @@ public class BusRoute implements GraphRoute {
         }
         if(flag) {
             cur.setNext(new LinkedNode<>(node));
+            node.addToRoute(this);
         }else {
             throw new NoNeighborException(this.name+ " 号线的最后一个站点 " + data.getName() + " 不与站点 " + node.getName()+" 相邻, 无法将站点 " + node.getName()+ " 添加进入线路中!");
         }
@@ -72,23 +83,48 @@ public class BusRoute implements GraphRoute {
         return false;
     }
 
-    public List<WGraphNode> getNeighborInRoute(WGraphNode node){
-        List<WGraphNode> list = new ArrayList<>();
+    public Set<WGraphNode> getIntersectionWithRoute(BusRoute route){
         LinkedNode<WGraphNode> cur = routeHead;
+        Set<WGraphNode> set = new HashSet<>();
         while (cur.getNext() != null){
-            if(node.equals(cur.getNext().getData())){
-                if(cur!=routeHead){
-                    list.add(cur.getData());
-                }
-                LinkedNode<WGraphNode> next = cur.getNext().getNext();
-                if(next!=null){
-                    list.add(next.getData());
-                }
-                break;
+            if(route.contains(cur.getData())){
+                set.add(cur.getData());
             }
             cur = cur.getNext();
         }
-        return list;
+        return set;
+    }
+
+    public BusRoute addSelectedRoute(BusRoute route, WGraphNode src, WGraphNode dst) {
+        BusRoute res = route;
+        try {
+            LinkedNode<WGraphNode> cur = routeHead.getNext();
+            while (cur.getData() != src) {
+                cur = cur.getNext();
+            }
+            while (cur.getData() != dst) {
+                res.add(cur.getData());
+                cur = cur.getNext();
+            }
+            res.add(cur.getData());
+        } catch (Exception e) {
+            res = addReverseSelectedRoute(route, src, dst);
+        }
+        return res;
+    }
+
+    public BusRoute addReverseSelectedRoute(BusRoute route, WGraphNode src, WGraphNode dst) {
+        return this.reverse().addSelectedRoute(route,src, dst);
+    }
+
+    public BusRoute reverse(){
+        BusRoute route = new BusRoute(this.name);
+        LinkedNode<WGraphNode> cur = routeHead.getNext();
+        while (cur != null){
+            route.addFist(cur.getData());
+            cur = cur.getNext();
+        }
+        return route;
     }
 
     @Override
@@ -97,6 +133,18 @@ public class BusRoute implements GraphRoute {
         LinkedNode<WGraphNode> cur = routeHead.getNext();
         while (cur != null){
             list.add(cur.getData());
+            cur = cur.getNext();
+        }
+        return list;
+    }
+
+    public List<WGraphNode> getNodesExtra(WGraphNode node) {
+        ArrayList<WGraphNode> list = new ArrayList<>();
+        LinkedNode<WGraphNode> cur = routeHead.getNext();
+        while (cur != null){
+            if(cur.getData() != node){
+                list.add(cur.getData());
+            }
             cur = cur.getNext();
         }
         return list;
@@ -118,7 +166,7 @@ public class BusRoute implements GraphRoute {
         while (cur != null) {
             sb.append(cur.toString());
             if(cur.getNext() != null){
-                sb.append("--> ");
+                sb.append(" -- ");
             }
             cur = cur.getNext();
         }

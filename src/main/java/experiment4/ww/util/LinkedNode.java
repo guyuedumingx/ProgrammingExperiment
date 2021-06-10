@@ -1,6 +1,9 @@
 package experiment4.ww.util;
 
+import experiment4.dqy.util.LinkList;
 import util.graphutil.GraphNode;
+
+import java.util.Iterator;
 
 /**
  * 邻接链表的节点
@@ -15,6 +18,7 @@ public class LinkedNode<T> {
 
     public LinkedNode(){
     }
+
 
     public LinkedNode(T data) {
         this.data = data;

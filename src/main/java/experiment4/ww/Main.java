@@ -1,5 +1,9 @@
 package experiment4.ww;
 
+import experiment4.dqy.Bus;
+import experiment4.ww.util.LinkedNode;
+import util.graphutil.GraphNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,54 +46,54 @@ public class Main {
         System.out.println(route1.toString());
         System.out.println(route2.toString());
         System.out.println(route3.toString());
-        search(nodeC,nodeE);
-        for(BusRoute route: searchRes){
-            System.out.println(route);
+
+        WGraphNode srcNode = nodeC;
+        WGraphNode dstNode = nodeE;
+        List<BusRoute> srcRoutes = srcNode.getAllRoutes();
+        List<BusRoute> dstRoutes = dstNode.getAllRoutes();
+        BusRoute res = new BusRoute(srcNode.getName()+"->"+dstNode.getName());
+
+        for(BusRoute route : srcRoutes){
+            if(dstRoutes.contains(route)){
+                route.addSelectedRoute(res,srcNode,dstNode);
+                System.out.println();
+                System.out.println(res);
+            } else {
+                List<WGraphNode> nodes = route.getNodesExtra(srcNode);
+                for(WGraphNode node : nodes){
+                    List<BusRoute> allRoutes = node.getAllRoutes();
+                    List<BusRoute> intersection = getIntersection(allRoutes, dstRoutes);
+                    while (intersection.size() > 0){
+                        System.out.println();
+                        res = new BusRoute("先"+route.getName()+"号线 "+srcNode.getName()+"->"+node.getName());
+                        route.addSelectedRoute(res,srcNode, node);
+                        System.out.println(res);
+                        BusRoute remove = intersection.remove(0);
+                        res = new BusRoute("再"+remove.getName()+"号线 "+node.getName()+"->"+dstNode.getName());
+                        remove.addSelectedRoute(res, node, dstNode);
+                        System.out.println(res);
+                    }
+                }
+            }
         }
+
+    }
+
+    public static List<BusRoute> getIntersection(List<BusRoute> list1, List<BusRoute> list2){
+        List<BusRoute> res =  new ArrayList<>();
+        for(BusRoute route1:list1){
+            for(BusRoute route2: list2){
+                if(route1.equals(route2)){
+                    res.add(route1);
+                }
+            }
+        }
+        return res;
     }
 
     public static void addLink(WGraphNode node1, WGraphNode node2, float len){
         node1.addNeighbor(node2,len);
         node2.addNeighbor(node1,len);
-    }
-
-    public static class SearchNode {
-        WGraphNode node;
-        boolean isSearch;
-        public SearchNode(WGraphNode node){
-            this.node = node;
-        }
-        public SearchNode(WGraphNode node, boolean isSearch){
-            this.node = node;
-            this.isSearch = isSearch;
-        }
-    }
-
-    public static void search(WGraphNode from, WGraphNode to) {
-        SearchNode fromNode = new SearchNode(from);
-        SearchNode toNode = new SearchNode(to);
-        search(fromNode, toNode, new BusRoute(from.getName()+to.getName()));
-    }
-
-    private static List<BusRoute> searchRes = new ArrayList<>();
-    public static void search(SearchNode from, SearchNode to, BusRoute route){
-        if(from.isSearch){
-            return;
-        }
-        from.isSearch = true;
-        route.add(from.node);
-        if(from.node.equals(to.node)){
-            searchRes.add(route);
-            return;
-        }
-        for(BusRoute busRoute: routes) {
-            if(busRoute.contains(from.node)){
-                for(WGraphNode next : busRoute.getNeighborInRoute(from.node)){
-                    SearchNode nextNode = new SearchNode(next);
-                    search(nextNode,to, route);
-                }
-            }
-        }
     }
 
     /**
