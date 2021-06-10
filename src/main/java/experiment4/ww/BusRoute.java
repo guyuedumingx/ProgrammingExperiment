@@ -95,22 +95,39 @@ public class BusRoute implements GraphRoute {
         return set;
     }
 
+    public static BusRoute copy(BusRoute route) {
+        BusRoute res = new BusRoute(route.getName());
+        List<WGraphNode> allWNodes = route.getAllWNodes();
+        for(WGraphNode node : allWNodes) {
+            res.add(node);
+        }
+        return res;
+    }
+
     public BusRoute addSelectedRoute(BusRoute route, WGraphNode src, WGraphNode dst) {
-        BusRoute res = route;
+        BusRoute res = BusRoute.copy(route);
         try {
             LinkedNode<WGraphNode> cur = routeHead.getNext();
             while (cur.getData() != src) {
                 cur = cur.getNext();
             }
             while (cur.getData() != dst) {
-                res.add(cur.getData());
+                res.addLast(cur.getData());
                 cur = cur.getNext();
             }
-            res.add(cur.getData());
+            res.addLast(cur.getData());
         } catch (Exception e) {
             res = addReverseSelectedRoute(route, src, dst);
         }
         return res;
+    }
+
+    public void addLast(WGraphNode node) {
+        LinkedNode<WGraphNode> cur = routeHead;
+        while (cur.getNext() != null) {
+            cur = cur.getNext();
+        }
+        cur.setNext(new LinkedNode<>(node));
     }
 
     public BusRoute addReverseSelectedRoute(BusRoute route, WGraphNode src, WGraphNode dst) {
@@ -130,6 +147,16 @@ public class BusRoute implements GraphRoute {
     @Override
     public List<GraphNode> getNodes() {
         ArrayList<GraphNode> list = new ArrayList<>();
+        LinkedNode<WGraphNode> cur = routeHead.getNext();
+        while (cur != null){
+            list.add(cur.getData());
+            cur = cur.getNext();
+        }
+        return list;
+    }
+
+    public List<WGraphNode> getAllWNodes() {
+        ArrayList<WGraphNode> list = new ArrayList<>();
         LinkedNode<WGraphNode> cur = routeHead.getNext();
         while (cur != null){
             list.add(cur.getData());

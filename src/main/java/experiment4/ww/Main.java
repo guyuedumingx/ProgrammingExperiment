@@ -5,6 +5,7 @@ import experiment4.ww.util.LinkedNode;
 import util.graphutil.GraphNode;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,26 +52,32 @@ public class Main {
         WGraphNode dstNode = nodeE;
         List<BusRoute> srcRoutes = srcNode.getAllRoutes();
         List<BusRoute> dstRoutes = dstNode.getAllRoutes();
-        BusRoute res = new BusRoute(srcNode.getName()+"->"+dstNode.getName());
+        Iterator<BusRoute> iterator = srcRoutes.iterator();
+        BusRoute res = null;
 
-        for(BusRoute route : srcRoutes){
+        while (iterator.hasNext()){
+            BusRoute route = iterator.next();
             if(dstRoutes.contains(route)){
-                route.addSelectedRoute(res,srcNode,dstNode);
+                res = new BusRoute(route.getName()+"号线 "+srcNode.getName()+"->"+dstNode.getName());
+                res = route.addSelectedRoute(res, srcNode, dstNode);
                 System.out.println();
                 System.out.println(res);
             } else {
                 List<WGraphNode> nodes = route.getNodesExtra(srcNode);
                 for(WGraphNode node : nodes){
-                    List<BusRoute> allRoutes = node.getAllRoutes();
+                    List<BusRoute> allRoutes = node.getAllRoutesExtra(route);
+                    if(allRoutes.size()==0){
+                        continue;
+                    }
                     List<BusRoute> intersection = getIntersection(allRoutes, dstRoutes);
                     while (intersection.size() > 0){
                         System.out.println();
                         res = new BusRoute("先"+route.getName()+"号线 "+srcNode.getName()+"->"+node.getName());
-                        route.addSelectedRoute(res,srcNode, node);
+                        res = route.addSelectedRoute(res, srcNode, node);
                         System.out.println(res);
                         BusRoute remove = intersection.remove(0);
                         res = new BusRoute("再"+remove.getName()+"号线 "+node.getName()+"->"+dstNode.getName());
-                        remove.addSelectedRoute(res, node, dstNode);
+                        res = remove.addSelectedRoute(res, node, dstNode);
                         System.out.println(res);
                     }
                 }

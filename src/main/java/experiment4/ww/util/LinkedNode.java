@@ -19,7 +19,6 @@ public class LinkedNode<T> {
     public LinkedNode(){
     }
 
-
     public LinkedNode(T data) {
         this.data = data;
     }

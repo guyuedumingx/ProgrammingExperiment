@@ -25,6 +25,16 @@ public class WGraphNode implements GraphNode {
         return routes;
     }
 
+    public List<BusRoute> getAllRoutesExtra(BusRoute route) {
+        List<BusRoute> routes = new ArrayList<>();
+        for(BusRoute route1 : this.routes) {
+            if(!route1.equals(route)){
+                routes.add(route1);
+            }
+        }
+        return routes;
+    }
+
     public WGraphNode(String name){
         this.name = name;
     }
