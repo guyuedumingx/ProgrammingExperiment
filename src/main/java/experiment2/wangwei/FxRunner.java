@@ -20,6 +20,10 @@ import java.net.URL;
  */
 public class FxRunner extends Application {
 
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = loadFxml("view/main.fxml");
@@ -37,7 +41,4 @@ public class FxRunner extends Application {
         return loader;
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
 }
