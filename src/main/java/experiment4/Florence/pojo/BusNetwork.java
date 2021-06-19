@@ -12,13 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BusNetwork {
 
     private int size=0;
-    private final List<BusNode> nodes = new ArrayList<>();
-    private final Set<Edge> edges  = new HashSet<>();
-    private final Map<String,Integer> nameToId=new ConcurrentHashMap<>();
-    ErrorShower errorShower = new ErrorShower();
-    /**
-     * 公交站点
-     */
+    private final static List<BusNode> nodes = new ArrayList<>();
+    private final static Set<Edge> edges  = new HashSet<>();
+    private final static Map<String,Integer> nameToId=new ConcurrentHashMap<>();
+    private final ErrorShower errorShower = new ErrorShower();
 
     /**
      * 添加公交节点（还没连接边）
@@ -44,11 +41,11 @@ public class BusNetwork {
         if (oldBusNode!=null){
             oldBusNode.setInf(newName);
             //添加新的映射,并且删除久的映射
-            nameToId.put(newName,oldBusNode.id);
+            nameToId.put(newName,oldBusNode.getId());
             nameToId.remove(oldName);
             return;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(oldName,newName);
     }
 
     /**
@@ -61,7 +58,6 @@ public class BusNetwork {
         if (id!=-1){
             return nodes.get(id);
         }
-        errorShower.noExistBusNode();
         return null;
     }
 
@@ -75,7 +71,7 @@ public class BusNetwork {
         if (busNode!=null){
            return busNode.getList();
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name);
         return null;
     }
 
@@ -93,7 +89,7 @@ public class BusNetwork {
             moveIndexAhead(id);
             size--;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name);
     }
 
     private void moveIndexAhead(long id){
@@ -155,7 +151,7 @@ public class BusNetwork {
             node2.addAdj(node1);
             return;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name1,name2);
     }
 
     /**
@@ -173,7 +169,7 @@ public class BusNetwork {
             node2.deleteAdj(node1);
             return;
         }
-        errorShower.noExistBusNode();
+        errorShower.noExistBusNode(name1,name2);
     }
 
 
@@ -188,88 +184,29 @@ public class BusNetwork {
         }
         errorShower.noExistEdge();
     }
-    /**
-     * 公交节点类
-     */
-    class BusNode {
-        private int id;
-        private String inf;
-        private List<BusNode> adjNodes = new ArrayList<>();
 
 
-
-        public BusNode(int id, String inf) {
-            this.id = id;
-            this.inf = inf;
-        }
-
-        public BusNode() {
-        }
-
-        public void addAdj(BusNode busNode){
-            adjNodes.add(busNode);
-        }
-
-        public void deleteAdj(BusNode busNode){
-            adjNodes.remove(busNode);
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getInf() {
-            return inf;
-        }
-
-        public void setInf(String inf) {
-            this.inf = inf;
-        }
-
-        public List<BusNode> getList() {
-            return adjNodes;
-        }
-
-        public void setList(List<BusNode> list) {
-            this.adjNodes = list;
-        }
-
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
+    public Edge getEdge(Edge wantToGetEdge){
+        for (Edge edge:edges){
+            if (wantToGetEdge.equals(edge)){
+                return edge;
             }
-            if (!(o instanceof BusNode)) {
-                return false;
-            }
-            BusNode busNode = (BusNode) o;
-            return getId() == busNode.getId() &&
-                    Objects.equals(getInf(), busNode.getInf());
         }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(getId(), getInf(), adjNodes);
-        }
-
-        @Override
-        public String toString() {
-            return "BusNode{" +
-                    "id=" + id +
-                    ", inf='" + inf + '\'' +
-                    '}';
-        }
+        return null;
     }
+    public List<BusNode> getNodes() {
+        return nodes;
+    }
+
+    public Set<Edge> getEdges() {
+        return edges;
+    }
+
 
     /**
      * 边类
      */
-     public class Edge{
+     public static class Edge{
         Integer id1;
         Integer id2;
         Integer lines=0;
@@ -313,7 +250,7 @@ public class BusNetwork {
                     ", id2=" + id2 +
                     ", lines=" + lines +
                     '}';
-        }
+        } 
     }
 
 }
