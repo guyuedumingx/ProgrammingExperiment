@@ -50,7 +50,11 @@ public class MainController {
         switch (type) {
             case SYSTEMMANAGER:
                 UI.systemManagerChoices();
-                return dealSystemOpera(in.nextInt());
+                boolean b = dealSystemOpera(in.nextInt());
+                if(b){
+                    showOpera();
+                }
+                break;
             case CARDOPERATOR:
                 UI.cardOperatorChoices();
                 break;
@@ -65,20 +69,22 @@ public class MainController {
         switch (opera) {
             case 1:
                 UI.noPromt();
-                String no = in.nextLine();
+                String no = in.next();
                 UI.pwdPromt();
-                String pwd = in.nextLine();
+                String pwd = in.next();
                 if(manager.login(no, pwd)) {
                     card = manager.query(no);
+                    System.out.println("登录成功!");
                     return true;
                 }else {
+                    System.out.println("登录失败!");
                     return false;
                 }
             case 2:
                 UI.pwdPromt();
-                String prePwd = in.nextLine();
+                String prePwd = in.next();
                 UI.chPwdPromt();
-                String afterPwd = in.nextLine();
+                String afterPwd = in.next();
                 return manager.chPwd(card.getNo(),prePwd, afterPwd);
         }
         return false;

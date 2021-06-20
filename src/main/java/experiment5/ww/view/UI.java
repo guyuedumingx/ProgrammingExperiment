@@ -10,12 +10,14 @@ import java.util.Scanner;
  */
 public class UI {
     public static void UserChoices(){
+        System.out.println();
         System.out.println("1. 数据库管理员");
         System.out.println("2. 卡业务员");
         System.out.println("3. 卡用户");
     }
 
     public static void systemManagerChoices(){
+        System.out.println();
         System.out.println("1. 登录");
         System.out.println("2. 修改密码");
         System.out.println("3. 创建账户");
@@ -24,6 +26,7 @@ public class UI {
     }
 
     public static void cardUserChoices() {
+        System.out.println();
         System.out.println("1. 登录");
         System.out.println("2. 修改密码");
         System.out.println("3. 查询卡余额");
@@ -32,6 +35,7 @@ public class UI {
     }
 
     public static void cardOperatorChoices() {
+        System.out.println();
         System.out.println("1. 登录");
         System.out.println("2. 修改密码");
         System.out.println("3. 查询卡信息");
@@ -49,7 +53,7 @@ public class UI {
     }
 
     public static void chPwdPromt() {
-        System.out.println("您的新密码是: ");
+        System.out.print("您的新密码是: ");
     }
 }
 

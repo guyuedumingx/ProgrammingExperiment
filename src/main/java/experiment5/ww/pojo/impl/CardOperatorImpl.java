@@ -31,6 +31,9 @@ public class CardOperatorImpl implements CardOperator {
     @Override
     public boolean login(String no, String pwd) {
         card = db.selectByNo(no);
+        if(card == null){
+            return false;
+        }
         return card.getPwd().equals(pwd);
     }
 

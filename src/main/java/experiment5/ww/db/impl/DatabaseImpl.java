@@ -39,6 +39,7 @@ public class DatabaseImpl<T extends DBNode> implements Database<T> {
         while (cur != null) {
             T data = cur.getData();
             list.add(data);
+            cur = cur.getNext();
         }
         return list;
     }
