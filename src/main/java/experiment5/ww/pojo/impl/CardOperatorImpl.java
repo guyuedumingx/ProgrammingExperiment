@@ -17,30 +17,31 @@ public class CardOperatorImpl implements CardOperator {
      * 被操作的卡
      */
     private Card card = null;
-    private Database db = DbUtil.getDb();
+    private Database<Card> db = DbUtil.getCardDB();
 
     @Override
     public Card query(String no) {
         card = db.selectByNo(no);
         if(card != null) {
-            card.setUserPassword("*****");
+            card.setPwd("*****");
         }
         return card;
     }
 
     @Override
-    public boolean login(String name, String pwd) {
-        card = db.selectByName(name);
-        if(card!=null && card.getUserPassword().equals(pwd)){
-            return true;
+    public boolean login(String no, String pwd) {
+        card = db.selectByNo(no);
+        if(card == null){
+            return false;
         }
-        return false;
+        return card.getPwd().equals(pwd);
     }
 
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
-            card.setUserPassword(afterPwd);
+            card.setPwd(afterPwd);
+            db.update(card);
             return true;
         }
         return false;
@@ -54,8 +55,8 @@ public class CardOperatorImpl implements CardOperator {
             no = NoUtil.build(userName);
         }
 
-        card.setUserName(userName)
-            .setUserPassword(pwd)
+        card.setName(userName)
+            .setPwd(pwd)
             .setBalance(0)
             .setNo(no);
         db.insert(card);

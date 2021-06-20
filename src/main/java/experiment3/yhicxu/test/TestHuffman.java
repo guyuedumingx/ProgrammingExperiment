@@ -26,7 +26,7 @@ public class TestHuffman {
         System.out.println("\n编码后：");
         System.out.println(code);
         System.out.println("\n解码后：");
-        System.out.println(h.decode(code));
+        System.out.println(h.decode("11011111101110010011110111111001101001100111000111111000000111100011"));
 
         // 显示树相关
         /*

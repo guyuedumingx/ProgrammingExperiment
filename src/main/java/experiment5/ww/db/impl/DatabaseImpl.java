@@ -1,6 +1,7 @@
-package experiment5.ww.db;
+package experiment5.ww.db.impl;
 
-import experiment5.ww.pojo.Card;
+import experiment5.ww.db.Database;
+import experiment5.ww.db.DBNode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,19 +11,19 @@ import java.util.List;
  * @author yohoyes
  * @date 2021/5/17 10:26
  */
-public class DatabaseImpl implements Database{
-    private static Node<Card> head = new Node<>();
+public class DatabaseImpl<T extends DBNode> implements Database<T> {
+    private Node<T> head = new Node<T>();
 
-    public void insert(Card card) {
-        Node<Card> cardNode = new Node<>(card);
-        cardNode.setNext(head.getNext());
-        head.setNext(cardNode);
+    public void insert(T t) {
+        Node<T> node = new Node<T>(t);
+        node.setNext(head.getNext());
+        head.setNext(node);
     }
 
     public boolean deleteByNo(String no) {
-        Node<Card> cur = head;
+        Node<T> cur = head;
         while (cur.getNext() != null) {
-            Card data = cur.getNext().getData();
+            T data = cur.getNext().getData();
             if(data.getNo().equals(no)) {
                 cur.setNext(cur.getNext().getNext());
                 return true;
@@ -32,41 +33,30 @@ public class DatabaseImpl implements Database{
         return false;
     }
 
-    public Card selectByName(String name) {
-        Node<Card> cur = head.getNext();
+    public List<T> selectAll() {
+        List<T> list = new ArrayList<>();
+        Node<T> cur = head.getNext();
         while (cur != null) {
-            Card data = cur.getData();
-            if(data.getUserName().equals(name)) {
-                return data;
-            }
-            cur = cur.getNext();
-        }
-       return null;
-    }
-
-    public List<Card> selectAll() {
-        List<Card> list = new ArrayList<>();
-        Node<Card> cur = head.getNext();
-        while (cur != null) {
-            Card data = cur.getData();
+            T data = cur.getData();
             list.add(data);
+            cur = cur.getNext();
         }
         return list;
     }
 
 
-    public void update(Card card) {
-       Node<Card> cur = head.getNext();
+    public void update(T t) {
+       Node<T> cur = head.getNext();
        while (cur != null) {
-            if(cur.getData().equals(card)) {
-                cur.setData(card);
+            if(cur.getData().equals(t)) {
+                cur.setData(t);
             }
             cur = cur.getNext();
        }
     }
 
-    public Card selectByNo(String no) {
-        Node<Card> cur = head.getNext();
+    public T selectByNo(String no) {
+        Node<T> cur = head.getNext();
         while (cur != null) {
             if(cur.getData().getNo().equals(no)) {
                 return cur.getData();

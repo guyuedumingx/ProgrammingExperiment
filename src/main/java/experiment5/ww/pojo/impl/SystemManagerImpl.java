@@ -7,6 +7,7 @@ import experiment5.ww.util.DbUtil;
 import experiment5.ww.util.NoUtil;
 
 /**
+ * 系统管理员：登录，修改密码，创建、删除及查询用户
  * @author yohoyes
  * @date 2021/5/20 18:47
  */
@@ -15,21 +16,38 @@ public class SystemManagerImpl implements SystemManager {
      * 被操作的卡
      */
     private Card card = null;
-    private Database db = DbUtil.getDb();
 
+    /**
+     * 卡数据库
+     */
+    private Database<Card> db = DbUtil.getCardDB();
+
+    /**
+     * 根据学号和密码登录
+     * @param no 学号
+     * @param pwd 用户密码
+     * @return 如果登录成功，则返回true，否则返回false
+     */
     @Override
-    public boolean login(String name, String pwd) {
-        card = db.selectByName(name);
-        if(card!=null && card.getUserPassword().equals(pwd)){
-            return true;
+    public boolean login(String no, String pwd) {
+        card = db.selectByNo(no);
+        if(card == null){
+            return false;
         }
-        return false;
+        return card.getPwd().equals(pwd);
     }
 
+    /**
+     * 修改密码
+     * @param prePwd 原用户密码
+     * @param afterPwd 现用户密码
+     * @return
+     */
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
-            card.setUserPassword(afterPwd);
+            card.setPwd(afterPwd);
+            db.update(card);
             return true;
         }
         return false;
@@ -43,8 +61,8 @@ public class SystemManagerImpl implements SystemManager {
             no = NoUtil.build(userName);
         }
 
-        card.setUserName(userName)
-                .setUserPassword(pwd)
+        card.setName(userName)
+                .setPwd(pwd)
                 .setBalance(0)
                 .setNo(no);
         db.insert(card);
@@ -54,8 +72,7 @@ public class SystemManagerImpl implements SystemManager {
 
     @Override
     public boolean delete(String no) {
-        boolean b = db.deleteByNo(no);
-        return b;
+        return db.deleteByNo(no);
     }
 
     @Override

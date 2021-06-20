@@ -8,23 +8,6 @@ public class Queue<T> {
     private Node<T> head = new Node<>();
     private int size = 0;
 
-//    public void poll(T data){
-//        Node node = new Node(data);
-//        node.setNext(head.getNext());
-//        head.setNext(node);
-//    }
-//
-//    public T pop() {
-//        Node p = head;
-//        Node q = p.getNext();
-//        while (q.getNext() != null) {
-//            p = q;
-//            q = q.getNext();
-//        }
-//        p.setNext(null);
-//        return (T)q.getData();
-//    }
-
     public void poll(T data) {
         Node node = new Node(data);
         Node p = head;

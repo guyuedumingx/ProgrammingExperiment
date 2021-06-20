@@ -1,7 +1,8 @@
 package experiment5.ww.util;
 
 import experiment5.ww.db.Database;
-import experiment5.ww.db.DatabaseImpl;
+import experiment5.ww.db.impl.DatabaseImpl;
+import experiment5.ww.pojo.Card;
 
 /**
  * 数据库工具类
@@ -9,9 +10,9 @@ import experiment5.ww.db.DatabaseImpl;
  * @date 2021/5/19 17:08
  */
 public class DbUtil {
-    private static Database db = new DatabaseImpl();
+    private static Database<Card> cardDB = new DatabaseImpl();
 
-    public static Database getDb() {
-        return db;
+    public static Database<Card> getCardDB() {
+        return cardDB;
     }
 }

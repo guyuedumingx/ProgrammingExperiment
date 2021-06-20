@@ -16,7 +16,7 @@ public class CardUserImpl implements CardUser {
      * 被操作的卡
      */
     private Card card = null;
-    private Database db = DbUtil.getDb();
+    private Database<Card> db = DbUtil.getCardDB();
 
     /**
      * 空实现
@@ -32,18 +32,19 @@ public class CardUserImpl implements CardUser {
     }
 
     @Override
-    public boolean login(String name, String pwd) {
-        card = db.selectByName(name);
-        if(card!=null && card.getUserPassword().equals(pwd)){
-            return true;
+    public boolean login(String no, String pwd) {
+        card = db.selectByNo(no);
+        if(card == null){
+            return false;
         }
-        return false;
+        return card.getPwd().equals(pwd);
     }
 
     @Override
     public boolean chPwd(String name, String prePwd, String afterPwd) {
         if(login(name,prePwd)){
-            card.setUserPassword(afterPwd);
+            card.setPwd(afterPwd);
+            db.update(card);
             return true;
         }
         return false;

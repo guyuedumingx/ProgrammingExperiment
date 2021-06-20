@@ -1,23 +1,25 @@
 package experiment5.ww.pojo;
 
+import experiment5.ww.db.DBNode;
+
 /**
  * 卡类
  * @author yohoyes
  * @date 2021/5/17 9:15
  */
-public class Card {
+public class Card implements DBNode {
     /**
      * 卡号
      */
     private String no;
     /**
-     * 用户名
+     * 用户name
      */
-    private String userName;
+    private String name;
     /**
      * 用户密码
      */
-    private String userPassword;
+    private String pwd;
     /**
      * 余额
      */
@@ -28,6 +30,7 @@ public class Card {
      */
     private boolean active = true;
 
+    @Override
     public String getNo() {
         return no;
     }
@@ -37,21 +40,21 @@ public class Card {
         return this;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public Card setUserName(String userName) {
-        this.userName = userName;
+    public Card setName(String name) {
+        this.name = name;
         return this;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPwd() {
+        return pwd;
     }
 
-    public Card setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public Card setPwd(String pwd) {
+        this.pwd = pwd;
         return this;
     }
 
@@ -77,5 +80,16 @@ public class Card {
     public boolean equals(Object obj) {
         Card card = (Card) obj;
         return this.getNo().equals(card.getNo());
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", balance=" + balance +
+                ", active=" + active +
+                '}';
     }
 }

@@ -5,7 +5,6 @@ import org.xmind.core.ITopic;
 import org.xmind.core.IWorkbook;
 import org.xmind.core.IWorkbookBuilder;
 import org.xmind.core.internal.dom.WorkbookBuilderImpl;
-import util.treeUtil.TreeNode;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,8 +14,8 @@ import java.util.LinkedList;
  * <p><b>类名：</b>{@code TreeUtil}</p>
  * <p><b>功能：</b></p><br>树工具类
  * <p><b>方法：</b></p>
- * <br> {@link #buildXmind(TreeNode, String)}生成Xmind文件
- * <br> {@link #printTree(TreeNode)}打印树
+ * <br> {@link #buildXmind(HuffmanNode, String)}生成Xmind文件
+ * <br> {@link #printTree(HuffmanNode)}打印树
  *
  * @author 60rzvvbj
  * @date 2021/4/21
@@ -25,7 +24,7 @@ public class TreeUtil {
     static IWorkbookBuilder builder = new WorkbookBuilderImpl();
     static IWorkbook workbook;
 
-    public static void buildXmind(TreeNode root, String fileName) {
+    public static void buildXmind(HuffmanNode root, String fileName) {
         workbook = builder.createWorkbook();
         ISheet sheet = workbook.getPrimarySheet();
         ITopic rootTopic = sheet.getRootTopic();
@@ -41,7 +40,7 @@ public class TreeUtil {
 
     }
 
-    private static void buildXmindTree(TreeNode node, ITopic parentTopic) {
+    private static void buildXmindTree(HuffmanNode node, ITopic parentTopic) {
         if (node == null) {
             return;
         }
@@ -52,15 +51,15 @@ public class TreeUtil {
         buildXmindTree(node.getRight(), topic);
     }
 
-    public static void printTree(TreeNode root) {
-        LinkedList<TreeNode> allNode = new LinkedList<>();
-        HashMap<TreeNode, Integer> nodeHeight = new HashMap<>();
-        LinkedList<TreeNode> leafNode = new LinkedList<>();
+    public static void printTree(HuffmanNode root) {
+        LinkedList<HuffmanNode> allNode = new LinkedList<>();
+        HashMap<HuffmanNode, Integer> nodeHeight = new HashMap<>();
+        LinkedList<HuffmanNode> leafNode = new LinkedList<>();
         showTreeDfs(allNode, nodeHeight, leafNode, 0, root);
-        HashMap<TreeNode, Integer> nodeX = new HashMap<>();
-        HashMap<TreeNode, Integer> nodeY = new HashMap<>();
+        HashMap<HuffmanNode, Integer> nodeX = new HashMap<>();
+        HashMap<HuffmanNode, Integer> nodeY = new HashMap<>();
         int maxHeight = 0;
-        for (TreeNode node : nodeHeight.keySet()) {
+        for (HuffmanNode node : nodeHeight.keySet()) {
             maxHeight = Math.max(nodeHeight.get(node), maxHeight);
         }
         int width = maxHeight + maxHeight / 2;
@@ -69,12 +68,12 @@ public class TreeUtil {
             Arrays.fill(chars, ' ');
         }
         int x = width;
-        for (TreeNode node : leafNode) {
+        for (HuffmanNode node : leafNode) {
             nodeX.put(node, x);
             x += width;
         }
         for (int y = maxHeight; y >= 0; y--) {
-            for (TreeNode node : allNode) {
+            for (HuffmanNode node : allNode) {
                 if (nodeHeight.get(node) == y) {
                     nodeY.put(node, 2 * y);
                     if (node.getLeft() != null || node.getLeft() != null) {
@@ -83,7 +82,7 @@ public class TreeUtil {
                 }
             }
         }
-        for (TreeNode node : allNode) {
+        for (HuffmanNode node : allNode) {
             setChar(chart, node.getData(), nodeX.get(node), nodeY.get(node));
             if (node.getLeft() != null && node.getRight() != null) {
                 chart[(nodeY.get(node) + nodeY.get(node.getLeft())) / 2][(nodeX.get(node) + nodeX.get(node.getLeft())) / 2] = '/';
@@ -111,7 +110,7 @@ public class TreeUtil {
         }
     }
 
-    private static void showTreeDfs(LinkedList<TreeNode> allNode, HashMap<TreeNode, Integer> nodeHeight, LinkedList<TreeNode> leafNode, int nowHeight, TreeNode node) {
+    private static void showTreeDfs(LinkedList<HuffmanNode> allNode, HashMap<HuffmanNode, Integer> nodeHeight, LinkedList<HuffmanNode> leafNode, int nowHeight, HuffmanNode node) {
         allNode.add(node);
         nodeHeight.put(node, nowHeight);
         if (node.getLeft() == null && node.getRight() == null) {
