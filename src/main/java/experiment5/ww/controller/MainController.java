@@ -60,7 +60,119 @@ public class MainController {
                 break;
             case CARDUSER:
                 UI.cardUserChoices();
+                boolean c = dealCardUserOpera(in.nextInt());
+                if(c){
+                    showOpera();
+                }
                 break;
+        }
+        return false;
+    }
+
+    public boolean dealOperator(int opera) {
+        switch (opera) {
+            case 1:
+                UI.noPromt();
+                String no = in.next();
+                UI.pwdPromt();
+                String pwd = in.next();
+                if (operator.login(no, pwd)) {
+                    card = operator.query(no);
+                    System.out.println("登录成功!");
+                    return true;
+                } else {
+                    System.out.println("登录失败!");
+                    return false;
+                }
+            case 2:
+                UI.pwdPromt();
+                String prePwd = in.next();
+                UI.chPwdPromt();
+                String afterPwd = in.next();
+                return operator.chPwd(card.getNo(), prePwd, afterPwd);
+            case 3:
+                UI.noPromt();
+                Card query = operator.query(in.next());
+                System.out.println(query);
+                return true;
+            case 4:
+                UI.namePromt();
+                String name = in.next();
+                UI.pwdPromt();
+                String pwds = in.next();
+                String register = operator.register(name, pwds);
+                System.out.println("添加成功!");
+                return true;
+            case 5:
+                UI.noPromt();
+                boolean freezing = operator.freezing(in.next());
+                if(freezing) {
+                    System.out.println("挂失成功");
+                }else {
+                    System.out.println("挂失失败");
+                }
+                return freezing;
+            case 6:
+                UI.noPromt();
+                String no2 = in.next();
+                UI.pwdPromt();
+                String pwd2 = in.next();
+                boolean unfreezing = operator.unfreezing(no2, pwd2);
+                if(unfreezing) {
+                    System.out.println("解挂成功");
+                }else {
+                    System.out.println("解挂失败");
+                }
+                return unfreezing;
+        }
+        return false;
+    }
+
+    public boolean dealCardUserOpera(int opera) {
+        switch (opera) {
+            case 1:
+                UI.noPromt();
+                String no = in.next();
+                UI.pwdPromt();
+                String pwd = in.next();
+                if (user.login(no, pwd)) {
+                    card = user.query(no);
+                    System.out.println("登录成功!");
+                    return true;
+                } else {
+                    System.out.println("登录失败!");
+                    return false;
+                }
+            case 2:
+                UI.pwdPromt();
+                String prePwd = in.next();
+                UI.chPwdPromt();
+                String afterPwd = in.next();
+                return user.chPwd(card.getNo(), prePwd, afterPwd);
+            case 3:
+                double balance = user.balance();
+                System.out.println("您剩余的余额是: " + balance);
+                return true;
+            case 4:
+                UI.topUpPromt();
+                int i = in.nextInt();
+                boolean b = user.topUp(i);
+                if(b) {
+                    System.out.println("充值成功!");
+                }else {
+                    System.out.println("充值失败!");
+                }
+                return b;
+            case 5:
+                UI.consumptionPromt();
+                int money = in.nextInt();
+                boolean consumption = user.consumption(money);
+                if(consumption) {
+                    System.out.println("消费成功!");
+                }else {
+                    System.out.println("消费失败!");
+                }
+                return consumption;
         }
         return false;
     }
@@ -86,6 +198,30 @@ public class MainController {
                 UI.chPwdPromt();
                 String afterPwd = in.next();
                 return manager.chPwd(card.getNo(),prePwd, afterPwd);
+            case 3:
+                UI.namePromt();
+                String name = in.next();
+                UI.pwdPromt();
+                String pwds = in.next();
+                manager.register(name, pwds);
+                System.out.println("添加成功!");
+                return true;
+            case 4:
+                UI.noPromt();
+                String queryNo = in.next();
+                Card query = manager.query(queryNo);
+                System.out.println(query);
+                return true;
+            case 5:
+                UI.noPromt();
+                boolean delete = manager.delete(in.next());
+                if(delete){
+                    System.out.println("删除成功!");
+                    return true;
+                }else {
+                    System.out.println("删除失败!");
+                    return false;
+                }
         }
         return false;
     }

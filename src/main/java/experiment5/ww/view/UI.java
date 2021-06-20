@@ -55,5 +55,17 @@ public class UI {
     public static void chPwdPromt() {
         System.out.print("您的新密码是: ");
     }
+
+    public static void namePromt() {
+        System.out.print("请输入您的账户名: ");
+    }
+
+    public static void topUpPromt(){
+        System.out.print("请输入您要充值的金额: ");
+    }
+
+    public static void consumptionPromt() {
+        System.out.print("请输入要消费的金额: ");
+    }
 }
 

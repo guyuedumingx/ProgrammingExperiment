@@ -10,10 +10,10 @@ import experiment5.ww.pojo.BaseOpera;
 public interface SystemManager extends BaseOpera {
     /**
      * 注册用户
-     * @param no 学号
+     * @param name 名字
      * @param pwd 密码
      */
-    String register(String no, String pwd);
+    String register(String name, String pwd);
 
     /**
      * 删除用户
