@@ -46,7 +46,7 @@ public class MainController {
         return false;
     }
 
-    public boolean opera() {
+    public boolean showOpera() {
         switch (type) {
             case SYSTEMMANAGER:
                 UI.systemManagerChoices();

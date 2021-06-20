@@ -1,5 +1,6 @@
 package experiment5.ww;
 
+import experiment5.ww.controller.MainController;
 import experiment5.ww.db.Database;
 import experiment5.ww.pojo.Card;
 import experiment5.ww.pojo.CardOperator;
@@ -22,13 +23,18 @@ public class Main {
     private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String name = in.nextLine();
-        String build = NoUtil.build(name);
-        Card card = new Card();
-        card.setNo(build)
-            .setBalance(100)
-            .setPwd("123456")
-            .setName(name);
+        MainController controller = new MainController(in);
+        while(!controller.login()){}
+        controller.showOpera();
+
+
+//        String name = in.nextLine();
+//        String build = NoUtil.build(name);
+//        Card card = new Card();
+//        card.setNo(build)
+//            .setBalance(100)
+//            .setPwd("123456")
+//            .setName(name);
 //        db.insert(card);
 //        Card card1 = db.selectByNo(card.getNo());
 //        System.out.println(card1);

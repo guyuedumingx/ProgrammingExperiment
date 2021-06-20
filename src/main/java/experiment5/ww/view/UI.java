@@ -41,11 +41,11 @@ public class UI {
     }
 
     public static void noPromt() {
-        System.out.println("您的账号是: ");
+        System.out.print("您的账号是: ");
     }
 
     public static void pwdPromt() {
-        System.out.println("您的密码是: ");
+        System.out.print("您的密码是: ");
     }
 
     public static void chPwdPromt() {
