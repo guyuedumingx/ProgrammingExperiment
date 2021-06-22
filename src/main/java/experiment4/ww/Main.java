@@ -1,8 +1,6 @@
 package experiment4.ww;
 
-import experiment4.dqy.Bus;
-import experiment4.ww.util.LinkedNode;
-import util.graphutil.GraphNode;
+import util.graphutil.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,6 +12,9 @@ import java.util.List;
  */
 public class Main {
     private static List<BusRoute> routes = new ArrayList<>();
+    private static List<GraphNode> nodes = new ArrayList<>();
+    private static List<GraphEdge> edges = new ArrayList<>();
+
     public static void main(String[] args) {
         WGraphNode nodeA = new WGraphNode("A");
         WGraphNode nodeB = new WGraphNode("B");
@@ -22,34 +23,47 @@ public class Main {
         WGraphNode nodeE = new WGraphNode("E");
         WGraphNode nodeF = new WGraphNode("F");
         WGraphNode nodeG = new WGraphNode("G");
+        WGraphNode nodeH = new WGraphNode("H");
+        WGraphNode nodeI = new WGraphNode("I");
+        WGraphNode nodeJ = new WGraphNode("J");
+
+        nodes.add(nodeA);
+        nodes.add(nodeB);
+        nodes.add(nodeC);
+        nodes.add(nodeD);
+        nodes.add(nodeE);
+        nodes.add(nodeF);
+        nodes.add(nodeG);
+        nodes.add(nodeH);
+        nodes.add(nodeI);
+        nodes.add(nodeJ);
 
         BusRoute route1 = new BusRoute("1");
         BusRoute route2 = new BusRoute("2");
-        BusRoute route3 = new BusRoute("3");
         routes.add(route1);
         routes.add(route2);
-        routes.add(route3);
 
-        addLink(nodeA,nodeB,200);
-        addLink(nodeE,nodeA,300);
-        addLink(nodeB, nodeC,300);
-        addLink(nodeE,nodeF, 100);
-        addLink(nodeF,nodeD,100);
-        addLink(nodeA,nodeD,500);
-        addLink(nodeD,nodeG,100);
-        addLink(nodeG, nodeB,200);
+        addLink(nodeA, nodeB);
+        addLink(nodeB, nodeC);
+        addLink(nodeA, nodeD);
+        addLink(nodeD, nodeG);
+        addLink(nodeG, nodeE);
+        addLink(nodeE, nodeC);
+        addLink(nodeE, nodeF);
+        addLink(nodeF, nodeJ);
+        addLink(nodeF, nodeJ);
+        addLink(nodeI, nodeJ);
+        addLink(nodeI, nodeH);
 
-        route1.add(nodeC,nodeB,nodeG,nodeD,nodeF);
-        route2.add(nodeD,nodeA,nodeE,nodeF);
-        route3.add(nodeC,nodeB,nodeA,nodeE,nodeF);
+        route1.add(nodeA,nodeD,nodeG,nodeE,nodeC, nodeB);
+        route2.add(nodeH,nodeI,nodeJ,nodeF, nodeE);
 
-        prt(nodeA,nodeB,nodeC,nodeD,nodeE,nodeF,nodeG);
+        prt(nodeA,nodeB,nodeC,nodeD,nodeE,nodeF,nodeG, nodeH, nodeI, nodeJ);
         System.out.println(route1.toString());
         System.out.println(route2.toString());
-        System.out.println(route3.toString());
 
-        WGraphNode srcNode = nodeC;
-        WGraphNode dstNode = nodeE;
+        WGraphNode srcNode = nodeA;
+        WGraphNode dstNode = nodeH;
         List<BusRoute> srcRoutes = srcNode.getAllRoutes();
         List<BusRoute> dstRoutes = dstNode.getAllRoutes();
         Iterator<BusRoute> iterator = srcRoutes.iterator();
@@ -83,7 +97,7 @@ public class Main {
                 }
             }
         }
-
+        GraphUtil.exportGraph(getGraph(), "a.ycx");
     }
 
     public static List<BusRoute> getIntersection(List<BusRoute> list1, List<BusRoute> list2){
@@ -99,8 +113,28 @@ public class Main {
     }
 
     public static void addLink(WGraphNode node1, WGraphNode node2, float len){
+        GraphEdge graphEdge = new GraphEdge(){
+            @Override
+            public int getRank() {
+                return 0;
+            }
+            @Override
+            public GraphNode getFirst() {
+                return node1;
+            }
+            @Override
+            public GraphNode getSecond() {
+                return node2;
+            }
+        };
+        edges.add(graphEdge);
+
         node1.addNeighbor(node2,len);
         node2.addNeighbor(node1,len);
+    }
+
+    public static void addLink(WGraphNode node1, WGraphNode node2){
+        addLink(node1,node2,0);
     }
 
     /**
@@ -110,5 +144,38 @@ public class Main {
         for(WGraphNode node : nodes) {
             System.out.println(node);
         }
+    }
+
+    public static Graph getGraph() {
+        return new Graph(){
+            @Override
+            public int getType() {
+                return 0;
+            }
+
+            @Override
+            public List<GraphNode> getNodes() {
+                return nodes;
+            }
+
+            @Override
+            public List<GraphEdge> getEdges() {
+                return edges;
+            }
+
+            @Override
+            public List<GraphRoute> getRoutes() {
+                return getGraphRoutes();
+            }
+        };
+    }
+
+    private static List<GraphRoute> getGraphRoutes() {
+        Iterator<BusRoute> iterator = routes.iterator();
+        List<GraphRoute> nodes = new ArrayList<>();
+        while (iterator.hasNext()) {
+            nodes.add(iterator.next());
+        }
+        return nodes;
     }
 }
