@@ -22,9 +22,6 @@ public class CardOperatorImpl implements CardOperator {
     @Override
     public Card query(String no) {
         card = db.selectByNo(no);
-        if(card != null) {
-            card.setPwd("*****");
-        }
         return card;
     }
 

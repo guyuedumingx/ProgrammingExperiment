@@ -23,6 +23,7 @@ public class UI {
         System.out.println("3. 创建账户");
         System.out.println("4. 查询账户");
         System.out.println("5. 删除账户");
+        System.out.println("6. 显示系统信息");
     }
 
     public static void cardUserChoices() {
@@ -32,6 +33,7 @@ public class UI {
         System.out.println("3. 查询卡余额");
         System.out.println("4. 充值");
         System.out.println("5. 消费");
+        System.out.println("6. 显示系统信息");
     }
 
     public static void cardOperatorChoices() {
@@ -42,6 +44,7 @@ public class UI {
         System.out.println("4. 开卡");
         System.out.println("5. 挂失");
         System.out.println("6. 解挂");
+        System.out.println("7. 显示系统信息");
     }
 
     public static void noPromt() {

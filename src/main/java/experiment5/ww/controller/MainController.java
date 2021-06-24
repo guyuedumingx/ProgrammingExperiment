@@ -10,6 +10,7 @@ import experiment5.ww.pojo.impl.CardUserImpl;
 import experiment5.ww.pojo.impl.SystemManagerImpl;
 import experiment5.ww.util.DbUtil;
 import experiment5.ww.view.UI;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -57,6 +58,10 @@ public class MainController {
                 break;
             case CARDOPERATOR:
                 UI.cardOperatorChoices();
+                boolean a = dealOperator(in.nextInt());
+                if(a){
+                    showOpera();
+                }
                 break;
             case CARDUSER:
                 UI.cardUserChoices();
@@ -91,6 +96,10 @@ public class MainController {
                 String afterPwd = in.next();
                 return operator.chPwd(card.getNo(), prePwd, afterPwd);
             case 3:
+                List<Card> list1 = db.selectAll();
+                for(Card card : list1) {
+                    System.out.println(card);
+                }
                 UI.noPromt();
                 Card query = operator.query(in.next());
                 System.out.println(query);
@@ -124,6 +133,12 @@ public class MainController {
                     System.out.println("解挂失败");
                 }
                 return unfreezing;
+            case 7:
+                List<Card> list = db.selectAll();
+                for(Card card : list) {
+                    System.out.println(card);
+                }
+                return true;
         }
         return false;
     }
@@ -173,6 +188,12 @@ public class MainController {
                     System.out.println("消费失败!");
                 }
                 return consumption;
+            case 6:
+                List<Card> list = db.selectAll();
+                for(Card card : list) {
+                    System.out.println(card);
+                }
+                return true;
         }
         return false;
     }
@@ -205,8 +226,16 @@ public class MainController {
                 String pwds = in.next();
                 manager.register(name, pwds);
                 System.out.println("添加成功!");
+                List<Card> list = db.selectAll();
+                for(Card card : list) {
+                    System.out.println(card);
+                }
                 return true;
             case 4:
+                List<Card> list1 = db.selectAll();
+                for(Card card : list1) {
+                    System.out.println(card);
+                }
                 UI.noPromt();
                 String queryNo = in.next();
                 Card query = manager.query(queryNo);
@@ -215,6 +244,10 @@ public class MainController {
             case 5:
                 UI.noPromt();
                 boolean delete = manager.delete(in.next());
+                List<Card> list2 = db.selectAll();
+                for(Card card : list2) {
+                    System.out.println(card);
+                }
                 if(delete){
                     System.out.println("删除成功!");
                     return true;
@@ -222,6 +255,12 @@ public class MainController {
                     System.out.println("删除失败!");
                     return false;
                 }
+            case 6:
+                List<Card> res = db.selectAll();
+                for(Card card : res) {
+                    System.out.println(card);
+                }
+                return true;
         }
         return false;
     }

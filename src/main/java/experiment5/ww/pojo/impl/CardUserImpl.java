@@ -23,7 +23,8 @@ public class CardUserImpl implements CardUser {
      */
     @Override
     public Card query(String no) {
-        return null;
+        Card card = db.selectByNo(no);
+        return card;
     }
 
     @Override
