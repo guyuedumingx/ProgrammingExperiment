@@ -55,9 +55,11 @@ git config --global http.sslVerify "false"
 
 > 前后的冒号都要  
 
-
 ### 声明  
 本仓库用于分享2021上学期韩冬同志的程序设计实验课的实验内容  
 仅作学习参考之用   
+
+### LICENCE
+[MIT](https://raw.githubusercontent.com/charmbracelet/bubbletea/master/LICENSE)  
 
 
