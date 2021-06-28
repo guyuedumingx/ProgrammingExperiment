@@ -60,6 +60,6 @@ git config --global http.sslVerify "false"
 仅作学习参考之用   
 
 ### LICENCE
-[MIT](https://raw.githubusercontent.com/charmbracelet/bubbletea/master/LICENSE)  
+[MIT](https://github.com/guyuedumingx/ProgrammingExperiment/blob/master/LICENSE)  
 
 
