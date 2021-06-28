@@ -139,6 +139,9 @@ public class MainController {
                     System.out.println(card);
                 }
                 return true;
+            case 8:
+                login();
+                return false;
         }
         return false;
     }
@@ -194,6 +197,9 @@ public class MainController {
                     System.out.println(card);
                 }
                 return true;
+            case 7:
+                login();
+                return false;
         }
         return false;
     }
@@ -261,6 +267,9 @@ public class MainController {
                     System.out.println(card);
                 }
                 return true;
+            case 7:
+                login();
+                return false;
         }
         return false;
     }

@@ -25,7 +25,6 @@ public class Main {
     private static Scanner in = new Scanner(System.in);
     private static Database<Card> db = DbUtil.getCardDB();
     private static String[] nameList = {"aa", "bb", "cc"};
-
     public static void main(String[] args) {
         read();
         List<Card> list = db.selectAll();
